@@ -1,6 +1,23 @@
 import AnimatedButton from "@/components/animated-button";
 import PromptGrid from "@/components/prompt-grid";
 import { samplePrompts } from "@/data/prompts";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Explore AI Prompts — Browse the Prompt Store | PromptStudio",
+  description:
+    "Browse thousands of expert-crafted, free AI prompts for ChatGPT, Claude, Gemini, and Midjourney. Filter by category, sort by popularity, and copy in one click.",
+  keywords: [
+    "explore AI prompts", "browse AI prompts", "free ChatGPT prompts",
+    "Claude prompts", "Gemini prompts", "AI prompt store", "best AI prompts",
+  ],
+  openGraph: {
+    title: "Explore AI Prompts | PromptStudio",
+    description: "Browse & copy thousands of free, expert-crafted AI prompts. Filter by category, model, and use case.",
+    type: "website",
+  },
+};
+
 
 export default function ExplorePage() {
   return (

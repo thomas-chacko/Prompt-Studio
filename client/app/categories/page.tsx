@@ -2,6 +2,23 @@ import CategoryBadge from "@/components/category-badge";
 import { categories } from "@/data/prompts";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "AI Prompt Categories — Marketing, Coding, SEO & More | PromptStudio",
+  description:
+    "Browse AI prompts by category on PromptStudio. Find expert prompts for Marketing, Coding, SEO, Writing, Business, Productivity, Social Media, and more.",
+  keywords: [
+    "AI prompt categories", "ChatGPT prompt categories", "marketing AI prompts",
+    "coding AI prompts", "SEO prompts", "writing prompts", "AI prompt store",
+  ],
+  openGraph: {
+    title: "Browse AI Prompt Categories | PromptStudio",
+    description: "Find the perfect AI prompt for every use case — 8 categories, thousands of expert prompts.",
+    type: "website",
+  },
+};
+
 
 export default function CategoriesPage() {
   return (

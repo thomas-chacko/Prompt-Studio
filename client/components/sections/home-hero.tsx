@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Search, BookMarked, Wand2, ImageIcon, Sparkles, Tag } from "lucide-react";
+import { Search, BookMarked, ImageIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 
 // Word-stagger variants
