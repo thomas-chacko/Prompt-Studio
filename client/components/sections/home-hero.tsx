@@ -98,13 +98,6 @@ function RotatingPlaceholder() {
   );
 }
 
-const FEATURE_PILLS = [
-  { icon: Copy, label: "One-click copy", href: "/explore" },
-  { icon: Wand2, label: "AI Prompt Builder", href: "/generate-prompt" },
-  { icon: ImageIcon, label: "Image Prompts", href: "/generate-image" },
-  { icon: Sparkles, label: "10k+ prompts free", href: "/explore" },
-];
-
 export default function HomeHero() {
   return (
     <section
@@ -124,26 +117,6 @@ export default function HomeHero() {
 
       {/* ── Content ─────────────────────────────────────────────── */}
       <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-8 flex flex-col items-center text-center">
-
-        {/* Top eyebrow badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-10"
-        >
-          <Link
-            href="/explore"
-            className="group inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.06] border border-white/10 text-sm font-medium text-gray-300 hover:bg-white/10 hover:border-white/20 transition-all"
-          >
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-cyan opacity-70" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-cyan" />
-            </span>
-            10,000+ free AI prompts — no sign-up needed
-            <ArrowRight className="w-3.5 h-3.5 text-gray-500 group-hover:text-gray-300 transition-colors" />
-          </Link>
-        </motion.div>
 
         {/* Headline — word-stagger reveal */}
         <AnimatedHeadline />
@@ -192,25 +165,6 @@ export default function HomeHero() {
               <Search className="w-3.5 h-3.5" />
             </button>
           </form>
-        </motion.div>
-
-        {/* Feature pills */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.45 }}
-          className="flex flex-wrap justify-center gap-2.5 mb-12"
-        >
-          {FEATURE_PILLS.map(({ icon: Icon, label, href }) => (
-            <Link
-              key={label}
-              href={href}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold text-gray-400 bg-white/[0.05] border border-white/8 hover:text-white hover:border-white/20 hover:bg-white/8 transition-all"
-            >
-              <Icon className="w-3.5 h-3.5 text-brand-cyan" />
-              {label}
-            </Link>
-          ))}
         </motion.div>
 
         {/* CTA buttons */}
