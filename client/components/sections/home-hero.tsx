@@ -29,7 +29,7 @@ function AnimatedHeadline() {
       variants={headlineContainer}
       initial="hidden"
       animate="visible"
-      className="text-5xl sm:text-6xl md:text-7xl xl:text-[5.5rem] font-black tracking-tighter leading-[1.04] text-white mb-6 max-w-4xl"
+      className="text-5xl sm:text-6xl md:text-7xl xl:text-[5.5rem] font-black tracking-tighter leading-[1.04] text-white mb-6 max-w-4xl mx-auto text-center"
       style={{ perspective: 800 }}
     >
       {["The", "Best", "Free"].map((w) => (
@@ -103,7 +103,7 @@ export default function HomeHero() {
     <section
       id="hero"
       aria-label="PromptStudio — Best Free AI Prompt Library for ChatGPT and Claude"
-      className="relative flex flex-col items-center justify-center min-h-[95vh] pt-28 pb-16 overflow-hidden bg-[#03010a]"
+      className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-[#03010a]"
     >
       {/* ── Background layers ───────────────────────────────────── */}
       {/* Dot-grid */}
@@ -116,7 +116,7 @@ export default function HomeHero() {
       <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#03010a] to-transparent pointer-events-none" />
 
       {/* ── Content ─────────────────────────────────────────────── */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-8 flex flex-col items-center text-center">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-8 flex flex-col items-center justify-center text-center">
 
         {/* Headline — word-stagger reveal */}
         <AnimatedHeadline />
