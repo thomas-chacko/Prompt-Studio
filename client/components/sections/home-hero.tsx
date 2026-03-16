@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Search, Copy, Wand2, ImageIcon, Sparkles } from "lucide-react";
+import { ArrowRight, Search, BookMarked, Wand2, ImageIcon, Sparkles, Tag } from "lucide-react";
 import { useState, useEffect } from "react";
 
 // Word-stagger variants
@@ -32,7 +32,7 @@ function AnimatedHeadline() {
       className="text-5xl sm:text-6xl md:text-7xl xl:text-[5.5rem] font-black tracking-tighter leading-[1.04] text-white mb-6 max-w-4xl mx-auto text-center"
       style={{ perspective: 800 }}
     >
-      {["The", "Best", "Free"].map((w) => (
+      {["The", "World's"].map((w) => (
         <motion.span key={w} variants={wordVariant} className="inline-block mr-[0.22em]">
           {w}
         </motion.span>
@@ -43,7 +43,7 @@ function AnimatedHeadline() {
         className="inline-block mr-[0.22em] relative"
       >
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan via-[#818cf8] to-brand-pink headline-shimmer">
-          AI
+          Largest
         </span>
       </motion.span>
       <motion.span
@@ -51,11 +51,11 @@ function AnimatedHeadline() {
         className="inline-block mr-[0.22em] relative"
       >
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan via-[#818cf8] to-brand-pink headline-shimmer">
-          Prompt
+          AI Prompt
         </span>
       </motion.span>
       <br />
-      {["Library", "on", "Earth"].map((w) => (
+      {["Store"].map((w) => (
         <motion.span key={w} variants={wordVariant} className="inline-block mr-[0.22em]">
           {w}
         </motion.span>
@@ -65,11 +65,12 @@ function AnimatedHeadline() {
 }
 
 const PLACEHOLDERS = [
-  '"Write a cold email for SaaS founders..."',
-  '"Midjourney cyberpunk city at midnight..."',
-  '"React custom hook for data fetching..."',
-  '"SEO blog outline: best AI tools 2025..."',
-  '"Viral Twitter thread about productivity..."',
+  '"cold email sequence for SaaS founders..."',
+  '"cinematic portrait, soft golden hour light..."',
+  '"React custom hook for infinite scroll..."',
+  '"SEO blog post about AI tools 2025..."',
+  '"viral LinkedIn post about productivity..."',
+  '"brand naming prompts for a startup..."',
 ];
 
 function RotatingPlaceholder() {
@@ -81,7 +82,6 @@ function RotatingPlaceholder() {
       setVisible(false);
       setTimeout(() => {
         setIndex((i) => (i + 1) % PLACEHOLDERS.length);
-
         setVisible(true);
       }, 400);
     }, 2800);
@@ -102,7 +102,7 @@ export default function HomeHero() {
   return (
     <section
       id="hero"
-      aria-label="PromptStudio — Best Free AI Prompt Library for ChatGPT and Claude"
+      aria-label="PromptStudio — The World's Largest AI Prompt Marketplace for ChatGPT, Claude, Gemini and Midjourney"
       className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-[#03010a]"
     >
       {/* ── Background layers ───────────────────────────────────── */}
@@ -128,11 +128,12 @@ export default function HomeHero() {
           transition={{ duration: 0.75, delay: 0.17, ease: [0.22, 1, 0.36, 1] }}
           className="text-lg md:text-xl text-gray-400 max-w-2xl mb-12 leading-relaxed font-light"
         >
-          Instantly copy proven prompts for{" "}
+          Browse and copy thousands of hand-picked, ready-to-use prompts for{" "}
           <strong className="font-semibold text-white">ChatGPT</strong>,{" "}
-          <strong className="font-semibold text-white">Claude</strong>, and{" "}
+          <strong className="font-semibold text-white">Claude</strong>,{" "}
+          <strong className="font-semibold text-white">Gemini</strong>, and{" "}
           <strong className="font-semibold text-white">Midjourney</strong>.
-          Built by top creators, free for everyone.
+          {" "}Plus, generate stunning AI images right here.
         </motion.p>
 
         {/* Search bar */}
@@ -152,7 +153,7 @@ export default function HomeHero() {
               <input
                 name="q"
                 type="search"
-                aria-label="Search free AI prompts for ChatGPT, Claude, Midjourney"
+                aria-label="Search AI prompts for ChatGPT, Claude, Gemini, Midjourney"
                 className="w-full bg-transparent text-white text-sm md:text-base px-4 py-4 outline-none placeholder:text-transparent"
               />
               <RotatingPlaceholder />
@@ -174,19 +175,25 @@ export default function HomeHero() {
           transition={{ duration: 0.7, delay: 0.38, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md"
         >
+          {/* Primary — gradient glow button */}
           <Link
             href="/explore"
-            className="w-full flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-white text-black font-bold text-sm hover:bg-gray-100 btn-shine transition-all shadow-[0_0_35px_rgba(255,255,255,0.08)]"
+            className="group w-full relative flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl font-bold text-sm text-white overflow-hidden transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] shadow-[0_0_40px_rgba(124,58,237,0.35)] hover:shadow-[0_0_55px_rgba(124,58,237,0.55)]"
+            style={{ background: "linear-gradient(135deg, #7c3aed 0%, #4f46e5 50%, #0891b2 100%)" }}
           >
-            <Sparkles className="w-4 h-4" />
-            Browse All Prompts
+            {/* Shine sweep on hover */}
+            <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none" />
+            <BookMarked className="w-4 h-4 shrink-0" />
+            Browse Prompts
           </Link>
+
+          {/* Secondary — glass border button */}
           <Link
-            href="/generate-prompt"
-            className="w-full flex items-center justify-center gap-2 px-7 py-4 rounded-2xl border border-white/15 text-white font-semibold text-sm hover:bg-white/[0.06] hover:border-white/25 transition-all"
+            href="/generate-image"
+            className="group w-full relative flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl font-semibold text-sm text-white border border-white/15 bg-white/[0.04] backdrop-blur-sm hover:bg-white/[0.09] hover:border-brand-cyan/40 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
           >
-            <Wand2 className="w-4 h-4 text-brand-cyan" />
-            Free AI Generator
+            <ImageIcon className="w-4 h-4 shrink-0 text-brand-cyan transition-transform duration-300 group-hover:scale-110" />
+            Generate AI Images
           </Link>
         </motion.div>
       </div>

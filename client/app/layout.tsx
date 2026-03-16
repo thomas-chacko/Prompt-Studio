@@ -16,26 +16,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PromptStudio — Best AI Prompt Library for ChatGPT, Claude & Midjourney",
+  title: "PromptStudio — #1 AI Prompt Marketplace | Buy, Sell & Copy AI Prompts",
   description:
-    "Browse 10,000+ free AI prompts for ChatGPT, Claude, Midjourney, DALL·E, and Stable Diffusion. Copy trending prompts for coding, marketing, SEO, and writing. No login needed.",
+    "PromptStudio is the largest AI prompt marketplace. Browse, copy, and submit thousands of expert-crafted prompts for ChatGPT, Claude, Gemini, Midjourney & more. Plus, generate images using AI — free, no login needed.",
   keywords: [
-    "AI prompts", "ChatGPT prompts", "Claude prompts", "Midjourney prompts",
-    "free AI prompts", "best AI prompts 2024", "AI prompt library",
-    "prompt engineering", "DALL-E prompts", "Stable Diffusion prompts",
-    "AI copywriting prompts", "coding prompts", "SEO prompts",
-    "ChatGPT prompt generator", "prompt studio",
+    "AI prompt marketplace", "AI prompt store", "buy AI prompts", "sell AI prompts",
+    "free AI prompts", "ChatGPT prompts", "Claude prompts", "Gemini prompts",
+    "Midjourney prompts", "best AI prompts", "AI prompt library",
+    "prompt engineering", "copy AI prompts", "AI prompts for coding",
+    "AI prompts for marketing", "AI prompts for writing", "AI prompts for SEO",
+    "prompt studio", "AI tools", "prompt community", "AI image generation prompts",
   ],
   openGraph: {
-    title: "PromptStudio — Best AI Prompt Library",
-    description: "10,000+ free prompts for ChatGPT, Claude & Midjourney. Copy, use, and share.",
+    title: "PromptStudio — The #1 AI Prompt Marketplace",
+    description: "Discover & copy thousands of expert AI prompts for ChatGPT, Claude, Gemini & Midjourney. The best place to find, share, and submit AI prompts — free forever.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "PromptStudio — Best AI Prompt Library",
-    description: "10,000+ free prompts for ChatGPT, Claude & Midjourney.",
+    title: "PromptStudio — The #1 AI Prompt Marketplace",
+    description: "Browse thousands of free AI prompts for ChatGPT, Claude, Gemini & Midjourney. Copy in one click. Submit your own.",
   },
   robots: { index: true, follow: true },
 };

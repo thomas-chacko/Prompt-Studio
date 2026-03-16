@@ -7,10 +7,10 @@ const STEPS = [
   {
     step: "01",
     icon: Search,
-    title: "Search or Browse",
+    title: "Browse the Prompt Store",
     detail:
-      "Search our curated library of 10,000+ battle-tested AI prompts by keyword, tool, or category. Filter by ChatGPT, Claude, Midjourney, and more.",
-    tag: "Free · No signup",
+      "Search our curated marketplace of 10,000+ expert-crafted AI prompts. Filter by AI model (ChatGPT, Claude, Gemini, Midjourney), category, or use case to find exactly what you need.",
+    tag: "Free · No signup required",
     color: "text-brand-cyan",
     glow: "shadow-[0_0_40px_rgba(0,212,255,0.08)]",
     border: "border-brand-cyan/20",
@@ -18,9 +18,9 @@ const STEPS = [
   {
     step: "02",
     icon: Copy,
-    title: "Copy in One Click",
+    title: "Copy & Use Instantly",
     detail:
-      "Found the perfect prompt? Hit copy and it's instantly on your clipboard, ready to paste into any AI tool. Counter updates in real-time.",
+      "Found the perfect prompt? Hit copy and it's on your clipboard in one click — ready to paste into ChatGPT, Claude, Gemini, or any AI tool. No friction, no fuss.",
     tag: "Instant · Works everywhere",
     color: "text-brand-purple",
     glow: "shadow-[0_0_40px_rgba(124,58,237,0.08)]",
@@ -29,9 +29,9 @@ const STEPS = [
   {
     step: "03",
     icon: SendHorizonal,
-    title: "Submit Your Best",
+    title: "Submit Your Prompts",
     detail:
-      "Are your prompts consistently delivering amazing results? Share them with 5,000+ creators and build your reputation as a top prompt engineer.",
+      "Have prompts that consistently deliver amazing results? Submit them to our store, reach thousands of creators, and build your reputation as a top prompt engineer in the community.",
     tag: "Community · Growing daily",
     color: "text-brand-pink",
     glow: "shadow-[0_0_40px_rgba(236,72,153,0.08)]",
@@ -42,7 +42,7 @@ const STEPS = [
 export default function HowItWorksSection() {
   return (
     <section
-      aria-label="How PromptStudio works — Find, Copy, and Submit AI Prompts"
+      aria-label="How PromptStudio works — Browse the prompt store, copy AI prompts, and submit your own"
       className="py-24 max-w-7xl mx-auto px-4 sm:px-8"
     >
       <div className="text-center mb-16">
@@ -51,7 +51,7 @@ export default function HowItWorksSection() {
           How It Works
         </h2>
         <p className="text-gray-400 text-lg max-w-xl mx-auto">
-          Get better AI outputs in three steps. No tutorials needed.
+          Go from browsing our prompt store to getting better AI results in seconds — no tutorials needed.
         </p>
       </div>
 

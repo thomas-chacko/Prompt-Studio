@@ -41,23 +41,18 @@ export default function Navbar() {
     <>
       {/* ─── Top Bar ─────────────────────────────────────────────────────── */}
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          scrolled ? "top-3 px-4 sm:px-6" : "top-0 px-0"
-        }`}
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "top-3 px-4 sm:px-6" : "top-0 px-0"
+          }`}
       >
         <nav
-          className={`mx-auto h-14 flex items-center justify-between transition-all duration-500 ${
-            scrolled
+          className={`mx-auto h-14 flex items-center justify-between transition-all duration-500 ${scrolled
               ? "max-w-5xl px-5 rounded-2xl bg-[#07040f]/80 backdrop-blur-2xl border border-white/10 shadow-[0_4px_40px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.07)]"
               : "max-w-7xl px-4 sm:px-6 lg:px-8 rounded-none bg-transparent border-b border-transparent"
-          }`}
+            }`}
           aria-label="Main navigation"
         >
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-cyan to-brand-purple flex items-center justify-center shadow-[0_0_14px_rgba(0,212,255,0.35)] group-hover:shadow-[0_0_22px_rgba(0,212,255,0.5)] transition-shadow">
-              <Sparkles className="w-4 h-4 text-white" />
-            </div>
             <span className="font-extrabold text-lg tracking-tight text-white">
               Prompt<span className="text-brand-cyan">Studio</span>
             </span>
@@ -71,11 +66,10 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
-                    active
+                  className={`relative flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-colors ${active
                       ? "text-white bg-white/8"
                       : "text-gray-400 hover:text-white hover:bg-white/5"
-                  }`}
+                    }`}
                 >
                   <link.icon className="w-3.5 h-3.5" />
                   {link.label}
@@ -168,8 +162,8 @@ export default function Navbar() {
                       <Link
                         href={link.href}
                         className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all ${active
-                            ? "bg-brand-purple/20 text-white border border-brand-purple/25"
-                            : "text-gray-400 hover:text-white hover:bg-white/5 border border-transparent"
+                          ? "bg-brand-purple/20 text-white border border-brand-purple/25"
+                          : "text-gray-400 hover:text-white hover:bg-white/5 border border-transparent"
                           }`}
                       >
                         <link.icon

@@ -2,12 +2,12 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Wand2, ImageIcon } from "lucide-react";
+import { ArrowRight, Sparkles, Wand2, ImageIcon, BookMarked } from "lucide-react";
 
 export default function CTASectionNew() {
   return (
     <section
-      aria-label="Start using PromptStudio — Free AI Prompt Generator and Library"
+      aria-label="Start using PromptStudio — The #1 AI Prompt Marketplace. Browse, copy, and submit AI prompts."
       className="py-32 relative overflow-hidden"
     >
       {/* Background */}
@@ -24,19 +24,19 @@ export default function CTASectionNew() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-purple/30 bg-brand-purple/10 text-brand-cyan text-sm font-semibold mb-8">
             <Sparkles className="w-4 h-4" />
-            Free forever · No login to browse
+            Free to browse · No login needed
           </div>
 
           <h2 className="text-5xl md:text-7xl font-extrabold tracking-tighter text-white mb-6 leading-tight">
-            Level Up Your
+            Your Prompt Store
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan via-brand-purple to-brand-pink">
-              AI Game
+              Awaits
             </span>
           </h2>
 
           <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Join 5,000+ creators using PromptStudio to craft better AI content, ship faster, and get results no one else gets.
+            Join 5,000+ creators who browse, copy, and submit AI prompts on PromptStudio — the world's largest community-driven prompt marketplace. Plus, generate stunning AI images for free.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
@@ -44,8 +44,8 @@ export default function CTASectionNew() {
               href="/explore"
               className="w-full sm:w-auto group flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white text-black font-bold text-base hover:bg-gray-100 btn-shine transition-all shadow-[0_0_40px_rgba(255,255,255,0.1)]"
             >
-              <Sparkles className="w-5 h-5" />
-              Explore Prompts
+              <BookMarked className="w-5 h-5" />
+              Browse Prompt Store
             </Link>
             <Link
               href="/submit"
@@ -69,7 +69,7 @@ export default function CTASectionNew() {
               href="/generate-image"
               className="flex items-center gap-2 text-gray-500 hover:text-brand-purple transition-colors"
             >
-              <ImageIcon className="w-4 h-4" /> AI Image Prompt Builder
+              <ImageIcon className="w-4 h-4" /> Generate AI Images Free
             </Link>
           </div>
         </motion.div>

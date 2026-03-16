@@ -11,14 +11,14 @@ export default function HeroSection() {
       {/* Animated Background Gradients & Grid - Optimized for Performance */}
       <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
         <div className="absolute w-full h-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-        
+
         {/* Swapped heavy framer-motion loops for optimized CSS classes to save CPU on low-end devices */}
-        <div 
-          className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-brand-cyan/20 rounded-full blur-[80px] md:blur-[120px] animate-pulse" 
+        <div
+          className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-brand-cyan/20 rounded-full blur-[80px] md:blur-[120px] animate-pulse"
           style={{ animationDuration: '8s' }}
         />
-        <div 
-          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-brand-purple/20 rounded-full blur-[90px] md:blur-[150px] animate-pulse" 
+        <div
+          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-brand-purple/20 rounded-full blur-[90px] md:blur-[150px] animate-pulse"
           style={{ animationDuration: '10s' }}
         />
       </div>
@@ -34,14 +34,14 @@ export default function HeroSection() {
             <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse" />
             <span className="text-sm font-medium">PromptStudio v2.0 is live</span>
           </div>
-          
+
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-[1.1]">
             Discover the Best <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan via-blue-500 to-brand-purple">
               AI Prompts
             </span>
           </h1>
-          
+
           <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
             Supercharge your workflow with thousands of high-quality, curated prompts for ChatGPT, Claude, and Midjourney. Built for creators.
           </p>
@@ -72,27 +72,27 @@ export default function HeroSection() {
 
       {/* Floating Prompt Cards Decoration */}
       <div className="absolute inset-0 pointer-events-none z-0 hidden lg:block overflow-hidden">
-        <FloatingCard 
-          title="React Component Gen" 
-          category="Coding" 
+        <FloatingCard
+          title="React Component Gen"
+          category="Coding"
           delay={0}
           className="top-[20%] left-[5%]"
         />
-        <FloatingCard 
-          title="Viral Twitter Thread" 
-          category="Social Media" 
+        <FloatingCard
+          title="Viral Twitter Thread"
+          category="Social Media"
           delay={2}
           className="top-[60%] left-[10%]"
         />
-        <FloatingCard 
-          title="SaaS Landing Page" 
-          category="Marketing" 
+        <FloatingCard
+          title="SaaS Landing Page"
+          category="Marketing"
           delay={1}
           className="top-[30%] right-[5%]"
         />
-        <FloatingCard 
-          title="SEO Blog Outline" 
-          category="SEO" 
+        <FloatingCard
+          title="SEO Blog Outline"
+          category="SEO"
           delay={3}
           className="top-[70%] right-[10%]"
         />
