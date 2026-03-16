@@ -4,6 +4,7 @@ import "./globals.css";
 import LenisProvider from "@/components/lenis-provider";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { Analytics } from '@vercel/analytics/next';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,6 +57,7 @@ export default function RootLayout({
             <Navbar />
             <main className="flex-1 pt-16">
               {children}
+              <Analytics />
             </main>
             <Footer />
           </div>
