@@ -24,6 +24,11 @@ if (process.env.NODE_ENV !== "test") {
   app.use(morgan("dev"));
 }
 
+// ─── Root Endpoint ────────────────────────────────────────────────────────────
+app.get("/", (_req, res) => {
+  res.json({ success: true, message: "Welcome to PromptStudio API", version: "1.0.0" });
+});
+
 // ─── Rate Limiting ────────────────────────────────────────────────────────────
 app.use("/api", rateLimiter);
 
