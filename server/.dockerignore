@@ -1,0 +1,16 @@
+# Dependencies — Docker installs these fresh inside the container
+node_modules
+
+# Secrets — never bake env values into the image
+.env
+
+# Git history — not needed at runtime
+.git
+.gitignore
+
+# Logs
+*.log
+
+# Local dev config
+.env.local
+.env.development
