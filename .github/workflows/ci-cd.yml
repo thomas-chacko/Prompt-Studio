@@ -34,9 +34,9 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      # Uncomment when tests are added
-      # - name: 🧪 Run tests
-      #   run: npm test
+      # Test the backend API using Jest and Supertest
+      - name: 🧪 Run tests
+        run: npm test
 
       - name: 🐳 Build Docker image
         run: docker build -t promptstudio-backend:${{ github.sha }} .
