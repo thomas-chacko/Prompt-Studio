@@ -111,7 +111,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     environment:
       name: production
-      url: https://your-app.vercel.app
+      url: https://promptstudio-web.vercel.app
 
     steps:
       - name: 🚀 Deploy Backend to Render
@@ -135,7 +135,7 @@ jobs:
       - name: ⏳ Wait for deployments
         run: sleep 30
 
-      Optional: Add health check
+      # Optional: Add health check
       - name: 🏥 Health check
         run: |
           curl -f https://prompt-studio-0egh.onrender.com || exit 1
