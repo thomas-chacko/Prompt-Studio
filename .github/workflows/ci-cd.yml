@@ -8,6 +8,7 @@ on:
 
 env:
   NODE_VERSION: '20'
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   # ========================
@@ -90,8 +91,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: nextjs-build
-          path: client/.next
+          path: ${{ github.workspace }}/client/.next
           retention-days: 7
+        if: success()
 
   # ========================
   # DEPLOY TO PRODUCTION
