@@ -299,6 +299,4 @@ Before considering any feature done, verify:
 - [ ] `whileInView` animations have `viewport={{ once: true }}`
 - [ ] Content refers to PromptStudio as a prompt store/marketplace
 
----
-
 *Last updated: March 2026*
