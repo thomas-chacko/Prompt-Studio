@@ -274,11 +274,21 @@ className="text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
 
 ---
 
+## 🚀 CI/CD & Testing Rules
+
+- All code changes are verified by a GitHub Actions CI/CD pipeline (`.github/workflows/ci-cd.yml`).
+- The frontend pipeline runs `pnpm test` (Vitest) and `pnpm build`.
+- You **must** ensure all tests pass locally before pushing to `main`.
+- Deployment to Vercel happens automatically when code is pushed to the `main` branch and the pipeline succeeds.
+
+---
+
 ## ✅ Pre-Commit Checklist
 
 Before considering any feature done, verify:
 
-- [ ] TypeScript compiles with no errors (`npm run build`)
+- [ ] TypeScript compiles with no errors (`pnpm build`)
+- [ ] All tests pass locally (`pnpm test`)
 - [ ] No unused imports (ESLint clean)
 - [ ] Page has `export const metadata` if it's a new route
 - [ ] New route added to `app/sitemap.ts`

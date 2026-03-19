@@ -239,8 +239,18 @@ When adding a new resource (e.g. `users`, `collections`):
 
 ---
 
+## 🚀 CI/CD & Testing Rules
+
+- All code changes are verified by a GitHub Actions CI/CD pipeline (`.github/workflows/ci-cd.yml`).
+- The backend pipeline runs `npm test` (Jest/Supertest) and performs a Docker smoke test.
+- You **must** ensure all tests pass locally before pushing to `main`.
+- Deployment to Render happens automatically when code is pushed to the `main` branch and the pipeline succeeds.
+
+---
+
 ## ✅ Pre-Commit Checklist
 
+- [ ] All tests pass locally (`npm test`)
 - [ ] No `process.env` access outside `config/env.js`
 - [ ] All controllers use `asyncHandler` — no bare `try/catch`
 - [ ] All responses use `sendSuccess` or `sendPaginated`
