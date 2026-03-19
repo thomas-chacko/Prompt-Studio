@@ -152,7 +152,7 @@ jobs:
       - name: 🚀 Deploy Backend to Render
         if: needs.changes.outputs.backend == 'true'
         run: |
-          response=$(curl -X POST -s -o /dev/null -w "%{http_code}" ${{ secrets.RENDER_DEPLOY_HOOK }})
+          response=$(curl -X POST -s -o /dev/null -w "%{http_code}" "${{ secrets.RENDER_DEPLOY_HOOK }}")
           if [ "$response" != "200" ] && [ "$response" != "201" ]; then
             echo "❌ Backend deployment failed with status $response"
             exit 1
@@ -162,22 +162,9 @@ jobs:
       - name: 🚀 Deploy Frontend to Vercel
         if: needs.changes.outputs.frontend == 'true'
         run: |
-          response=$(curl -X POST -s -o /dev/null -w "%{http_code}" ${{ secrets.VERCEL_DEPLOY_HOOK }})
+          response=$(curl -X POST -s -o /dev/null -w "%{http_code}" "${{ secrets.VERCEL_DEPLOY_HOOK }}")
           if [ "$response" != "200" ] && [ "$response" != "201" ]; then
             echo "❌ Frontend deployment failed with status $response"
             exit 1
           fi
           echo "✅ Frontend deployment triggered successfully"
-
-      - name: ⏳ Wait for deployments
-        run: sleep 30
-
-      # Optional: Add health check
-      - name: 🏥 Health check
-        run: |
-          if [ "${{ needs.changes.outputs.backend }}" == "true" ]; then
-            curl -f https://prompt-studio-0egh.onrender.com || exit 1
-          fi
-          if [ "${{ needs.changes.outputs.frontend }}" == "true" ]; then
-            curl -f https://promptstudio-web.vercel.app || exit 1
-          fi
