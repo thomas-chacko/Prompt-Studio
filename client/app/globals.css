@@ -108,3 +108,21 @@
   background-size: 200% auto;
   animation: shimmer-sweep 5s linear infinite;
 }
+
+@keyframes cascade-up {
+  0% { transform: translateY(0%); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes cascade-down {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0%); }
+}
+
+.animate-cascade-up {
+  animation: cascade-up 25s linear infinite;
+}
+
+.animate-cascade-down {
+  animation: cascade-down 35s linear infinite;
+}
