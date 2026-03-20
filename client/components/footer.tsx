@@ -1,31 +1,78 @@
 import Link from 'next/link';
-import { Github, Sparkles } from 'lucide-react';
+import { Github, Twitter, DiscIcon as Discord, Sparkles, Image as ImageIcon } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t border-white/10 glass">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-brand-purple" />
-            <span className="font-semibold text-lg">PromptStudio</span>
-          </div>
+    <footer className="relative border-t border-white/5 bg-[#03010a] pt-20 pb-12 overflow-hidden">
+      {/* Subtle top glow effect */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-px bg-gradient-to-r from-transparent via-brand-purple/50 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[200px] bg-brand-purple/10 blur-[100px] rounded-b-full pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-16">
           
-          <div className="flex gap-6 text-sm text-gray-400">
-            <Link href="/about" className="hover:text-white transition-colors">About</Link>
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+          {/* Brand Column */}
+          <div className="lg:col-span-2 flex flex-col items-start text-left">
+            <Link href="/" className="flex items-center gap-2.5 mb-6 group">
+              <div className="p-2 rounded-lg bg-white/5 border border-white/10 group-hover:border-brand-purple/30 group-hover:bg-brand-purple/10 transition-colors">
+                <ImageIcon className="w-5 h-5 text-brand-cyan group-hover:text-brand-purple transition-colors" />
+              </div>
+              <span className="font-extrabold text-xl tracking-tight text-white">PromptStudio</span>
+            </Link>
+            <p className="text-gray-400 text-sm max-w-sm leading-relaxed mb-6 font-light">
+              The world's largest visual AI prompt gallery. Discover stunning generative art, copy Midjourney prompts, and generate masterpieces using your Gemini API key.
+            </p>
+            <div className="flex items-center gap-4">
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all outline-none focus:ring-2 focus:ring-brand-purple" aria-label="Twitter">
+                <Twitter className="w-4 h-4" />
+              </a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all outline-none focus:ring-2 focus:ring-brand-purple" aria-label="GitHub">
+                <Github className="w-4 h-4" />
+              </a>
+              <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all outline-none focus:ring-2 focus:ring-brand-purple" aria-label="Discord">
+                <Discord className="w-4 h-4" />
+              </a>
+            </div>
           </div>
-          
-          <div className="flex items-center gap-4">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-              <Github className="w-5 h-5" />
-              <span className="sr-only">GitHub</span>
-            </a>
+
+          {/* Links Columns */}
+          <div className="flex flex-col gap-4">
+            <h4 className="font-semibold text-white tracking-wide text-sm mb-2">Platform</h4>
+            <Link href="/explore" className="text-sm text-gray-500 hover:text-brand-cyan transition-colors">Visual Gallery</Link>
+            <Link href="/generate" className="text-sm text-gray-500 hover:text-brand-purple transition-colors">Gemini Generator</Link>
+            <Link href="/submit" className="text-sm text-gray-500 hover:text-white transition-colors">Submit Artwork</Link>
+            <Link href="/trending" className="text-sm text-gray-500 hover:text-white transition-colors">Trending Prompts</Link>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <h4 className="font-semibold text-white tracking-wide text-sm mb-2">Resources</h4>
+            <Link href="/docs" className="text-sm text-gray-500 hover:text-white transition-colors">API Guidelines</Link>
+            <Link href="/midjourney-guide" className="text-sm text-gray-500 hover:text-white transition-colors">Midjourney v6 Guide</Link>
+            <Link href="/dalle-tips" className="text-sm text-gray-500 hover:text-white transition-colors">DALL·E Optimization</Link>
+            <Link href="/blog" className="text-sm text-gray-500 hover:text-white transition-colors">Generative Art Blog</Link>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <h4 className="font-semibold text-white tracking-wide text-sm mb-2">Legal</h4>
+            <Link href="/about" className="text-sm text-gray-500 hover:text-white transition-colors">About PromptStudio</Link>
+            <Link href="/privacy" className="text-sm text-gray-500 hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="text-sm text-gray-500 hover:text-white transition-colors">Terms of Service</Link>
+            <a href="mailto:contact@promptstudio.com" className="text-sm text-gray-500 hover:text-white transition-colors">Contact Us</a>
           </div>
         </div>
-        <div className="mt-8 text-center text-xs text-gray-500">
-          &copy; {new Date().getFullYear()} PromptStudio. All rights reserved.
+
+        {/* Bottom Banner */}
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="text-xs text-gray-500 font-medium">
+            &copy; {new Date().getFullYear()} PromptStudio, Inc. All rights reserved.
+          </div>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.02] border border-white/5 text-xs text-gray-400 font-mono">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            All systems operational
+          </div>
         </div>
       </div>
     </footer>
