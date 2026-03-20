@@ -108,34 +108,42 @@ export default function HomeHero() {
 
             {/* Cascade Column 1 (Scrolls Up) */}
             <motion.div
-              animate={{ y: [0, -1000] }}
+              animate={{ y: ["0%", "-50%"] }}
               transition={{ repeat: Infinity, ease: "linear", duration: 25 }}
-              className="flex flex-col gap-4 lg:gap-6 flex-1 pt-12"
+              className="flex flex-col flex-1 mt-12"
             >
-              {[...CASCADE_IMAGES_LEFT, ...CASCADE_IMAGES_LEFT].map((src, idx) => (
-                <div
-                  key={`left-${idx}`}
-                  className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform-gpu hover:scale-[1.02] transition-transform duration-500"
-                >
-                  <img src={src} alt="AI Artwork" className="w-full h-full object-cover" loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+              {[1, 2].map((group) => (
+                <div key={group} className="flex flex-col gap-4 lg:gap-6 pb-4 lg:pb-6">
+                  {CASCADE_IMAGES_LEFT.map((src, idx) => (
+                    <div
+                      key={`left-${group}-${idx}`}
+                      className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform-gpu hover:scale-[1.02] transition-transform duration-500"
+                    >
+                      <img src={src} alt="AI Artwork" className="w-full h-full object-cover" loading="lazy" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                  ))}
                 </div>
               ))}
             </motion.div>
 
             {/* Cascade Column 2 (Scrolls Down) */}
             <motion.div
-              animate={{ y: [-1000, 0] }}
+              animate={{ y: ["-50%", "0%"] }}
               transition={{ repeat: Infinity, ease: "linear", duration: 35 }}
-              className="flex flex-col gap-4 lg:gap-6 flex-1 -mt-24"
+              className="flex flex-col flex-1 -mt-24"
             >
-              {[...CASCADE_IMAGES_RIGHT, ...CASCADE_IMAGES_RIGHT].map((src, idx) => (
-                <div
-                  key={`right-${idx}`}
-                  className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform-gpu hover:scale-[1.02] transition-transform duration-500"
-                >
-                  <img src={src} alt="AI Artwork" className="w-full h-full object-cover" loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+              {[1, 2].map((group) => (
+                <div key={group} className="flex flex-col gap-4 lg:gap-6 pb-4 lg:pb-6">
+                  {CASCADE_IMAGES_RIGHT.map((src, idx) => (
+                    <div
+                      key={`right-${group}-${idx}`}
+                      className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform-gpu hover:scale-[1.02] transition-transform duration-500"
+                    >
+                      <img src={src} alt="AI Artwork" className="w-full h-full object-cover" loading="lazy" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                  ))}
                 </div>
               ))}
             </motion.div>
