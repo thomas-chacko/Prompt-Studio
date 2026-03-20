@@ -17,27 +17,25 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PromptStudio — #1 AI Prompt Marketplace | Buy, Sell & Copy AI Prompts",
+  title: "PromptStudio — #1 AI Image & Video Prompt Gallery | Generate with Gemini",
   description:
-    "PromptStudio is the largest AI prompt marketplace. Browse, copy, and submit thousands of expert-crafted prompts for ChatGPT, Claude, Gemini, Midjourney & more. Plus, generate images using AI — free, no login needed.",
+    "PromptStudio is the largest visual AI prompt gallery. Browse, copy, and discover breathtaking image prompts for Midjourney, DALL-E, & Stable Diffusion. Generate your own stunning AI images right here using your Gemini API key.",
   keywords: [
-    "AI prompt marketplace", "AI prompt store", "buy AI prompts", "sell AI prompts",
-    "free AI prompts", "ChatGPT prompts", "Claude prompts", "Gemini prompts",
-    "Midjourney prompts", "best AI prompts", "AI prompt library",
-    "prompt engineering", "copy AI prompts", "AI prompts for coding",
-    "AI prompts for marketing", "AI prompts for writing", "AI prompts for SEO",
-    "prompt studio", "AI tools", "prompt community", "AI image generation prompts",
+    "AI image prompts", "Midjourney prompts", "DALL-E prompts", "Stable diffusion prompts",
+    "AI generative art", "AI image generator", "Gemini API image generation",
+    "copy image prompts", "visual AI gallery", "AI video prompts",
+    "AI art community", "prompt studio art", "best AI image prompts",
   ],
   openGraph: {
-    title: "PromptStudio — The #1 AI Prompt Marketplace",
-    description: "Discover & copy thousands of expert AI prompts for ChatGPT, Claude, Gemini & Midjourney. The best place to find, share, and submit AI prompts — free forever.",
+    title: "PromptStudio — Visual AI Prompt Gallery",
+    description: "Discover breathtaking AI image prompts. Generate stunning generative art using your Gemini API key. Free curated library of Midjourney and DALL-E prompts.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "PromptStudio — The #1 AI Prompt Marketplace",
-    description: "Browse thousands of free AI prompts for ChatGPT, Claude, Gemini & Midjourney. Copy in one click. Submit your own.",
+    title: "PromptStudio — Visual AI Prompt Gallery",
+    description: "Browse the world's best AI image prompts. Copy in one click. Generate stunning art directly with your Gemini API key.",
   },
   robots: { index: true, follow: true },
 };

@@ -1,250 +1,174 @@
 "use client";
 
 import { motion } from "framer-motion";
-import AnimatedButton from "@/components/animated-button";
+import Link from "next/link";
 import SearchBar from "@/components/search-bar";
-import { Copy, Sparkles, Terminal, Code2, PenTool } from "lucide-react";
-
-// Word-stagger variants for premium 3D headline
-const headlineContainer = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.07, delayChildren: 0.08 },
-  },
-};
-const wordVariant = {
-  hidden: { opacity: 0, y: 32, rotateX: -30, filter: "blur(6px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    rotateX: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-  },
-};
-
-function AnimatedHeadline() {
-  return (
-    <motion.h1
-      variants={headlineContainer}
-      initial="hidden"
-      animate="visible"
-      className="text-5xl sm:text-6xl md:text-7xl xl:text-[5.5rem] font-extrabold tracking-tight leading-[1.05] text-white mb-8 max-w-5xl mx-auto text-center drop-shadow-lg"
-      style={{ perspective: 800 }}
-    >
-      {["Elevate", "Your", "Work"].map((w) => (
-        <motion.span key={w} variants={wordVariant} className="inline-block mr-[0.25em]">
-          {w}
-        </motion.span>
-      ))}
-      <br />
-      {["With"].map((w) => (
-        <motion.span key={w} variants={wordVariant} className="inline-block mr-[0.25em]">
-          {w}
-        </motion.span>
-      ))}
-      <motion.span
-        variants={wordVariant}
-        className="inline-block relative ml-2"
-      >
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan via-brand-purple to-brand-pink drop-shadow-2xl">
-          Curated AI Prompts
-        </span>
-      </motion.span>
-    </motion.h1>
-  );
-}
+import { ArrowRight, Copy, CheckCircle2, Image as ImageIcon, Sparkles, Zap } from "lucide-react";
+import { useState } from "react";
 
 export default function HomeHero() {
   return (
     <section 
       id="hero"
-      aria-label="PromptStudio — The World's Largest AI Prompt Marketplace"
-      className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-20 overflow-hidden bg-[#03010a]"
+      aria-label="PromptStudio — Visual AI Prompt Gallery"
+      className="relative min-h-[95vh] flex items-center pt-24 pb-20 overflow-hidden bg-[#03010a]"
     >
-      {/* Background Gradients & Grid - CSS Only to save CPU */}
-      <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden">
-        {/* Subtle grid */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-        
-        {/* Animated Orbs using pure CSS animation for performance on mobile */}
-        {/* Large Purple Glow */}
-        <div className="absolute top-[-10%] left-[10%] w-[500px] h-[500px] sm:w-[600px] sm:h-[600px] bg-brand-purple/20 rounded-full blur-[100px] sm:blur-[120px] mix-blend-screen animate-pulse" style={{ animationDuration: '7s' }} />
-        {/* Cyan Accents */}
-        <div className="absolute top-[10%] -right-[10%] w-[400px] h-[400px] sm:w-[500px] sm:h-[500px] bg-brand-cyan/20 rounded-full blur-[80px] sm:blur-[100px] mix-blend-screen animate-pulse" style={{ animationDuration: '10s' }} />
-        {/* Pink Accent */}
-        <div className="absolute bottom-0 right-[20%] w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] bg-brand-pink/15 rounded-full blur-[80px] sm:blur-[100px] mix-blend-screen animate-pulse" style={{ animationDuration: '8s' }} />
-      </div>
-
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-        
-        {/* Dynamic Badge */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: -20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/80 mb-8 backdrop-blur-md shadow-2xl overflow-hidden group cursor-default"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-purple/20 via-brand-cyan/20 to-brand-pink/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <Sparkles className="w-4 h-4 text-brand-cyan" />
-          <span className="text-sm font-medium tracking-wide">
-            The World's Largest <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-purple font-bold">AI Prompt Marketplace</span>
-          </span>
-        </motion.div>
-
-        {/* Cinematic 3D Headline */}
-        <div className="max-w-5xl mx-auto">
-          <AnimatedHeadline />
-
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
+      {/* Sleek minimalist dark theme background */}
+      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_30%,#000_70%,transparent_100%)] pointer-events-none" />
+      
+      {/* Subtle core glow focus on the purple aesthetic */}
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[600px] bg-brand-purple/15 blur-[150px] mix-blend-screen pointer-events-none hidden lg:block" />
+      
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-12 items-center">
+          
+          {/* Left Column: Typography & CTAs (Split Layout) */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="text-lg md:text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed font-medium"
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex flex-col items-start text-left max-w-2xl mx-auto lg:mx-0 w-full"
           >
-            Discover, copy, and submit the highest-quality prompts for{" "}
-            <strong className="font-semibold text-white">ChatGPT</strong>,{" "}
-            <strong className="font-semibold text-white">Claude</strong>,{" "}
-            <strong className="font-semibold text-white">Gemini</strong>, and{" "}
-            <strong className="font-semibold text-white">Midjourney</strong>. Stop guessing. Start creating.
-          </motion.p>
+            {/* Minimalist Tech Badge */}
+            <div className="inline-flex items-center gap-2 xl:gap-3 px-3 xl:px-4 py-1.5 rounded-full border border-brand-purple/30 bg-brand-purple/5 text-brand-purple mb-8 text-xs font-bold tracking-widest uppercase">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-purple opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-purple"></span>
+              </span>
+              Image & Video Prompts
+            </div>
+
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter text-white leading-[1.05] mb-6">
+              The standard for <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-indigo-300 to-brand-purple">
+                Visual Generative Art.
+              </span>
+            </h1>
+
+            <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-xl font-light leading-relaxed">
+              Discover, copy, and create breathtaking images. Browse the ultimate visual prompt gallery for Midjourney and DALL-E, or generate your own using Gemini.
+            </p>
+
+            <div className="w-full max-w-md mb-8">
+              <SearchBar />
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
+              <Link 
+                href="/explore" 
+                className="group flex items-center justify-center gap-2 px-7 py-3.5 bg-white text-black font-semibold rounded-xl text-sm transition-all hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_30px_rgba(255,255,255,0.15)] w-full sm:w-auto"
+                aria-label="Explore Visual AI Gallery"
+              >
+                Explore Gallery
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link 
+                href="/generate" 
+                className="flex items-center justify-center gap-2 px-7 py-3.5 border border-brand-purple/50 bg-brand-purple/10 hover:bg-brand-purple/20 text-white font-semibold rounded-xl text-sm transition-all hover:scale-[1.02] active:scale-[0.98] w-full sm:w-auto"
+                aria-label="Generate images with your Gemini API Key"
+              >
+                <Sparkles className="w-4 h-4 text-brand-purple" />
+                Generate with Gemini Key
+              </Link>
+            </div>
+            
+            <div className="mt-8 flex items-center gap-6 text-sm text-gray-500 font-medium">
+              <div className="flex items-center gap-1.5"><ImageIcon className="w-4 h-4 text-brand-purple" /> Stunning Visuals</div>
+              <div className="flex items-center gap-1.5"><Zap className="w-4 h-4 text-brand-purple" /> Instant Copy + Generate</div>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Visual Art Gallery Mockup */}
+          <motion.div 
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+            className="hidden lg:block relative"
+          >
+            <InteractivePromptUI />
+          </motion.div>
+
         </div>
-
-        {/* Enhanced Search Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full max-w-2xl mx-auto relative z-20 group mb-10"
-        >
-          {/* Glowing wrapper around SearchBar on hover */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-brand-cyan via-brand-purple to-brand-pink rounded-3xl blur opacity-25 group-hover:opacity-50 transition-all duration-700 pointer-events-none" />
-          <div className="relative">
-            <SearchBar />
-          </div>
-        </motion.div>
-
-        {/* Optimized Buttons targeted explicitly for prompt store actions */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col sm:flex-row justify-center items-center gap-5 w-full sm:w-auto relative z-10"
-        >
-          <AnimatedButton variant="primary" href="/explore" className="w-full sm:w-auto px-8 py-4 text-base shadow-[0_0_40px_rgba(124,58,237,0.3)] hover:shadow-[0_0_60px_rgba(124,58,237,0.5)] transition-shadow duration-500">
-            Browse Prompts
-          </AnimatedButton>
-          <AnimatedButton variant="outline" href="/submit" className="w-full sm:w-auto px-8 py-4 text-base backdrop-blur-sm">
-            Submit A Prompt
-          </AnimatedButton>
-        </motion.div>
-      </div>
-
-      {/* Custom CSS Floating Animation for Background Cards */}
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes heroFloat {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(1deg); }
-        }
-        @keyframes heroFloatReverse {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-15px) rotate(-1.5deg); }
-        }
-        .animate-hero-float {
-          animation: heroFloat 7s ease-in-out infinite;
-        }
-        .animate-hero-float-reverse {
-          animation: heroFloatReverse 8s ease-in-out infinite;
-        }
-        .anim-delay-0 { animation-delay: 0s; }
-        .anim-delay-1 { animation-delay: -2s; }
-        .anim-delay-2 { animation-delay: -4s; }
-        .anim-delay-3 { animation-delay: -3s; }
-      `}} />
-
-      {/* High-fidelity Floating Decorative Cards */}
-      <div className="absolute inset-0 pointer-events-none z-0 hidden xl:block overflow-hidden [perspective:1000px]">
-        <FloatingCard
-          title="React Component Generator"
-          category="Coding"
-          icon={<Code2 className="w-4 h-4 text-brand-cyan" />}
-          delayClass="anim-delay-0"
-          floatClass="animate-hero-float"
-          className="top-[15%] left-[6%] -rotate-6"
-        />
-        <FloatingCard
-          title="Viral Twitter Thread"
-          category="Social"
-          icon={<Sparkles className="w-4 h-4 text-brand-pink" />}
-          delayClass="anim-delay-1"
-          floatClass="animate-hero-float-reverse"
-          className="top-[60%] left-[8%] rotate-3"
-        />
-        <FloatingCard
-          title="SaaS Landing Page Copy"
-          category="Marketing"
-          icon={<PenTool className="w-4 h-4 text-brand-purple" />}
-          delayClass="anim-delay-2"
-          floatClass="animate-hero-float"
-          className="top-[25%] right-[6%] rotate-6"
-        />
-        <FloatingCard
-          title="Advanced System Prompt"
-          category="AI Eng"
-          icon={<Terminal className="w-4 h-4 text-white" />}
-          delayClass="anim-delay-3"
-          floatClass="animate-hero-float-reverse"
-          className="top-[65%] right-[8%] -rotate-3"
-        />
       </div>
     </section>
   );
 }
 
-function FloatingCard({ 
-  title, 
-  category, 
-  icon,
-  delayClass,
-  floatClass,
-  className 
-}: { 
-  title: string; 
-  category: string; 
-  icon: React.ReactNode;
-  delayClass: string; 
-  floatClass: string;
-  className: string; 
-}) {
+function InteractivePromptUI() {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
-      className={`absolute w-[260px] ${floatClass} ${delayClass} ${className}`}
-    >
-      <div className="glass p-5 rounded-2xl border border-white/10 shadow-2xl backdrop-blur-xl bg-[#0a0812]/50 relative overflow-hidden group">
-        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        
-        <div className="flex gap-3 items-center mb-4">
-          <div className="p-2 rounded-lg bg-white/5 border border-white/10 shadow-inner">
-            {icon}
+    <div className="relative w-full max-w-xl xl:max-w-2xl mx-auto ml-auto xl:mr-0 z-10 [perspective:1000px]">
+      {/* Behind-glow for 3D emphasis */}
+      <div className="absolute inset-x-10 inset-y-10 bg-brand-purple/20 blur-[80px] rounded-full mix-blend-screen -z-10" />
+
+      {/* Main Glass Gallery Feed mimicking the app */}
+      <motion.div
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 8, ease: "easeInOut", repeat: Infinity }}
+        className="transform-gpu shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] border border-white/10 bg-[#0a0812]/80 backdrop-blur-2xl rounded-2xl overflow-hidden flex flex-col"
+      >
+        {/* Gallery Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-white/[0.03]">
+          <div className="flex items-center gap-2 bg-white/5 px-4 py-1.5 rounded-md text-xs font-mono text-gray-400">
+            <Sparkles className="w-3.5 h-3.5 text-brand-purple" /> Currently Trending Prompts
           </div>
-          <span className="text-xs font-bold tracking-wider text-brand-cyan uppercase">{category}</span>
+        </div>
+
+        {/* Content Listing the Top Visual Prompts with actual placeholder imagery style */}
+        <div className="p-6 space-y-6">
+          <MockImageCard 
+            badge="Midjourney v6"
+            title="Neon Cyberpunk Alley"
+            prompt="A photorealistic cinematic shot of a rainy neon cyberpunk alleyway in Tokyo, highly detailed reflections 8k --ar 16:9"
+            imageUrl="https://images.unsplash.com/photo-1605364850558-29a3977c07e0?q=80&w=600&auto=format&fit=crop"
+            active={false}
+          />
+          <MockImageCard 
+            badge="Gemini Visuals"
+            title="Ethereal Deep Space"
+            prompt="An ethereal glowing nebula in deep space shaped like a cosmic eye, brilliant purple and cyan hues, ultra high resolution"
+            imageUrl="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop"
+            active={true}
+          />
         </div>
         
-        <p className="text-sm font-semibold text-white leading-snug mb-5 pr-2">{title}</p>
-        
-        <div className="flex items-center justify-between text-gray-500 pt-3 border-t border-white/5">
-          <div className="flex gap-1.5">
-             <div className="h-1.5 w-10 bg-white/10 rounded-full" />
-             <div className="h-1.5 w-16 bg-white/5 rounded-full" />
-          </div>
-          <div className="p-1.5 rounded-md bg-white/5 group-hover:bg-brand-purple/20 transition-colors pointer-events-auto cursor-pointer border border-transparent group-hover:border-brand-purple/30">
-            <Copy className="w-3.5 h-3.5 group-hover:text-brand-purple transition-colors" />
-          </div>
+        {/* Fade Out Gradient Cover at bottom for the 'infinite scroll' look */}
+        <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#0a0812] to-transparent pointer-events-none" />
+      </motion.div>
+    </div>
+  );
+}
+
+function MockImageCard({ badge, title, prompt, imageUrl, active }: { badge: string; title: string; prompt: string; imageUrl: string; active: boolean }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className={`rounded-xl border transition-all duration-300 flex flex-col overflow-hidden ${active ? 'bg-brand-purple/10 border-brand-purple/30 shadow-[0_0_20px_rgba(124,58,237,0.15)]' : 'bg-white/[0.02] border-white/5 hover:border-white/10 hover:bg-white/[0.04]'}`}>
+      
+      {/* Mock Image Area */}
+      <div className="h-32 w-full bg-cover bg-center relative border-b border-white/10" style={{ backgroundImage: `url(${imageUrl})` }}>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-3">
+          <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">{badge}</span>
         </div>
       </div>
-    </motion.div>
+
+      <div className="p-4">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="font-semibold text-white text-sm sm:text-base select-none">{title}</h3>
+          <button 
+            onClick={handleCopy} 
+            className="p-1.5 hover:bg-white/10 rounded-md transition-colors text-gray-400 hover:text-white"
+            aria-label="Copy visual prompt"
+          >
+            {copied ? <CheckCircle2 className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+          </button>
+        </div>
+        <p className="text-xs text-gray-400 font-mono leading-relaxed line-clamp-2 select-none">{prompt}</p>
+      </div>
+    </div>
   );
 }
