@@ -46,8 +46,8 @@ export default function Navbar() {
       >
         <nav
           className={`mx-auto h-14 flex items-center justify-between transition-all duration-500 ${scrolled
-              ? "max-w-5xl px-5 rounded-2xl bg-[#07040f]/80 backdrop-blur-2xl border border-white/10 shadow-[0_4px_40px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.07)]"
-              : "max-w-7xl px-4 sm:px-6 lg:px-8 rounded-none bg-transparent border-b border-transparent"
+            ? "max-w-5xl px-5 rounded-2xl bg-[#07040f]/80 backdrop-blur-2xl border border-white/10 shadow-[0_4px_40px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.07)]"
+            : "max-w-7xl px-4 sm:px-6 lg:px-8 rounded-none bg-transparent border-b border-transparent"
             }`}
           aria-label="Main navigation"
         >
@@ -67,8 +67,8 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={`relative flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-colors ${active
-                      ? "text-white bg-white/8"
-                      : "text-gray-400 hover:text-white hover:bg-white/5"
+                    ? "text-white bg-white/8"
+                    : "text-gray-400 hover:text-white hover:bg-white/5"
                     }`}
                 >
                   <link.icon className="w-3.5 h-3.5" />

@@ -7,7 +7,7 @@ import CTASectionNew from "@/sections/cta-section-new";
 
 export default function Home() {
   return (
-    <div className="flex flex-col bg-[#03010a] overflow-x-hidden">
+    <div className="flex flex-col bg-[#03010a] overflow-x-hidden -mt-16">
       {/* Section 1: Hero */}
       <HomeHero />
 
