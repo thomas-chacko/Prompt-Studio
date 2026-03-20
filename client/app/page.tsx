@@ -1,9 +1,9 @@
-import HomeHero from "@/components/sections/home-hero";
-import TrendingPromptsSection from "@/components/sections/trending-prompts-section";
-import CategoriesSection from "@/components/sections/categories-section";
-import HowItWorksSection from "@/components/sections/how-it-works-section";
-import ModelsTicker from "@/components/sections/models-ticker";
-import CTASectionNew from "@/components/sections/cta-section-new";
+import HomeHero from "@/sections/home-hero";
+import TrendingPromptsSection from "@/sections/trending-prompts-section";
+import CategoriesSection from "@/sections/categories-section";
+import HowItWorksSection from "@/sections/how-it-works-section";
+import ModelsTicker from "@/sections/models-ticker";
+import CTASectionNew from "@/sections/cta-section-new";
 
 export default function Home() {
   return (
