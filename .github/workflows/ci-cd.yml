@@ -62,6 +62,11 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
+      - name: 🔍 Debug environment
+        run: |
+          echo "DATABASE_URL is set: $([[ -n "$DATABASE_URL" ]] && echo 'YES' || echo 'NO')"
+          echo "DATABASE_URL length: ${#DATABASE_URL}"
+
       - name: 🔧 Generate Prisma Client
         run: npx prisma generate
 
