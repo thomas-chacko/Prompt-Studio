@@ -6,28 +6,13 @@
 
 ---
 
-## Table of Contents
-
-1. [Project Overview](#1-project-overview)
-2. [Technology Stack](#2-technology-stack)
-3. [System Architecture](#3-system-architecture)
-4. [Request Lifecycle](#4-request-lifecycle)
-5. [Project Structure](#5-project-structure)
-6. [Database Schema](#6-database-schema)
-7. [API Architecture](#7-api-architecture)
-8. [Authentication & Authorization](#8-authentication--authorization)
-9. [Image Generation Flow](#9-image-generation-flow)
-10. [File Storage — Cloudinary](#10-file-storage--cloudinary)
-11. [Environment Variables](#11-environment-variables)
-12. [Error Handling Strategy](#12-error-handling-strategy)
-13. [Security Checklist](#13-security-checklist)
-14. [Scalability Considerations](#14-scalability-considerations)
-
----
-
 ## 1. Project Overview
 
 **PromptStudio** is an AI image and video prompt gallery and generator. Users browse a visually rich library of AI-generated images, copy the exact prompts behind them, and generate their own images directly on the site using either their own Gemini API key or the platform's free quota.
+
+**Live URLs**
+- API: `https://prompt-studio-0egh.onrender.com`
+- Frontend: `https://promptstudio-web.vercel.app`
 
 ### Core Features
 
@@ -57,7 +42,7 @@
 | **Password Hashing** | bcrypt (rounds: 12) | Industry standard, adaptive cost |
 | **Encryption** | AES-256-GCM | Encrypting user Gemini API keys at rest |
 | **Security** | Helmet + CORS + express-rate-limit | Essential production hardening |
-| **Deployment** | Render / Railway | Simple container deploys, env var management |
+| **Deployment** | Render (Docker) | Container-based deploy via Dockerfile, env var management |
 
 ---
 
@@ -165,6 +150,7 @@ promptstudio-server/
 ├── .env                          # Local secrets — never commit
 ├── .env.example                  # Committed template with placeholder values
 ├── .gitignore
+├── Dockerfile                    # Docker image for Render deployment
 ├── package.json                  # "type": "module" — ESM only
 ├── prisma/
 │   ├── schema.prisma             # Single source of truth for DB schema
@@ -198,7 +184,7 @@ promptstudio-server/
     │   └── admin.controller.js
     │
     ├── services/
-    │   ├── auth.service.js       # Signup, login, token generation, password reset
+    │   ├── auth.service.js       # Signup, login, token generation
     │   ├── user.service.js       # Profile CRUD, account deletion
     │   ├── prompt.service.js     # Prompt CRUD, trending logic, like toggle
     │   ├── category.service.js   # Category CRUD, prompt counts
@@ -209,7 +195,7 @@ promptstudio-server/
     │
     ├── middleware/
     │   ├── auth.js               # Verifies JWT, attaches req.user
-    │   ├── adminOnly.js          # Checks role — 403 if not admin/super_admin
+    │   ├── adminOnly.js          # Checks role — 403 if not admin
     │   ├── rateLimiter.js        # express-rate-limit config
     │   ├── notFound.js           # 404 catch-all — must be second-to-last in app.js
     │   └── errorHandler.js       # Global error formatter — must be LAST in app.js
@@ -245,9 +231,7 @@ users
   │
   ├──  user_api_keys (user_id) — one-to-one
   │
-  ├──  generation_quota (user_id) — one-to-one
-  │
-  └──< password_resets (user_id)
+  └──  generation_quota (user_id) — one-to-one
 
 categories
   └──< prompts (category_id)
@@ -266,7 +250,7 @@ Central entity. Handles both regular users and admins via the `role` column — 
 | `username` | `varchar(32)` | UNIQUE, NOT NULL | Alphanumeric + underscores |
 | `email` | `varchar(255)` | UNIQUE, NOT NULL | Stored lowercase |
 | `password_hash` | `varchar(255)` | NOT NULL | bcrypt, 12 rounds |
-| `role` | `enum` | NOT NULL, default `user` | `user` · `admin` · `super_admin` |
+| `role` | `enum` | NOT NULL, default `user` | `user` · `admin` |
 | `avatar_url` | `text` | NULLABLE | Cloudinary URL |
 | `bio` | `text` | NULLABLE | |
 | `plan` | `enum` | NOT NULL, default `free` | `free` · `pro` |
@@ -274,7 +258,7 @@ Central entity. Handles both regular users and admins via the `role` column — 
 | `created_at` | `timestamptz` | default `now()` | |
 | `updated_at` | `timestamptz` | auto-updated | |
 
-> **Role values:** `user` (default on signup) → `admin` (manages content, categories) → `super_admin` (full access including user role management). The first super_admin is seeded via a one-time CLI script or direct DB update. No public API endpoint can set `role = super_admin`.
+> **Role values:** `user` (default on signup) → `admin` (manages content, categories, users). Admin role is assigned via direct DB update — no public API endpoint can elevate a user to admin.
 
 ---
 
@@ -404,27 +388,12 @@ Tracks which users liked which prompts (for like toggle).
 
 ---
 
-#### `password_resets`
-Stores one-time password reset tokens.
-
-| Column | Type | Constraints | Notes |
-|---|---|---|---|
-| `id` | `uuid` | PK | |
-| `user_id` | `uuid` | FK → users.id | |
-| `token_hash` | `varchar(255)` | NOT NULL | SHA-256 hash of the raw token sent by email |
-| `expires_at` | `timestamptz` | NOT NULL | 1 hour from creation |
-| `used` | `boolean` | default `false` | Set to true on successful reset |
-
-> **Security:** Only the hash is stored. The raw token exists only in the email. Even a full DB leak cannot be used to reset passwords.
-
----
-
 ## 7. API Architecture
 
 ### Base URL
 
 ```
-https://api.promptstudio.app/api/v1
+https://prompt-studio-0egh.onrender.com/api/v1
 ```
 
 ### Response Format
@@ -453,8 +422,6 @@ Every response — success or error — follows one of these shapes:
 | POST | `/auth/signup` | — | 201 |
 | POST | `/auth/login` | — | 200 |
 | POST | `/auth/logout` | Auth | 200 |
-| POST | `/auth/forgot-password` | — | 200 |
-| POST | `/auth/reset-password` | — | 200 |
 | GET | `/user/me` | Auth | 200 |
 | PUT | `/user/me` | Auth | 200 |
 | PUT | `/user/me/password` | Auth | 200 |
@@ -490,8 +457,8 @@ Every response — success or error — follows one of these shapes:
 | DELETE | `/user/api-key` | Auth | 200 |
 | GET | `/admin/stats` | Admin | 200 |
 | GET | `/admin/users` | Admin | 200 |
-| PUT | `/admin/users/:id/role` | Super Admin | 200 |
-| DELETE | `/admin/users/:id` | Super Admin | 200 |
+| PUT | `/admin/users/:id/role` | Admin | 200 |
+| DELETE | `/admin/users/:id` | Admin | 200 |
 | GET | `/admin/prompts` | Admin | 200 |
 | PUT | `/admin/prompts/:id` | Admin | 200 |
 | DELETE | `/admin/prompts/:id` | Admin | 200 |
@@ -530,13 +497,9 @@ Attaches req.user = { id, email, role }
 ### Role Hierarchy
 
 ```
-super_admin
-    │    Can do everything. Manages admin roles.
-    │    First super_admin seeded via CLI or direct DB insert.
-    ▼
 admin
-    │    Can manage prompts, categories, view all generations.
-    │    Cannot change roles or delete users.
+    │    Can manage prompts, categories, users, view all generations.
+    │    Role assigned via direct DB update — no API endpoint can promote to admin.
     ▼
 user
          Standard account. Manages own content only.
@@ -553,16 +516,11 @@ router.post('/prompt/create', auth, asyncHandler(createPrompt))
 
 // Admin required
 router.delete('/admin/prompts/:id', auth, adminOnly, asyncHandler(forceDeletePrompt))
-
-// Super admin required (role check inside adminOnly with level param)
-router.put('/admin/users/:id/role', auth, adminOnly('super_admin'), asyncHandler(updateRole))
 ```
 
 ### Logout Strategy
 
-On logout, the token's `jti` (JWT ID) is stored in-memory (or a simple DB table for multi-instance deployments) with a TTL matching the token's remaining lifetime. The `auth` middleware checks this blocklist on every request.
-
-> **Note:** Without Redis, a `token_blocklist` table in Neon handles this. A cleanup cron (or Prisma query with `where: { expires_at: { lt: new Date() } }`) removes expired entries. This is perfectly sufficient at PromptStudio's scale.
+On logout, the token's `jti` (JWT ID) is stored in a `token_blocklist` table in Neon with a TTL matching the token's remaining lifetime. The `auth` middleware checks this blocklist on every request. A cleanup query (`where: { expires_at: { lt: new Date() } }`) removes expired entries.
 
 ---
 
@@ -648,7 +606,6 @@ cloudinary.config({
   api_secret: CLOUDINARY_API_SECRET,
 })
 
-// Upload from a local file path or base64 buffer
 export const uploadImage = async (source, folder) => {
   const result = await cloudinary.uploader.upload(source, {
     folder,
@@ -658,7 +615,6 @@ export const uploadImage = async (source, folder) => {
   return result.secure_url  // always HTTPS
 }
 
-// Delete by public_id (used when a prompt or generation is deleted)
 export const deleteImage = async (publicId) => {
   await cloudinary.uploader.destroy(publicId)
 }
@@ -677,7 +633,6 @@ promptstudio/avatars/{userId}
 When a prompt is deleted, the associated Cloudinary image is also deleted by calling `deleteImage(publicId)` inside the service. The `public_id` is extracted from the stored URL before deletion.
 
 ```javascript
-// Extract public_id from a Cloudinary URL
 const getPublicId = (url) => {
   // e.g. https://res.cloudinary.com/demo/image/upload/v123/promptstudio/prompts/abc.jpg
   // → promptstudio/prompts/abc
@@ -696,23 +651,18 @@ All `process.env` access is centralised in `src/config/env.js`. No other file re
 
 ```javascript
 // src/config/env.js
-export const PORT                = process.env.PORT || 5000
-export const NODE_ENV            = process.env.NODE_ENV || 'development'
-export const DATABASE_URL        = process.env.DATABASE_URL
-export const JWT_SECRET          = process.env.JWT_SECRET
-export const JWT_EXPIRES_IN      = process.env.JWT_EXPIRES_IN || '7d'
-export const CORS_ORIGIN         = process.env.CORS_ORIGIN
-export const GEMINI_API_KEY      = process.env.GEMINI_API_KEY
-export const GEMINI_FREE_LIMIT   = Number(process.env.GEMINI_FREE_LIMIT) || 10
-export const ENCRYPT_SECRET      = process.env.ENCRYPT_SECRET
+export const PORT                  = process.env.PORT || 5000
+export const NODE_ENV              = process.env.NODE_ENV || 'development'
+export const DATABASE_URL          = process.env.DATABASE_URL
+export const JWT_SECRET            = process.env.JWT_SECRET
+export const JWT_EXPIRES_IN        = process.env.JWT_EXPIRES_IN || '7d'
+export const CORS_ORIGIN           = process.env.CORS_ORIGIN
+export const GEMINI_API_KEY        = process.env.GEMINI_API_KEY
+export const GEMINI_FREE_LIMIT     = Number(process.env.GEMINI_FREE_LIMIT) || 10
+export const ENCRYPT_SECRET        = process.env.ENCRYPT_SECRET
 export const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME
 export const CLOUDINARY_API_KEY    = process.env.CLOUDINARY_API_KEY
 export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET
-export const CDN_BASE_URL          = process.env.CDN_BASE_URL
-export const SMTP_HOST             = process.env.SMTP_HOST
-export const SMTP_USER             = process.env.SMTP_USER
-export const SMTP_PASS             = process.env.SMTP_PASS
-export const EMAIL_FROM            = process.env.EMAIL_FROM
 ```
 
 ### `.env.example`
@@ -730,7 +680,7 @@ JWT_SECRET="replace-with-openssl-rand-hex-32-output"
 JWT_EXPIRES_IN="7d"
 
 # CORS — comma-separated for multiple origins
-CORS_ORIGIN="http://localhost:3000"
+CORS_ORIGIN="https://promptstudio-web.vercel.app,http://localhost:3000"
 
 # Gemini AI
 GEMINI_API_KEY="AIza..."
@@ -743,25 +693,17 @@ ENCRYPT_SECRET="replace-with-openssl-rand-hex-32-output"
 CLOUDINARY_CLOUD_NAME="your-cloud-name"
 CLOUDINARY_API_KEY="your-api-key"
 CLOUDINARY_API_SECRET="your-api-secret"
-CDN_BASE_URL="https://res.cloudinary.com/your-cloud-name"
-
-# Email (password reset)
-SMTP_HOST="smtp.resend.com"
-SMTP_USER="apikey"
-SMTP_PASS="re_..."
-EMAIL_FROM="no-reply@promptstudio.app"
 ```
 
 ---
-
 ## 12. Error Handling Strategy
 
 ### Rules
 
-1. **No `try/catch` in controllers** — wrap with `asyncHandler`. It catches any thrown error and passes it to `next(err)` automatically.
-2. **No `new Error()`** — always use `createError(statusCode, message)` for operational errors.
-3. **No `res.json()` directly** — always use `sendSuccess()` or `sendPaginated()`.
-4. **No stack traces in production** — `errorHandler` only includes `stack` when `NODE_ENV === 'development'`.
+1. No `try/catch` in controllers — wrap with `asyncHandler`. It catches any thrown error and passes it to `next(err)` automatically.
+2. No `new Error()` — always use `createError(statusCode, message)` for operational errors.
+3. No `res.json()` directly — always use `sendSuccess()` or `sendPaginated()`.
+4. No stack traces in production — `errorHandler` only includes `stack` when `NODE_ENV === 'development'`.
 
 ### Error Codes
 
@@ -818,12 +760,10 @@ export const getById = asyncHandler(async (req, res) => {
 | **Token invalidation** | Logout blocklist via `token_blocklist` DB table |
 | **API key encryption** | User Gemini keys encrypted with AES-256-GCM at rest |
 | **API key exposure** | Full key never returned from any endpoint — preview only |
-| **Reset tokens** | SHA-256 hashed before storage — raw token only in email |
 | **SQL injection** | Prisma parameterises all queries — no raw SQL strings |
-| **Enumeration** | forgot-password always returns 200 regardless of email match |
 | **Stack traces** | Only exposed in `NODE_ENV=development` |
 | **Env secrets** | `.env` in `.gitignore` — only `.env.example` committed |
-| **Admin escalation** | `role = super_admin` cannot be set via any API endpoint |
+| **Admin escalation** | `role = admin` cannot be set via any API endpoint |
 
 ---
 
@@ -833,36 +773,36 @@ PromptStudio is designed to scale horizontally without any architectural changes
 
 ### Stateless API Server
 
-The Express server holds no in-memory state. Every request reads from Neon and writes to Neon. This means you can run 2, 10, or 50 instances behind a load balancer without any session-sharing problem.
+The Express server holds no in-memory state. Every request reads from Neon and writes to Neon. This means you can run multiple instances behind a load balancer without any session-sharing problem.
 
-> **Exception:** The logout token blocklist. A simple `token_blocklist` table in Neon handles this at current scale. If you need sub-millisecond blocklist checks at very high traffic, that's the one place to add Redis later.
+> **Exception:** The logout token blocklist. A simple `token_blocklist` table in Neon handles this at current scale. If sub-millisecond blocklist checks are needed at very high traffic, that's the one place to add Redis later.
 
 ### Neon PostgreSQL
 
-Neon is serverless Postgres — it auto-scales compute based on load and scales storage independently. Key benefits for PromptStudio:
+Neon is serverless Postgres — it auto-scales compute based on load and scales storage independently.
 
 - **Branching:** Create a database branch per PR for isolated staging environments
 - **Connection pooling:** Use Neon's built-in PgBouncer endpoint for high-concurrency workloads
-- **Read replicas:** Route heavy read traffic (prompt feeds, search) to a read replica without changing application code — just swap the `DATABASE_URL` in the read service
+- **Read replicas:** Route heavy read traffic (prompt feeds, search) to a read replica without changing application code
 
 ### Cloudinary
 
-Cloudinary handles CDN delivery automatically. Uploaded images are served from the nearest edge. No infrastructure work required to go global.
+Cloudinary handles CDN delivery automatically. Uploaded images are served from the nearest edge — no infrastructure work required to go global.
 
 ### Gemini Quota Management
 
-`generation_quota` resets are self-healing — no cron job. The service checks and resets on the first request after midnight. This means zero infrastructure overhead for quota management.
+`generation_quota` resets are self-healing — no cron job. The service checks and resets on the first request after midnight, meaning zero infrastructure overhead for quota management.
 
 ### Trending Prompts
 
-The `/prompts/trending` endpoint runs a weighted sort query on every call. At low-to-medium scale this is fine with proper indexes on `total_copied_count` and `total_likes`. When this becomes a bottleneck, add a materialized view that refreshes every 10 minutes — a one-line Prisma migration.
+The `/prompts/trending` endpoint runs a weighted sort query on every call. At low-to-medium scale this is fine with proper indexes on `total_copied_count` and `total_likes`. When this becomes a bottleneck, a materialized view refreshing every 10 minutes is a one-line Prisma migration.
 
 ### Future Scaling Path
 
 ```
 Current (MVP)                        Future (Scale)
 ─────────────────────────────────    ────────────────────────────────────
-Single Express instance          →   Multiple instances + load balancer
+Single Express instance (Render) →   Multiple instances + load balancer
 Neon serverless (auto-scale)     →   Neon + read replicas for feed queries
 Cloudinary CDN (built-in)        →   Already global — no change needed
 token_blocklist in Neon          →   Redis for sub-ms token lookup
