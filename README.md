@@ -4,7 +4,7 @@
 
   <p>
     <a href="https://promptstudio-web.vercel.app">Live Site</a> ·
-    <a href="https://prompt-studio-0egh.onrender.com/api/v1">API</a>
+    <a href="https://prompt-studio-0egh.onrender.com">API</a>
   </p>
 </div>
 
@@ -99,7 +99,7 @@ prompt-studio/
 
 ## API
 
-Base URL: `https://prompt-studio-0egh.onrender.com/api/v1`
+Base URL: `https://prompt-studio-0egh.onrender.com/`
 
 All responses follow a consistent shape:
 
