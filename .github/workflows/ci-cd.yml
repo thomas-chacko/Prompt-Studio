@@ -42,6 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: changes
     if: needs.changes.outputs.backend == 'true'
+    environment: production
     defaults:
       run:
         working-directory: server
