@@ -1,1 +1,220 @@
-// schema.prisma
+// PromptStudio Database Schema
+// PostgreSQL 15 (Neon) via Prisma ORM
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+enum Role {
+  user
+  admin
+}
+
+enum Plan {
+  free
+  pro
+}
+
+enum ApiKeySource {
+  own
+  free
+}
+
+// ============================================================================
+// USERS
+// ============================================================================
+
+model User {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username      String   @unique @db.VarChar(32)
+  email         String   @unique @db.VarChar(255)
+  passwordHash  String   @map("password_hash") @db.VarChar(255)
+  role          Role     @default(user)
+  avatarUrl     String?  @map("avatar_url") @db.Text
+  bio           String?  @db.Text
+  plan          Plan     @default(free)
+  isVerified    Boolean  @default(false) @map("is_verified")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  // Relations
+  prompts         Prompt[]
+  collections     Collection[]
+  generations     Generation[]
+  apiKey          UserApiKey?
+  generationQuota GenerationQuota?
+  promptLikes     PromptLike[]
+
+  @@map("users")
+}
+
+// ============================================================================
+// CATEGORIES
+// ============================================================================
+
+model Category {
+  id                 Int      @id @default(autoincrement())
+  category           String   @unique @db.VarChar(64)
+  slug               String   @unique @db.VarChar(64)
+  imageUrl           String?  @map("image_url") @db.Text
+  totalPromptsCount  Int      @default(0) @map("total_prompts_count")
+  createdAt          DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  // Relations
+  prompts Prompt[]
+
+  @@map("categories")
+}
+
+// ============================================================================
+// PROMPTS
+// ============================================================================
+
+model Prompt {
+  id               Int      @id @default(autoincrement())
+  authorId         String   @map("author_id") @db.Uuid
+  categoryId       Int      @map("category_id")
+  title            String   @db.VarChar(128)
+  prompt           String   @db.Text
+  image            String   @db.Text
+  modelUsed        String?  @map("model_used") @db.VarChar(64)
+  tags             String[] @default([])
+  totalCopiedCount Int      @default(0) @map("total_copied_count")
+  totalLikes       Int      @default(0) @map("total_likes")
+  isPublished      Boolean  @default(true) @map("is_published")
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  // Relations
+  author          User             @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  category        Category         @relation(fields: [categoryId], references: [id])
+  collectionItems CollectionItem[]
+  likes           PromptLike[]
+  savedGeneration Generation?
+
+  @@index([authorId])
+  @@index([categoryId])
+  @@index([isPublished])
+  @@map("prompts")
+}
+
+// ============================================================================
+// GENERATIONS
+// ============================================================================
+
+model Generation {
+  id               String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId           String       @map("user_id") @db.Uuid
+  promptUsed       String       @map("prompt_used") @db.Text
+  aspectRatio      String       @default("1:1") @map("aspect_ratio") @db.VarChar(8)
+  style            String?      @db.VarChar(32)
+  model            String       @db.VarChar(64)
+  apiKeySource     ApiKeySource @map("api_key_source")
+  imageUrls        String[]     @map("image_urls")
+  savedAsPromptId  Int?         @unique @map("saved_as_prompt_id")
+  createdAt        DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  // Relations
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  savedPrompt Prompt? @relation(fields: [savedAsPromptId], references: [id])
+
+  @@index([userId])
+  @@map("generations")
+}
+
+// ============================================================================
+// USER API KEYS
+// ============================================================================
+
+model UserApiKey {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId       String    @unique @map("user_id") @db.Uuid
+  encryptedKey String    @map("encrypted_key") @db.Text
+  keyPreview   String    @map("key_preview") @db.VarChar(16)
+  isValid      Boolean   @default(true) @map("is_valid")
+  addedAt      DateTime  @default(now()) @map("added_at") @db.Timestamptz(3)
+  lastUsedAt   DateTime? @map("last_used_at") @db.Timestamptz(3)
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_api_keys")
+}
+
+// ============================================================================
+// GENERATION QUOTA
+// ============================================================================
+
+model GenerationQuota {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String   @unique @map("user_id") @db.Uuid
+  freeUsed    Int      @default(0) @map("free_used")
+  freeLimit   Int      @map("free_limit")
+  periodStart DateTime @map("period_start") @db.Date
+  resetsAt    DateTime @map("resets_at") @db.Timestamptz(3)
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("generation_quota")
+}
+
+// ============================================================================
+// COLLECTIONS
+// ============================================================================
+
+model Collection {
+  id         Int      @id @default(autoincrement())
+  userId     String   @map("user_id") @db.Uuid
+  name       String   @db.VarChar(64)
+  isPublic   Boolean  @default(false) @map("is_public")
+  coverImage String?  @map("cover_image") @db.Text
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  // Relations
+  user  User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items CollectionItem[]
+
+  @@index([userId])
+  @@map("collections")
+}
+
+model CollectionItem {
+  id           Int      @id @default(autoincrement())
+  collectionId Int      @map("collection_id")
+  promptId     Int      @map("prompt_id")
+  addedAt      DateTime @default(now()) @map("added_at") @db.Timestamptz(3)
+
+  // Relations
+  collection Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  prompt     Prompt     @relation(fields: [promptId], references: [id])
+
+  @@unique([collectionId, promptId])
+  @@map("collection_items")
+}
+
+// ============================================================================
+// PROMPT LIKES
+// ============================================================================
+
+model PromptLike {
+  id        Int      @id @default(autoincrement())
+  userId    String   @map("user_id") @db.Uuid
+  promptId  Int      @map("prompt_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  // Relations
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prompt Prompt @relation(fields: [promptId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, promptId])
+  @@map("prompt_likes")
+}

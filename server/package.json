@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "deploy": "node scripts/deploy.sh",
+    "migrate": "npx prisma migrate deploy",
+    "db:seed": "node prisma/seed.js"
   },
   "keywords": [],
   "author": "",
