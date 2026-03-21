@@ -1,21 +1,17 @@
-import type { Metadata } from "next";
-import SubmitPageClient from "./submit-client";
+import { Metadata } from "next";
+import ProtectedRoute from "@/components/protected-route";
+import SubmitClient from "./submit-client";
 
 export const metadata: Metadata = {
-  title: "Submit Your AI Prompt — Share with the Community | PromptStudio",
-  description:
-    "Share your best AI prompts on PromptStudio and reach thousands of creators. Submit prompts for ChatGPT, Claude, Gemini, Midjourney, and more — join the world's largest prompt community.",
-  keywords: [
-    "submit AI prompt", "share AI prompts", "contribute prompts",
-    "sell AI prompts", "AI prompt community", "prompt marketplace submit",
-  ],
-  openGraph: {
-    title: "Submit Your AI Prompt | PromptStudio",
-    description: "Share your best prompts with 5,000+ creators on the world's largest AI prompt marketplace.",
-    type: "website",
-  },
+  title: "Submit AI Prompt — Share Your Creation | PromptStudio",
+  description: "Share your AI-generated image prompts with the PromptStudio community. Upload your creation and inspire others.",
+  keywords: ["submit prompt", "share AI art", "upload prompt", "AI image gallery"],
 };
 
 export default function SubmitPage() {
-  return <SubmitPageClient />;
+  return (
+    <ProtectedRoute>
+      <SubmitClient />
+    </ProtectedRoute>
+  );
 }

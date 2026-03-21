@@ -11,6 +11,76 @@ last_updated: 2025-03-21
 
 # PromptStudio Server — Coding Rules & Architecture
 
+---
+
+## 📚 Module Documentation Requirements
+
+**CRITICAL RULE:** For every major feature module you implement, you MUST create a detailed API documentation file in `/server/docs/`.
+
+### Required Documentation Files
+
+Each API module MUST have its own comprehensive `.md` file:
+
+| Module | File | Required Contents |
+|---|---|---|
+| **Authentication** | `AUTH_API.md` | All auth endpoints, JWT flow, token blocklist, request/response examples, cURL commands |
+| **Prompts** | `PROMPTS_API.md` | Prompt CRUD, like/copy, trending logic, pagination, filtering, sorting |
+| **Admin** | `ADMIN_API.md` | Admin endpoints, role management, content moderation, platform stats |
+| **Search** | `SEARCH_API.md` | Search implementation, full-text search, filters, query examples |
+| **Generation** | `GENERATION_API.md` | Image generation, quota management, Gemini integration, key encryption/decryption |
+| **Collections** | `COLLECTIONS_API.md` | Collection CRUD, add/remove items, cover image logic, unique constraints |
+| **Categories** | `CATEGORIES_API.md` | Category CRUD, slug generation, prompt count updates |
+| **User** | `USER_API.md` | Profile management, password change, account deletion, API key management |
+
+### Documentation Template Structure
+
+Each module documentation MUST include:
+
+1. **Overview** — Module purpose, key features, business logic summary
+2. **Base URL** — Full endpoint path with `/api/v1` prefix
+3. **Endpoints Table** — Method, path, auth requirement, status code
+4. **Request/Response Examples** — Full JSON for each endpoint (success + errors)
+5. **Service Functions** — List of service layer functions and their responsibilities
+6. **Database Operations** — Prisma queries, transactions, indexes used
+7. **Error Scenarios** — All possible errors with status codes and messages
+8. **Security** — Auth requirements, rate limiting, input validation, encryption
+9. **External APIs** — Cloudinary, Gemini, or other third-party integrations
+10. **cURL Examples** — Command-line examples for testing
+11. **Testing Examples** — Supertest examples for each endpoint
+
+### When to Create Documentation
+
+- **Before implementing** a new API resource — plan endpoints and data flow
+- **During implementation** — document as you build each endpoint
+- **After completing** a module — ensure all endpoints are documented
+- **When refactoring** — update docs to match new patterns
+
+### Documentation Best Practices
+
+- Include both success and error response examples
+- Show all query parameters and request body fields
+- Document authentication headers
+- Include realistic data in examples
+- Reference related modules and dependencies
+- Keep cURL examples copy-paste ready
+
+**IMPORTANT:** This SKILLS.md file is the entry point for all AI coding. Detailed API specifications and implementation patterns go in module-specific docs in `/server/docs/`. When implementing features, ALWAYS create or reference the appropriate module documentation file.
+
+---
+
+## 📚 Existing Documentation
+
+Current documentation files in `/server/docs/`:
+
+| File | Purpose |
+|---|---|
+| `Architecture .md` | Complete system architecture, database schema, tech stack |
+| `AUTH_API.md` | Authentication API endpoints with examples |
+
+**When implementing new modules, create similar detailed documentation files.**
+
+---
+
 ## What Is PromptStudio?
 
 PromptStudio is an AI image and video prompt gallery and generator. Users browse a visually rich
@@ -21,6 +91,61 @@ This server is the Node.js + Express REST API that serves all data to the Next.j
 
 **Stack:** Node.js 20+ · Express 4 · PostgreSQL (Neon) · Prisma · Cloudinary · Gemini API  
 **Module system:** ESM only (`"type": "module"` in `package.json`)
+
+---
+
+## 📚 Module Documentation Requirements
+
+**CRITICAL RULE:** For every major feature module you implement, you MUST create a detailed API documentation file in `/server/docs/`.
+
+### Required Documentation Files
+
+Each API module MUST have its own comprehensive `.md` file:
+
+| Module | File | Required Contents |
+|---|---|---|
+| **Authentication** | `AUTH_API.md` | All auth endpoints, JWT flow, token blocklist, request/response examples, cURL commands |
+| **Prompts** | `PROMPTS_API.md` | Prompt CRUD, like/copy, trending logic, pagination, filtering, sorting |
+| **Admin** | `ADMIN_API.md` | Admin endpoints, role management, content moderation, platform stats |
+| **Search** | `SEARCH_API.md` | Search implementation, full-text search, filters, query examples |
+| **Generation** | `GENERATION_API.md` | Image generation, quota management, Gemini integration, key encryption/decryption |
+| **Collections** | `COLLECTIONS_API.md` | Collection CRUD, add/remove items, cover image logic, unique constraints |
+| **Categories** | `CATEGORIES_API.md` | Category CRUD, slug generation, prompt count updates |
+| **User** | `USER_API.md` | Profile management, password change, account deletion, API key management |
+
+### Documentation Template Structure
+
+Each module documentation MUST include:
+
+1. **Overview** — Module purpose, key features, business logic summary
+2. **Base URL** — Full endpoint path with `/api/v1` prefix
+3. **Endpoints Table** — Method, path, auth requirement, status code
+4. **Request/Response Examples** — Full JSON for each endpoint (success + errors)
+5. **Service Functions** — List of service layer functions and their responsibilities
+6. **Database Operations** — Prisma queries, transactions, indexes used
+7. **Error Scenarios** — All possible errors with status codes and messages
+8. **Security** — Auth requirements, rate limiting, input validation, encryption
+9. **External APIs** — Cloudinary, Gemini, or other third-party integrations
+10. **cURL Examples** — Command-line examples for testing
+11. **Testing Examples** — Supertest examples for each endpoint
+
+### When to Create Documentation
+
+- **Before implementing** a new API resource — plan endpoints and data flow
+- **During implementation** — document as you build each endpoint
+- **After completing** a module — ensure all endpoints are documented
+- **When refactoring** — update docs to match new patterns
+
+### Documentation Best Practices
+
+- Include both success and error response examples
+- Show all query parameters and request body fields
+- Document authentication headers
+- Include realistic data in examples
+- Reference related modules and dependencies
+- Keep cURL examples copy-paste ready
+
+**IMPORTANT:** This SKILLS.md file is the entry point for all AI coding. Detailed API specifications and implementation patterns go in module-specific docs in `/server/docs/`. When implementing features, ALWAYS create or reference the appropriate module documentation file.
 
 ---
 
@@ -315,3 +440,8 @@ Follow this checklist when adding any new resource (e.g. `reviews`, `tags`):
 12. No local imports without the `.js` extension
 13. No raw SQL strings — Prisma only
 14. No Gemini or Cloudinary SDK calls outside their respective service/util files
+
+
+---
+
+*Last updated: March 2026 — PromptStudio v1.0.0*

@@ -4,23 +4,80 @@ import { Mail, Lock, User, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
+import {
+  validateEmail,
+  validatePassword,
+  validateUsername,
+  validatePasswordMatch,
+} from "@/lib/validation";
+import { handleApiError } from "@/lib/error-handler";
+import { useToast } from "@/components/toast";
 
 export default function SignupClient() {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  
+  const router = useRouter();
+  const { signup } = useAuth();
+  const toast = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateForm = (): boolean => {
+    const errors: Record<string, string> = {};
+
+    const usernameValidation = validateUsername(username);
+    if (!usernameValidation.isValid) {
+      errors.username = usernameValidation.error!;
+    }
+
+    const emailValidation = validateEmail(email);
+    if (!emailValidation.isValid) {
+      errors.email = emailValidation.error!;
+    }
+
+    const passwordValidation = validatePassword(password);
+    if (!passwordValidation.isValid) {
+      errors.password = passwordValidation.error!;
+    }
+
+    const passwordMatchValidation = validatePasswordMatch(password, confirmPassword);
+    if (!passwordMatchValidation.isValid) {
+      errors.confirmPassword = passwordMatchValidation.error!;
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    if (password !== confirmPassword) {
-      alert("Passwords don't match!");
+    setError("");
+    setFieldErrors({});
+
+    // Client-side validation
+    if (!validateForm()) {
       return;
     }
 
-    // API integration will be added later
-    console.log("Signup:", { name, email, password });
+    setIsLoading(true);
+
+    try {
+      await signup(username, email, password);
+      toast.success("Account created successfully!");
+      router.push("/explore");
+    } catch (err) {
+      const appError = handleApiError(err, "Signup");
+      setError(appError.message);
+      toast.error(appError.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -60,26 +117,42 @@ export default function SignupClient() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
+            {error && (
+              <div className="bg-red-500/10 border border-red-500/50 rounded-xl p-4 text-red-400 text-sm">
+                {error}
+              </div>
+            )}
+
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                Full Name
+              <label htmlFor="username" className="block text-sm font-medium text-gray-300 mb-2 cursor-pointer">
+                Username
               </label>
               <div className="relative">
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                 <input
                   type="text"
-                  id="name"
+                  id="username"
                   required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="John Doe"
-                  className="w-full bg-black/40 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan transition-all"
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                    setFieldErrors((prev) => ({ ...prev, username: "" }));
+                  }}
+                  placeholder="johndoe"
+                  className={`w-full bg-black/40 border rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-600 focus:outline-none transition-all ${
+                    fieldErrors.username
+                      ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                      : "border-white/10 focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan"
+                  }`}
                 />
               </div>
+              {fieldErrors.username && (
+                <p className="mt-1.5 text-xs text-red-400">{fieldErrors.username}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2 cursor-pointer">
                 Email Address
               </label>
               <div className="relative">
@@ -89,15 +162,25 @@ export default function SignupClient() {
                   id="email"
                   required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setFieldErrors((prev) => ({ ...prev, email: "" }));
+                  }}
                   placeholder="you@example.com"
-                  className="w-full bg-black/40 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan transition-all"
+                  className={`w-full bg-black/40 border rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-600 focus:outline-none transition-all ${
+                    fieldErrors.email
+                      ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                      : "border-white/10 focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan"
+                  }`}
                 />
               </div>
+              {fieldErrors.email && (
+                <p className="mt-1.5 text-xs text-red-400">{fieldErrors.email}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2 cursor-pointer">
                 Password
               </label>
               <div className="relative">
@@ -107,15 +190,28 @@ export default function SignupClient() {
                   id="password"
                   required
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setFieldErrors((prev) => ({ ...prev, password: "" }));
+                  }}
                   placeholder="••••••••"
-                  className="w-full bg-black/40 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan transition-all"
+                  className={`w-full bg-black/40 border rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-600 focus:outline-none transition-all ${
+                    fieldErrors.password
+                      ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                      : "border-white/10 focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan"
+                  }`}
                 />
               </div>
+              {fieldErrors.password && (
+                <p className="mt-1.5 text-xs text-red-400">{fieldErrors.password}</p>
+              )}
+              <p className="mt-1.5 text-xs text-gray-500">
+                At least 8 characters with letters and numbers
+              </p>
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2 cursor-pointer">
                 Confirm Password
               </label>
               <div className="relative">
@@ -125,18 +221,29 @@ export default function SignupClient() {
                   id="confirmPassword"
                   required
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    setFieldErrors((prev) => ({ ...prev, confirmPassword: "" }));
+                  }}
                   placeholder="••••••••"
-                  className="w-full bg-black/40 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan transition-all"
+                  className={`w-full bg-black/40 border rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-600 focus:outline-none transition-all ${
+                    fieldErrors.confirmPassword
+                      ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                      : "border-white/10 focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan"
+                  }`}
                 />
               </div>
+              {fieldErrors.confirmPassword && (
+                <p className="mt-1.5 text-xs text-red-400">{fieldErrors.confirmPassword}</p>
+              )}
             </div>
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-brand-purple to-brand-cyan hover:from-brand-purple/80 hover:to-brand-cyan/80 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-[0_0_20px_rgba(112,0,255,0.4)]"
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-brand-purple to-brand-cyan hover:from-brand-purple/80 hover:to-brand-cyan/80 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-[0_0_20px_rgba(112,0,255,0.4)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
-              Create Account
+              {isLoading ? "Creating Account..." : "Create Account"}
             </button>
 
             <div className="text-center text-sm text-gray-400 pt-4">

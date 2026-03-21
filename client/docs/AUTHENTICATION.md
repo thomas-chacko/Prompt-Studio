@@ -1,3 +1,70 @@
+# Authentication Implementation Guide
+
+> **Complete reference for authentication in PromptStudio**  
+> Covers API integration, validation, error handling, and usage patterns
+
+---
+
+## System Overview
+
+The frontend authentication system uses:
+- **Zustand** for state management with localStorage persistence
+- **Custom React hooks** for auth operations (`useAuth`)
+- **Axios interceptors** for automatic JWT token attachment
+- **Protected route wrapper** for access control
+- **Toast notifications** for user feedback
+- **Comprehensive validation** before API calls
+
+---
+
+## Quick Start
+
+### 1. Using Auth in Components
+
+```typescript
+import { useAuth } from "@/hooks/useAuth";
+
+function MyComponent() {
+  const { user, isAuthenticated, login, logout } = useAuth();
+
+  if (!isAuthenticated) {
+    return <div>Please login</div>;
+  }
+
+  return (
+    <div>
+      <p>Welcome, {user?.username}!</p>
+      <button onClick={logout} className="cursor-pointer">
+        Logout
+      </button>
+    </div>
+  );
+}
+```
+
+### 2. Protecting Routes
+
+Wrap any page that requires authentication:
+
+```typescript
+// app/dashboard/page.tsx
+import ProtectedRoute from "@/components/protected-route";
+import DashboardClient from "./dashboard-client";
+
+export default function DashboardPage() {
+  return (
+    <ProtectedRoute>
+      <DashboardClient />
+    </ProtectedRoute>
+  );
+}
+```
+
+---
+
+## Full Login Component
+
+```typescript
 "use client";
 
 import { Mail, Lock, ArrowLeft } from "lucide-react";
@@ -11,16 +78,21 @@ import { handleApiError } from "@/lib/error-handler";
 import { useToast } from "@/components/toast";
 
 export default function LoginClient() {
+  // Form state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
+  // UI state
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   
+  // Hooks
   const router = useRouter();
   const { login } = useAuth();
   const toast = useToast();
 
+  // Validation
   const validateForm = (): boolean => {
     const errors: Record<string, string> = {};
 
@@ -38,6 +110,7 @@ export default function LoginClient() {
     return Object.keys(errors).length === 0;
   };
 
+  // Form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
@@ -66,8 +139,7 @@ export default function LoginClient() {
   return (
     <div className="min-h-screen flex">
       {/* Left Side - Image */}
-      <div className="hidden lg:flex lg:w-1/2 relative bg-gradient-to-br from-brand-purple/20 to-brand-cyan/20">
-        <div className="absolute inset-0 bg-black/40" />
+      <div className="hidden lg:flex lg:w-1/2 relative">
         <Image
           src="/ai-generated-robot.avif"
           alt="AI Generated Art"
@@ -75,39 +147,30 @@ export default function LoginClient() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 flex items-center justify-center p-12">
-          <div className="text-center z-10">
-            <h2 className="text-5xl font-bold mb-4">Welcome Back</h2>
-            <p className="text-xl text-gray-300">Continue your creative journey with AI</p>
-          </div>
-        </div>
       </div>
 
       {/* Right Side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
-          <Link
-            href="/"
-            className="inline-flex items-center text-sm font-medium text-gray-400 hover:text-white transition-colors mb-8"
-          >
+          <Link href="/" className="inline-flex items-center text-sm mb-8">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Link>
 
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Login</h1>
-            <p className="text-gray-400">Access your account</p>
-          </div>
+          <h1 className="text-4xl font-bold mb-2">Login</h1>
+          <p className="text-gray-400 mb-8">Access your account</p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Global form error */}
             {error && (
               <div className="bg-red-500/10 border border-red-500/50 rounded-xl p-4 text-red-400 text-sm">
                 {error}
               </div>
             )}
 
+            {/* Email field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2 cursor-pointer">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                 Email Address
               </label>
               <div className="relative">
@@ -134,8 +197,9 @@ export default function LoginClient() {
               )}
             </div>
 
+            {/* Password field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2 cursor-pointer">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -162,36 +226,132 @@ export default function LoginClient() {
               )}
             </div>
 
-            <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center text-gray-400 cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="mr-2 w-4 h-4 rounded border-white/10 bg-black/40 text-brand-purple focus:ring-brand-purple focus:ring-offset-0 cursor-pointer"
-                />
-                Remember me
-              </label>
-              <Link href="#" className="text-brand-cyan hover:text-brand-cyan/80 transition-colors cursor-pointer">
-                Forgot password?
-              </Link>
-            </div>
-
+            {/* Submit button */}
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-brand-purple to-brand-cyan hover:from-brand-purple/80 hover:to-brand-cyan/80 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-[0_0_20px_rgba(112,0,255,0.4)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full bg-gradient-to-r from-brand-purple to-brand-cyan hover:from-brand-purple/80 hover:to-brand-cyan/80 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               {isLoading ? "Logging in..." : "Login"}
             </button>
-
-            <div className="text-center text-sm text-gray-400 pt-4">
-              Don't have an account?{" "}
-              <Link href="/signup" className="text-brand-cyan hover:text-brand-cyan/80 transition-colors font-semibold">
-                Sign up
-              </Link>
-            </div>
           </form>
         </div>
       </div>
     </div>
   );
 }
+```
+
+---
+
+## Error Flow Diagram
+
+```
+User submits form
+      │
+      ▼
+Client validation (validateForm)
+      │
+      ├─→ Invalid: Show field errors, stop
+      │
+      ▼
+API call (login/signup)
+      │
+      ├─→ Success: Toast + redirect
+      │
+      ▼
+API error thrown
+      │
+      ▼
+handleApiError() processes error
+      │
+      ├─→ Extract message
+      ├─→ Log in dev
+      └─→ Return AppError
+      │
+      ▼
+Component catch block
+      │
+      ├─→ Set inline error
+      └─→ Show toast
+      │
+      ▼
+User sees:
+  1. Toast notification (top-right)
+  2. Inline error message (in form)
+  3. Button re-enabled
+```
+
+---
+
+## Common Error Scenarios
+
+### Scenario 1: Invalid Email Format
+
+**User Action:** Enters "invalid-email" and clicks submit
+
+**Flow:**
+1. Client validation catches it
+2. Field error shown: "Invalid email format"
+3. Red border on email input
+4. No API call made
+5. Button stays enabled
+
+### Scenario 2: Wrong Password
+
+**User Action:** Enters correct email but wrong password
+
+**Flow:**
+1. Client validation passes
+2. API call made
+3. Server returns 401
+4. handleApiError extracts: "Invalid email or password"
+5. Toast shows error
+6. Inline error shown in form
+7. Button re-enabled
+
+### Scenario 3: Network Error
+
+**User Action:** Submits form with no internet
+
+**Flow:**
+1. Client validation passes
+2. API call fails with network error
+3. handleApiError extracts: "Network error"
+4. Toast shows error
+5. Inline error shown
+6. Button re-enabled
+7. User can retry
+
+### Scenario 4: Email Already Exists
+
+**User Action:** Signs up with existing email
+
+**Flow:**
+1. Client validation passes
+2. API call made
+3. Server returns 409
+4. handleApiError extracts: "Email already registered"
+5. Toast shows error
+6. Inline error shown
+7. Email field highlighted
+8. Button re-enabled
+
+---
+
+## Testing Checklist
+
+- [ ] Validation functions have 100% coverage
+- [ ] Error handler functions have 100% coverage
+- [ ] Login form shows validation errors
+- [ ] Signup form shows validation errors
+- [ ] Toast notifications appear on success/error
+- [ ] Buttons disable during loading
+- [ ] Errors clear when user types
+- [ ] 401 responses redirect to login
+- [ ] Network errors show user-friendly messages
+- [ ] No console errors in production build
+
+---
+
+*Last updated: March 2026*

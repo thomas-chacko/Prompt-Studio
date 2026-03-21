@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Sparkles, Menu, X, Wand2, ImageIcon,
-  LayoutGrid, Compass, PlusCircle, ChevronDown,
+  LayoutGrid, Compass, PlusCircle, LogOut,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/components/toast";
 
 const NAV_LINKS = [
   { href: "/explore", label: "Explore", icon: Compass },
@@ -20,6 +22,19 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const { isAuthenticated, user, logout } = useAuth();
+  const toast = useToast();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast.success("Logged out successfully");
+      router.push("/");
+    } catch (err) {
+      toast.error("Logout failed");
+    }
+  };
 
   // Detect scroll for blur intensity
   useEffect(() => {
@@ -86,13 +101,44 @@ export default function Navbar() {
 
           {/* Desktop right actions */}
           <div className="hidden lg:flex items-center gap-3">
-            <Link
-              href="/submit"
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-white text-black hover:bg-gray-100 btn-shine transition-colors shadow-[0_0_20px_rgba(255,255,255,0.08)]"
-            >
-              <PlusCircle className="w-4 h-4" />
-              Submit Prompt
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  href="/submit"
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-white text-black hover:bg-gray-100 btn-shine transition-colors shadow-[0_0_20px_rgba(255,255,255,0.08)]"
+                >
+                  <PlusCircle className="w-4 h-4" />
+                  Submit Prompt
+                </Link>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-400">
+                    {user?.username}
+                  </span>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Logout
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-brand-purple to-brand-cyan text-white hover:from-brand-purple/80 hover:to-brand-cyan/80 transition-colors shadow-[0_0_20px_rgba(112,0,255,0.4)]"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile hamburger */}
@@ -177,14 +223,40 @@ export default function Navbar() {
               </nav>
 
               {/* Drawer footer CTA */}
-              <div className="px-4 pb-8 pt-4 border-t border-white/8">
-                <Link
-                  href="/submit"
-                  className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-brand-purple to-brand-cyan text-white btn-shine shadow-[0_0_30px_rgba(124,58,237,0.3)] transition-all"
-                >
-                  <PlusCircle className="w-4.5 h-4.5" />
-                  Submit Your Prompt
-                </Link>
+              <div className="px-4 pb-8 pt-4 border-t border-white/8 space-y-3">
+                {isAuthenticated ? (
+                  <>
+                    <Link
+                      href="/submit"
+                      className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-brand-purple to-brand-cyan text-white btn-shine shadow-[0_0_30px_rgba(124,58,237,0.3)] transition-all"
+                    >
+                      <PlusCircle className="w-4.5 h-4.5" />
+                      Submit Your Prompt
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl font-medium text-sm bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/10 transition-all cursor-pointer"
+                    >
+                      <LogOut className="w-4.5 h-4.5" />
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/login"
+                      className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl font-medium text-sm bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/10 transition-all"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      href="/signup"
+                      className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-brand-purple to-brand-cyan text-white btn-shine shadow-[0_0_30px_rgba(124,58,237,0.3)] transition-all"
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+                )}
               </div>
             </motion.aside>
           </>
