@@ -15,6 +15,9 @@ RUN npm install --omit=dev
 # Copy the rest of the source code
 COPY . .
 
+# Generate Prisma Client
+RUN npx prisma generate
+
 # Document the port the app listens on (Render injects PORT at runtime)
 EXPOSE 5000
 
