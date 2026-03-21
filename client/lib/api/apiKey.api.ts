@@ -6,14 +6,14 @@ interface AddApiKeyData {
 
 export const apiKeyApi = {
   add: async (data: AddApiKeyData) => {
-    return axios.post('/user/api-key', data)
+    return axios.post('/api/v1/user/api-key', data)
   },
 
   get: async () => {
-    return axios.get('/user/api-key')
+    return axios.get('/api/v1/user/api-key')
   },
 
   delete: async () => {
-    return axios.delete('/user/api-key')
+    return axios.delete('/api/v1/user/api-key')
   },
 }

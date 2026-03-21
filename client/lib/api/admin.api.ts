@@ -17,50 +17,50 @@ interface UpdateCategoryData {
 export const adminApi = {
   // Stats
   getStats: async () => {
-    return axios.get('/admin/stats')
+    return axios.get('/api/v1/admin/stats')
   },
 
   // Users
   getUsers: async (page = 1, limit = 20) => {
-    return axios.get('/admin/users', { params: { page, limit } })
+    return axios.get('/api/v1/admin/users', { params: { page, limit } })
   },
 
   updateUserRole: async (userId: string, data: UpdateUserRoleData) => {
-    return axios.put(`/admin/users/${userId}/role`, data)
+    return axios.put(`/api/v1/admin/users/${userId}/role`, data)
   },
 
   deleteUser: async (userId: string) => {
-    return axios.delete(`/admin/users/${userId}`)
+    return axios.delete(`/api/v1/admin/users/${userId}`)
   },
 
   // Prompts
   getPrompts: async (page = 1, limit = 20) => {
-    return axios.get('/admin/prompts', { params: { page, limit } })
+    return axios.get('/api/v1/admin/prompts', { params: { page, limit } })
   },
 
   updatePrompt: async (promptId: number, data: UpdatePromptData) => {
-    return axios.put(`/admin/prompts/${promptId}`, data)
+    return axios.put(`/api/v1/admin/prompts/${promptId}`, data)
   },
 
   deletePrompt: async (promptId: number) => {
-    return axios.delete(`/admin/prompts/${promptId}`)
+    return axios.delete(`/api/v1/admin/prompts/${promptId}`)
   },
 
   // Categories
   getCategories: async () => {
-    return axios.get('/admin/categories')
+    return axios.get('/api/v1/admin/categories')
   },
 
   updateCategory: async (categoryId: number, data: UpdateCategoryData) => {
-    return axios.put(`/admin/categories/${categoryId}`, data)
+    return axios.put(`/api/v1/admin/categories/${categoryId}`, data)
   },
 
   deleteCategory: async (categoryId: number) => {
-    return axios.delete(`/admin/categories/${categoryId}`)
+    return axios.delete(`/api/v1/admin/categories/${categoryId}`)
   },
 
   // Generations
   getGenerations: async (page = 1, limit = 20) => {
-    return axios.get('/admin/generations', { params: { page, limit } })
+    return axios.get('/api/v1/admin/generations', { params: { page, limit } })
   },
 }

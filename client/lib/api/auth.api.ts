@@ -30,14 +30,14 @@ interface AuthResponse {
 
 export const authApi = {
   signup: async (data: SignupData): Promise<AuthResponse> => {
-    return axios.post('/auth/signup', data)
+    return axios.post('/api/v1/auth/signup', data)
   },
 
   login: async (data: LoginData): Promise<AuthResponse> => {
-    return axios.post('/auth/login', data)
+    return axios.post('/api/v1/auth/login', data)
   },
 
   logout: async (): Promise<{ success: boolean }> => {
-    return axios.post('/auth/logout')
+    return axios.post('/api/v1/auth/logout')
   },
 }

@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const baseURL = process.env.NODE_ENV === 'development' 
-  ? 'http://localhost:5000/api/v1'
-  : 'https://prompt-studio-0egh.onrender.com/api/v1'
+  ? 'http://localhost:5000'
+  : 'https://prompt-studio-0egh.onrender.com'
 
 const axiosInstance = axios.create({
   baseURL,

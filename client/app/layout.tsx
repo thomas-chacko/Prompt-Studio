@@ -4,6 +4,7 @@ import "./globals.css";
 import LenisProvider from "@/components/lenis-provider";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import APIWarmup from "@/components/api-warmup";
 import { Analytics } from '@vercel/analytics/next';
 
 const geistSans = Geist({
@@ -50,6 +51,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <APIWarmup />
         <LenisProvider>
           <div className="flex flex-col min-h-screen">
             <Navbar />

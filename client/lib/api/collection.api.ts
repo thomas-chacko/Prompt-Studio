@@ -7,22 +7,22 @@ interface CreateCollectionData {
 
 export const collectionApi = {
   getAll: async () => {
-    return axios.get('/collections')
+    return axios.get('/api/v1/collections')
   },
 
   create: async (data: CreateCollectionData) => {
-    return axios.post('/collections', data)
+    return axios.post('/api/v1/collections', data)
   },
 
   addPrompt: async (collectionId: number, promptId: number) => {
-    return axios.post(`/collections/${collectionId}/prompts`, { prompt_id: promptId })
+    return axios.post(`/api/v1/collections/${collectionId}/prompts`, { prompt_id: promptId })
   },
 
   removePrompt: async (collectionId: number, promptId: number) => {
-    return axios.delete(`/collections/${collectionId}/prompts/${promptId}`)
+    return axios.delete(`/api/v1/collections/${collectionId}/prompts/${promptId}`)
   },
 
   delete: async (id: number) => {
-    return axios.delete(`/collections/${id}`)
+    return axios.delete(`/api/v1/collections/${id}`)
   },
 }

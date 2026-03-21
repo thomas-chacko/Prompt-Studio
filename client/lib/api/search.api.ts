@@ -8,6 +8,6 @@ interface SearchParams {
 
 export const searchApi = {
   search: async ({ query, page = 1, limit = 12 }: SearchParams) => {
-    return axios.post('/search', { query, page, limit })
+    return axios.post('/api/v1/search', { query, page, limit })
   },
 }
