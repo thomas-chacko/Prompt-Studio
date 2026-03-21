@@ -8,15 +8,16 @@ WORKDIR /app
 # Copy package files first — Docker caches this layer
 # node_modules only reinstall when package.json changes
 COPY package*.json ./
+COPY prisma ./prisma
 
-# Install production dependencies only
-RUN npm install --omit=dev
+# Install all dependencies (including prisma CLI for generation)
+RUN npm install --omit=dev && \
+    npm install -D prisma && \
+    npx prisma generate && \
+    npm uninstall prisma
 
 # Copy the rest of the source code
 COPY . .
-
-# Generate Prisma Client
-RUN npx prisma generate
 
 # Document the port the app listens on (Render injects PORT at runtime)
 EXPOSE 5000
