@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import LenisProvider from "@/components/lenis-provider";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
+import ConditionalLayout from "@/components/conditional-layout";
 import APIWarmup from "@/components/api-warmup";
 import { Analytics } from '@vercel/analytics/next';
 
@@ -52,16 +50,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <APIWarmup />
-        <LenisProvider>
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <main className="flex-1 pt-16">
-              {children}
-              <Analytics />
-            </main>
-            <Footer />
-          </div>
-        </LenisProvider>
+        <ConditionalLayout>
+          {children}
+          <Analytics />
+        </ConditionalLayout>
       </body>
     </html>
   );
