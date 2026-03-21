@@ -50,7 +50,7 @@ Each module documentation MUST include these sections:
 6. **Validation Rules** — All validation logic specific to the module
 7. **Error Handling** — Module-specific error scenarios and handling
 8. **Complete Code Example** — Full implementation showing best practices
-9. **Testing** — Test examples, coverage requirements, edge cases
+9. **Manual Testing Checklist** — Key scenarios to test manually
 10. **Common Patterns** — Reusable patterns specific to the module
 
 ### When to Create Documentation
@@ -173,6 +173,7 @@ Examples:
 - [ ] No unused imports
 - [ ] Fast, smooth scroll implemented
 - [ ] Next/Image used exclusively for the gallery
+- [ ] Base test file exists at `app/__tests__/app.test.tsx`
 
 *Last updated: March 2026*
 
@@ -727,39 +728,36 @@ client/
 
 ## 🧪 Testing Standards
 
-### Test File Naming
+### Test File Location
 
-- Component tests: `MyComponent.test.tsx`
-- Hook tests: `useMyHook.test.ts`
-- Utility tests: `validation.test.ts`
+**IMPORTANT:** We maintain only ONE base test file for the entire client application:
 
-### Test Coverage Requirements
-
-- All validation functions: 100%
-- All error handlers: 100%
-- Critical user flows: 100% (login, signup, generation)
-- UI components: 80%+
+- **Location:** `client/app/__tests__/app.test.tsx`
+- **Purpose:** Basic smoke tests to verify the app builds and test environment works
+- **No per-module tests** — Keep it minimal
 
 ### Test Pattern
 
 ```typescript
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 
-describe('LoginClient', () => {
-  it('shows validation error for invalid email', async () => {
-    render(<LoginClient />);
-    
-    const emailInput = screen.getByLabelText(/email/i);
-    fireEvent.change(emailInput, { target: { value: 'invalid' } });
-    fireEvent.blur(emailInput);
-    
-    await waitFor(() => {
-      expect(screen.getByText(/invalid email format/i)).toBeInTheDocument();
-    });
+describe('App Health Check', () => {
+  it('app builds and tests run successfully', () => {
+    expect(true).toBe(true);
+  });
+
+  it('basic math works', () => {
+    expect(1 + 1).toBe(2);
   });
 });
 ```
+
+### Testing Philosophy
+
+- Keep tests minimal — one base file only
+- Focus on manual testing and code review
+- No per-component or per-module test files
+- Test environment verification only
 
 ---
 
@@ -778,6 +776,7 @@ Before committing any code, verify:
 - [ ] No unused imports
 - [ ] Toast notifications for user feedback
 - [ ] Field errors clear on input change
+- [ ] Base test file exists at `app/__tests__/app.test.tsx`
 
 ---
 

@@ -339,10 +339,22 @@ User sees:
 
 ---
 
-## Testing Checklist
+## Testing Approach
 
-- [ ] Validation functions have 100% coverage
-- [ ] Error handler functions have 100% coverage
+**IMPORTANT:** PromptStudio uses minimal automated testing with one base test file only.
+
+### Test File Location
+- **Client:** `client/app/__tests__/app.test.tsx`
+- **Server:** `server/src/__test__/app.test.js`
+
+### Testing Philosophy
+- Manual testing preferred over extensive test suites
+- Base test files verify build and environment only
+- No per-component or per-module test files
+- Focus on code review and manual QA
+
+### Manual Testing Checklist
+
 - [ ] Login form shows validation errors
 - [ ] Signup form shows validation errors
 - [ ] Toast notifications appear on success/error

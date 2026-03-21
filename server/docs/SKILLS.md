@@ -45,8 +45,8 @@ Each module documentation MUST include:
 7. **Error Scenarios** — All possible errors with status codes and messages
 8. **Security** — Auth requirements, rate limiting, input validation, encryption
 9. **External APIs** — Cloudinary, Gemini, or other third-party integrations
-10. **cURL Examples** — Command-line examples for testing
-11. **Testing Examples** — Supertest examples for each endpoint
+10. **cURL Examples** — Command-line examples for manual testing
+11. **Manual Testing Checklist** — Key scenarios to test with Postman or cURL
 
 ### When to Create Documentation
 
@@ -441,6 +441,43 @@ Follow this checklist when adding any new resource (e.g. `reviews`, `tags`):
 13. No raw SQL strings — Prisma only
 14. No Gemini or Cloudinary SDK calls outside their respective service/util files
 
+
+---
+
+## 16. Testing Standards
+
+### Test File Location
+
+**IMPORTANT:** We maintain only ONE base test file for the entire server application:
+
+- **Location:** `server/src/__test__/app.test.js`
+- **Purpose:** Basic health check to verify the app starts and responds correctly
+- **No per-module tests** — Keep it minimal
+
+### Test Pattern
+
+```javascript
+import request from 'supertest';
+import app from '../app.js';
+
+describe('App Health Check', () => {
+  test('GET / should return 200 and a valid response', async () => {
+    const response = await request(app).get('/');
+    
+    expect(response.status).toBe(200);
+    expect(response.headers['content-type']).toMatch(/json/);
+    expect(response.body).toHaveProperty('message');
+    expect(response.body.message).toBe('Welcome to PromptStudio API');
+  });
+});
+```
+
+### Testing Philosophy
+
+- Keep tests minimal — one base file only
+- Focus on manual testing with tools like Postman or cURL
+- No per-endpoint or per-service test files
+- Test environment verification only
 
 ---
 

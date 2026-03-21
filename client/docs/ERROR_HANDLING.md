@@ -332,35 +332,29 @@ export default function MyForm() {
 
 ---
 
-## Testing Error Handling
+## Testing Approach
 
-### Validation Tests
+**IMPORTANT:** PromptStudio uses minimal automated testing.
 
-```typescript
-import { validateEmail } from '@/lib/validation';
+### Test File Location
+- **Client:** `client/app/__tests__/app.test.tsx` (base smoke test only)
+- **Server:** `server/src/__test__/app.test.js` (health check only)
 
-it('should reject invalid email', () => {
-  const result = validateEmail('invalid');
-  expect(result.isValid).toBe(false);
-  expect(result.error).toBe('Invalid email format');
-});
-```
+### Testing Philosophy
+- Manual testing preferred over extensive test suites
+- No per-module or per-component test files
+- Focus on manual QA and code review
+- Base test files verify build and environment only
 
-### Component Error Tests
+### Manual Testing Checklist
 
-```typescript
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-
-it('shows error message on failed login', async () => {
-  render(<LoginClient />);
-  
-  fireEvent.click(screen.getByRole('button', { name: /login/i }));
-  
-  await waitFor(() => {
-    expect(screen.getByText(/invalid email or password/i)).toBeInTheDocument();
-  });
-});
-```
+Test error handling manually by:
+- Entering invalid data in forms
+- Disconnecting network during API calls
+- Testing with expired tokens
+- Verifying toast notifications appear
+- Checking field errors clear on input change
+- Confirming 401 redirects to login
 
 ---
 

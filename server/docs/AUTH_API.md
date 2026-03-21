@@ -216,3 +216,30 @@ curl -X POST https://prompt-studio-0egh.onrender.com/api/v1/auth/login \
 curl -X POST https://prompt-studio-0egh.onrender.com/api/v1/auth/logout \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
 ```
+
+---
+
+## Testing
+
+**IMPORTANT:** PromptStudio uses minimal automated testing.
+
+### Test File Location
+- **Server:** `server/src/__test__/app.test.js` (health check only)
+
+### Testing Philosophy
+- Manual testing preferred using Postman, cURL, or Thunder Client
+- No per-endpoint or per-service test files
+- Focus on manual QA and code review
+- Base test file verifies app starts correctly
+
+### Manual Testing Checklist
+
+Test auth endpoints manually:
+- [ ] Signup with valid data returns 201 and token
+- [ ] Signup with duplicate email returns 409
+- [ ] Login with valid credentials returns 200 and token
+- [ ] Login with invalid credentials returns 401
+- [ ] Logout with valid token returns 200
+- [ ] Protected routes return 401 without token
+- [ ] Protected routes work with valid token
+- [ ] Logged out tokens are rejected (blocklist works)
