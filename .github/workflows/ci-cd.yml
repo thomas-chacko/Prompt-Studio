@@ -45,6 +45,8 @@ jobs:
     defaults:
       run:
         working-directory: server
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
       - name: 📥 Checkout code
@@ -65,8 +67,6 @@ jobs:
 
       - name: 🗄️ Run database migrations
         run: npx prisma migrate deploy
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       # Test the backend API using Jest and Supertest
       - name: 🧪 Run tests
