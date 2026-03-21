@@ -12,9 +12,9 @@ export const usePrompts = (page = 1, limit = 12, categoryId?: number) => {
     const fetchPrompts = async () => {
       try {
         setLoading(true)
-        const response = await promptApi.getAll(page, limit, categoryId)
+        const response: any = await promptApi.getAll(page, limit, categoryId)
         setPrompts(response.data)
-        setMeta(response.meta)
+        setMeta(response.meta || null)
         setError(null)
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch prompts')
