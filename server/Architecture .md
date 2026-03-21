@@ -419,53 +419,53 @@ Every response — success or error — follows one of these shapes:
 
 | Method | Endpoint | Auth | Status |
 |---|---|---|---|
-| POST | `/auth/signup` | — | 201 |
-| POST | `/auth/login` | — | 200 |
-| POST | `/auth/logout` | Auth | 200 |
-| GET | `/user/me` | Auth | 200 |
-| PUT | `/user/me` | Auth | 200 |
-| PUT | `/user/me/password` | Auth | 200 |
-| DELETE | `/user/me` | Auth | 200 |
-| GET | `/user/me/prompts` | Auth | 200 |
-| GET | `/prompts/trending` | — | 200 |
-| GET | `/prompts` | — | 200 |
-| GET | `/prompts/:id` | — | 200 |
-| POST | `/prompt/create` | Auth | 201 |
-| PUT | `/prompt/update/:id` | Auth | 200 |
-| DELETE | `/prompt/delete/:id` | Auth | 200 |
-| POST | `/prompts/:id/copy` | — | 200 |
-| POST | `/prompts/:id/like` | Auth | 200 |
-| GET | `/prompts/category` | — | 200 |
-| GET | `/prompts/category/:slug` | — | 200 |
-| POST | `/category/create` | Admin | 201 |
-| PUT | `/category/:id` | Admin | 200 |
-| DELETE | `/category/:id` | Admin | 200 |
-| POST | `/search` | — | 200 |
-| POST | `/generate/image` | Auth | 200 |
-| POST | `/generate/image/enhance-prompt` | Auth | 200 |
-| GET | `/generate/history` | Auth | 200 |
-| DELETE | `/generate/history/:id` | Auth | 200 |
-| POST | `/generate/save-to-gallery` | Auth | 201 |
-| GET | `/generate/quota` | Auth | 200 |
-| GET | `/collections` | Auth | 200 |
-| POST | `/collections` | Auth | 201 |
-| POST | `/collections/:id/prompts` | Auth | 200 |
-| DELETE | `/collections/:id/prompts/:pid` | Auth | 200 |
-| DELETE | `/collections/:id` | Auth | 200 |
-| POST | `/user/api-key` | Auth | 200 |
-| GET | `/user/api-key` | Auth | 200 |
-| DELETE | `/user/api-key` | Auth | 200 |
-| GET | `/admin/stats` | Admin | 200 |
-| GET | `/admin/users` | Admin | 200 |
-| PUT | `/admin/users/:id/role` | Admin | 200 |
-| DELETE | `/admin/users/:id` | Admin | 200 |
-| GET | `/admin/prompts` | Admin | 200 |
-| PUT | `/admin/prompts/:id` | Admin | 200 |
-| DELETE | `/admin/prompts/:id` | Admin | 200 |
-| GET | `/admin/categories` | Admin | 200 |
-| PUT | `/admin/categories/:id` | Admin | 200 |
-| DELETE | `/admin/categories/:id` | Admin | 200 |
-| GET | `/admin/generations` | Admin | 200 |
+| POST | `/api/v1/auth/signup` | — | 201 |
+| POST | `/api/v1/auth/login` | — | 200 |
+| POST | `/api/v1/auth/logout` | Auth | 200 |
+| GET | `/api/v1/user/me` | Auth | 200 |
+| PUT | `/api/v1/user/me` | Auth | 200 |
+| PUT | `/api/v1/user/me/password` | Auth | 200 |
+| DELETE | `/api/v1/user/me` | Auth | 200 |
+| GET | `/api/v1/user/me/prompts` | Auth | 200 |
+| GET | `/api/v1/prompts/trending` | — | 200 |
+| GET | `/api/v1/prompts` | — | 200 |
+| GET | `/api/v1/prompts/:id` | — | 200 |
+| POST | `/api/v1/prompts` | Auth | 201 |
+| PUT | `/api/v1/prompts/:id` | Auth | 200 |
+| DELETE | `/api/v1/prompts/:id` | Auth | 200 |
+| POST | `/api/v1/prompts/:id/copy` | — | 200 |
+| POST | `/api/v1/prompts/:id/like` | Auth | 200 |
+| GET | `/api/v1/categories` | — | 200 |
+| GET | `/api/v1/categories/:slug` | — | 200 |
+| POST | `/api/v1/categories` | Admin | 201 |
+| PUT | `/api/v1/categories/:id` | Admin | 200 |
+| DELETE | `/api/v1/categories/:id` | Admin | 200 |
+| POST | `/api/v1/search` | — | 200 |
+| POST | `/api/v1/generate/image` | Auth | 200 |
+| POST | `/api/v1/generate/enhance-prompt` | Auth | 200 |
+| GET | `/api/v1/generate/history` | Auth | 200 |
+| DELETE | `/api/v1/generate/history/:id` | Auth | 200 |
+| POST | `/api/v1/generate/save-to-gallery` | Auth | 201 |
+| GET | `/api/v1/generate/quota` | Auth | 200 |
+| GET | `/api/v1/collections` | Auth | 200 |
+| POST | `/api/v1/collections` | Auth | 201 |
+| POST | `/api/v1/collections/:id/prompts` | Auth | 200 |
+| DELETE | `/api/v1/collections/:id/prompts/:pid` | Auth | 200 |
+| DELETE | `/api/v1/collections/:id` | Auth | 200 |
+| POST | `/api/v1/user/api-key` | Auth | 200 |
+| GET | `/api/v1/user/api-key` | Auth | 200 |
+| DELETE | `/api/v1/user/api-key` | Auth | 200 |
+| GET | `/api/v1/admin/stats` | Admin | 200 |
+| GET | `/api/v1/admin/users` | Admin | 200 |
+| PUT | `/api/v1/admin/users/:id/role` | Admin | 200 |
+| DELETE | `/api/v1/admin/users/:id` | Admin | 200 |
+| GET | `/api/v1/admin/prompts` | Admin | 200 |
+| PUT | `/api/v1/admin/prompts/:id` | Admin | 200 |
+| DELETE | `/api/v1/admin/prompts/:id` | Admin | 200 |
+| GET | `/api/v1/admin/categories` | Admin | 200 |
+| PUT | `/api/v1/admin/categories/:id` | Admin | 200 |
+| DELETE | `/api/v1/admin/categories/:id` | Admin | 200 |
+| GET | `/api/v1/admin/generations` | Admin | 200 |
 
 ---
 
@@ -512,7 +512,7 @@ user
 router.get('/prompts', getAll)
 
 // Auth required
-router.post('/prompt/create', auth, asyncHandler(createPrompt))
+router.post('/prompts', auth, asyncHandler(createPrompt))
 
 // Admin required
 router.delete('/admin/prompts/:id', auth, adminOnly, asyncHandler(forceDeletePrompt))
@@ -529,7 +529,7 @@ On logout, the token's `jti` (JWT ID) is stored in a `token_blocklist` table in 
 ### Flow: User with Own API Key
 
 ```
-POST /generate/image { use_own_key: true, prompt, ... }
+POST /api/v1/generate/image { use_own_key: true, prompt, ... }
       │
       ▼
 auth middleware — verify JWT
@@ -551,7 +551,7 @@ generate.service.js
 ### Flow: Platform Free Key
 
 ```
-POST /generate/image { use_own_key: false, prompt, ... }
+POST /api/v1/generate/image { use_own_key: false, prompt, ... }
       │
       ▼
 generate.service.js
@@ -570,14 +570,14 @@ generate.service.js
 ### Prompt Enhancement Flow
 
 ```
-POST /generate/image/enhance-prompt { raw_prompt, style_hint }
+POST /api/v1/generate/enhance-prompt { raw_prompt, style_hint }
       │
       ▼
 generate.service.js
   ├── Build system prompt instructing Gemini Flash to expand the raw prompt
   ├── Call Gemini Flash (text model — fast, cheap, not Imagen)
   ├── Return { enhanced_prompt, original_prompt }
-  └── Client uses enhanced_prompt as input to POST /generate/image
+  └── Client uses enhanced_prompt as input to POST /api/v1/generate/image
 ```
 
 ---

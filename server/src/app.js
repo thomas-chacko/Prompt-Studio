@@ -33,7 +33,7 @@ app.get("/", (_req, res) => {
 app.use("/api", rateLimiter);
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
-app.use("/api", router);
+app.use("/api/v1", router);
 
 // ─── Error Handling ───────────────────────────────────────────────────────────
 app.use(notFound);

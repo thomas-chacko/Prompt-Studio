@@ -99,7 +99,7 @@ prompt-studio/
 
 ## API
 
-Base URL: `https://prompt-studio-0egh.onrender.com/`
+Base URL: `https://prompt-studio-0egh.onrender.com/api/v1`
 
 All responses follow a consistent shape:
 
@@ -114,7 +114,7 @@ All responses follow a consistent shape:
 { "success": false, "message": "Prompt with id \"99\" not found" }
 ```
 
-Key route groups: `/auth`, `/user`, `/prompts`, `/categories`, `/search`, `/generate`, `/collections`, `/admin`
+Key route groups: `/api/v1/auth`, `/api/v1/user`, `/api/v1/prompts`, `/api/v1/categories`, `/api/v1/search`, `/api/v1/generate`, `/api/v1/collections`, `/api/v1/admin`
 
 ---
 

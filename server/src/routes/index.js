@@ -1,5 +1,6 @@
 import { Router } from "express";
 
+import authRoutes from "./auth.routes.js";
 import promptRoutes from "./prompt.routes.js";
 import categoryRoutes from "./category.routes.js";
 
@@ -11,6 +12,7 @@ router.get("/health", (_req, res) => {
 });
 
 // ─── Resource Routes ──────────────────────────────────────────────────────────
+router.use("/auth", authRoutes);
 router.use("/prompts", promptRoutes);
 router.use("/categories", categoryRoutes);
 
