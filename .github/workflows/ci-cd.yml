@@ -62,7 +62,16 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      - name: 🔧 Generate Prisma Client
+      - name: � Debug DATABASE_URL
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "❌ DATABASE_URL is EMPTY or NOT SET"
+          else
+            echo "✅ DATABASE_URL is set (length: ${#DATABASE_URL} chars)"
+            echo "First 20 chars: ${DATABASE_URL:0:20}..."
+          fi
+
+      - name: �🔧 Generate Prisma Client
         run: npx prisma generate
 
       - name: 🗄️ Run database migrations
