@@ -241,7 +241,7 @@ export default function SignupClient() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-brand-purple to-brand-cyan hover:from-brand-purple/80 hover:to-brand-cyan/80 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-[0_0_20px_rgba(112,0,255,0.4)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 hover:border-white/30 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-[1.02] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               {isLoading ? "Creating Account..." : "Create Account"}
             </button>
