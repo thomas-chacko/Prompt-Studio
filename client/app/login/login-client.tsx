@@ -99,7 +99,7 @@ export default function LoginClient() {
             <p className="text-gray-400">Access your account</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} noValidate className="space-y-6">
             {error && (
               <div className="bg-red-500/10 border border-red-500/50 rounded-xl p-4 text-red-400 text-sm">
                 {error}
