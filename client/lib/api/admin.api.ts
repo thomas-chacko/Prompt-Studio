@@ -1,44 +1,48 @@
 import axios from '../axios'
 
-interface UpdateUserRoleData {
-  role: 'user' | 'admin'
-}
-
-interface UpdatePromptData {
-  is_published?: boolean
-}
-
-interface UpdateCategoryData {
-  category?: string
-  slug?: string
-  image_url?: string
-}
-
 export const adminApi = {
-  // Stats
+  // Platform Stats
   getStats: async () => {
     return axios.get('/api/v1/admin/stats')
   },
 
-  // Users
-  getUsers: async (page = 1, limit = 20) => {
-    return axios.get('/api/v1/admin/users', { params: { page, limit } })
+  // User Management
+  getUsers: async (params?: {
+    page?: number
+    limit?: number
+    role?: 'user' | 'admin'
+    plan?: 'free' | 'pro'
+    search?: string
+  }) => {
+    return axios.get('/api/v1/admin/users', { params })
   },
 
-  updateUserRole: async (userId: string, data: UpdateUserRoleData) => {
-    return axios.put(`/api/v1/admin/users/${userId}/role`, data)
+  updateUserRole: async (userId: string, role: 'user' | 'admin') => {
+    return axios.put(`/api/v1/admin/users/${userId}/role`, { role })
   },
 
   deleteUser: async (userId: string) => {
     return axios.delete(`/api/v1/admin/users/${userId}`)
   },
 
-  // Prompts
-  getPrompts: async (page = 1, limit = 20) => {
-    return axios.get('/api/v1/admin/prompts', { params: { page, limit } })
+  // Prompt Management
+  getPrompts: async (params?: {
+    page?: number
+    limit?: number
+    isPublished?: boolean
+    categoryId?: number
+    search?: string
+  }) => {
+    return axios.get('/api/v1/admin/prompts', { params })
   },
 
-  updatePrompt: async (promptId: number, data: UpdatePromptData) => {
+  updatePrompt: async (promptId: number, data: {
+    title?: string
+    prompt?: string
+    isPublished?: boolean
+    categoryId?: number
+    tags?: string[]
+  }) => {
     return axios.put(`/api/v1/admin/prompts/${promptId}`, data)
   },
 
@@ -46,12 +50,24 @@ export const adminApi = {
     return axios.delete(`/api/v1/admin/prompts/${promptId}`)
   },
 
-  // Categories
+  // Category Management
   getCategories: async () => {
     return axios.get('/api/v1/admin/categories')
   },
 
-  updateCategory: async (categoryId: number, data: UpdateCategoryData) => {
+  createCategory: async (data: {
+    category: string
+    slug: string
+    imageUrl?: string
+  }) => {
+    return axios.post('/api/v1/admin/categories', data)
+  },
+
+  updateCategory: async (categoryId: number, data: {
+    category?: string
+    slug?: string
+    imageUrl?: string
+  }) => {
     return axios.put(`/api/v1/admin/categories/${categoryId}`, data)
   },
 
@@ -59,8 +75,13 @@ export const adminApi = {
     return axios.delete(`/api/v1/admin/categories/${categoryId}`)
   },
 
-  // Generations
-  getGenerations: async (page = 1, limit = 20) => {
-    return axios.get('/api/v1/admin/generations', { params: { page, limit } })
+  // Generation Monitoring
+  getGenerations: async (params?: {
+    page?: number
+    limit?: number
+    userId?: string
+    apiKeySource?: 'own' | 'free'
+  }) => {
+    return axios.get('/api/v1/admin/generations', { params })
   },
 }

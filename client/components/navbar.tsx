@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Sparkles, Menu, X, Wand2, ImageIcon,
-  LayoutGrid, Compass, User,
+  LayoutGrid, Compass, User, Shield, PlusCircle,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
@@ -102,25 +102,39 @@ export default function Navbar() {
           {/* Desktop right actions */}
           <div className="hidden lg:flex items-center gap-3">
             {isAuthenticated ? (
-              <Link
-                href="/profile"
-                className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-brand-purple to-brand-cyan hover:from-brand-purple/80 hover:to-brand-cyan/80 transition-all shadow-[0_0_20px_rgba(112,0,255,0.4)] hover:shadow-[0_0_30px_rgba(112,0,255,0.6)]"
-                title={user?.username}
-              >
-                {user?.avatar_url ? (
-                  <img
-                    src={user.avatar_url}
-                    alt={user.username}
-                    className="w-full h-full rounded-full object-cover"
-                  />
-                ) : (
-                  <User className="w-5 h-5 text-white" />
+              <>
+                {/* Admin Dashboard Link - Only for admins */}
+                {user?.role === 'admin' && (
+                  <Link
+                    href="/admin"
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-brand-purple/20 hover:bg-brand-purple/30 border border-brand-purple/30 hover:border-brand-purple/50 text-brand-purple hover:text-white transition-all cursor-pointer"
+                    title="Admin Dashboard"
+                  >
+                    <Shield className="w-4 h-4" />
+                    Admin
+                  </Link>
                 )}
-              </Link>
+                
+                <Link
+                  href="/profile"
+                  className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-brand-purple to-brand-cyan hover:from-brand-purple/80 hover:to-brand-cyan/80 transition-all shadow-[0_0_20px_rgba(112,0,255,0.4)] hover:shadow-[0_0_30px_rgba(112,0,255,0.6)] cursor-pointer"
+                  title={user?.username}
+                >
+                  {user?.avatarUrl ? (
+                    <img
+                      src={user.avatarUrl}
+                      alt={user.username}
+                      className="w-full h-full rounded-full object-cover"
+                    />
+                  ) : (
+                    <User className="w-5 h-5 text-white" />
+                  )}
+                </Link>
+              </>
             ) : (
               <Link
                 href="/login"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 hover:border-white/30 text-white transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 hover:border-white/30 text-white transition-all cursor-pointer"
               >
                 Login
               </Link>
@@ -212,25 +226,42 @@ export default function Navbar() {
               <div className="px-4 pb-8 pt-4 border-t border-white/8 space-y-3">
                 {isAuthenticated ? (
                   <>
+                    {/* Admin Dashboard Link - Mobile */}
+                    {user?.role === 'admin' && (
+                      <Link
+                        href="/admin"
+                        className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl font-bold text-sm bg-brand-purple/20 text-brand-purple hover:text-white hover:bg-brand-purple/30 border border-brand-purple/30 transition-all cursor-pointer"
+                      >
+                        <Shield className="w-4.5 h-4.5" />
+                        Admin Dashboard
+                      </Link>
+                    )}
+                    
                     <Link
                       href="/submit"
-                      className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-brand-purple to-brand-cyan text-white btn-shine shadow-[0_0_30px_rgba(124,58,237,0.3)] transition-all"
+                      className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-brand-purple to-brand-cyan text-white btn-shine shadow-[0_0_30px_rgba(124,58,237,0.3)] transition-all cursor-pointer"
                     >
                       <PlusCircle className="w-4.5 h-4.5" />
                       Submit Your Prompt
                     </Link>
                     <Link
                       href="/profile"
-                      className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl font-medium text-sm bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/10 transition-all"
+                      className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl font-medium text-sm bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/10 transition-all cursor-pointer"
                     >
                       <User className="w-4.5 h-4.5" />
                       Profile
                     </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl font-medium text-sm bg-red-500/10 text-red-400 hover:text-red-300 hover:bg-red-500/20 border border-red-500/20 transition-all cursor-pointer"
+                    >
+                      Logout
+                    </button>
                   </>
                 ) : (
                   <Link
                     href="/login"
-                    className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl font-bold text-sm bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 hover:border-white/30 text-white btn-shine transition-all"
+                    className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl font-bold text-sm bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 hover:border-white/30 text-white btn-shine transition-all cursor-pointer"
                   >
                     Login
                   </Link>
