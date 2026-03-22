@@ -120,9 +120,9 @@ export default function Navbar() {
                   className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-brand-purple to-brand-cyan hover:from-brand-purple/80 hover:to-brand-cyan/80 transition-all shadow-[0_0_20px_rgba(112,0,255,0.4)] hover:shadow-[0_0_30px_rgba(112,0,255,0.6)] cursor-pointer"
                   title={user?.username}
                 >
-                  {user?.avatarUrl ? (
+                  {user?.avatar_url ? (
                     <img
-                      src={user.avatarUrl}
+                      src={user.avatar_url}
                       alt={user.username}
                       className="w-full h-full rounded-full object-cover"
                     />
