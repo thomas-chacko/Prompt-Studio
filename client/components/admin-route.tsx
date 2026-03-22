@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -15,8 +15,17 @@ interface AdminRouteProps {
 export default function AdminRoute({ children }: AdminRouteProps) {
   const { isAuthenticated, user } = useAuth();
   const router = useRouter();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Wait for Zustand to hydrate from localStorage
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   useEffect(() => {
+    // Only check auth after hydration is complete
+    if (!isHydrated) return;
+
     if (!isAuthenticated) {
       router.push("/login");
       return;
@@ -25,10 +34,10 @@ export default function AdminRoute({ children }: AdminRouteProps) {
     if (user?.role !== "admin") {
       router.push("/");
     }
-  }, [isAuthenticated, user, router]);
+  }, [isAuthenticated, user, router, isHydrated]);
 
-  // Show loading while checking auth and role
-  if (!isAuthenticated || user?.role !== "admin") {
+  // Show loading while hydrating or checking auth
+  if (!isHydrated || !isAuthenticated || user?.role !== "admin") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#03010a]">
         <div className="text-center">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -21,15 +21,24 @@ export default function ProtectedRoute({
 }: ProtectedRouteProps) {
   const { isAuthenticated } = useAuth();
   const router = useRouter();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Wait for Zustand to hydrate from localStorage
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   useEffect(() => {
+    // Only check auth after hydration is complete
+    if (!isHydrated) return;
+    
     if (requireAuth && !isAuthenticated) {
       router.push(redirectTo);
     }
-  }, [isAuthenticated, requireAuth, redirectTo, router]);
+  }, [isAuthenticated, requireAuth, redirectTo, router, isHydrated]);
 
-  // Show loading or nothing while redirecting
-  if (requireAuth && !isAuthenticated) {
+  // Show loading while hydrating or redirecting
+  if (!isHydrated || (requireAuth && !isAuthenticated)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">

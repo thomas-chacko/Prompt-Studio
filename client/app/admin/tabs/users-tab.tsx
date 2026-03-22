@@ -8,7 +8,11 @@ export default function UsersTab() {
   const { getUsers, updateUserRole, deleteUser, isLoading } = useAdmin();
   const [users, setUsers] = useState<any[]>([]);
   const [pagination, setPagination] = useState({ page: 1, limit: 20, total: 0, totalPages: 0 });
-  const [filters, setFilters] = useState({ role: "", plan: "", search: "" });
+  const [filters, setFilters] = useState<{ role: "" | "user" | "admin"; plan: "" | "free" | "pro"; search: string }>({ 
+    role: "", 
+    plan: "", 
+    search: "" 
+  });
   const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
@@ -20,8 +24,8 @@ export default function UsersTab() {
       const response: any = await getUsers({
         page: pagination.page,
         limit: pagination.limit,
-        role: filters.role || undefined,
-        plan: filters.plan || undefined,
+        role: filters.role ? (filters.role as "user" | "admin") : undefined,
+        plan: filters.plan ? (filters.plan as "free" | "pro") : undefined,
         search: filters.search || undefined,
       });
       setUsers(response.data);
@@ -99,7 +103,7 @@ export default function UsersTab() {
             <select
               value={filters.role}
               onChange={(e) => {
-                setFilters({ ...filters, role: e.target.value });
+                setFilters({ ...filters, role: e.target.value as "" | "user" | "admin" });
                 setPagination({ ...pagination, page: 1 });
               }}
               className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-brand-cyan transition-all cursor-pointer"
@@ -116,7 +120,7 @@ export default function UsersTab() {
             <select
               value={filters.plan}
               onChange={(e) => {
-                setFilters({ ...filters, plan: e.target.value });
+                setFilters({ ...filters, plan: e.target.value as "" | "free" | "pro" });
                 setPagination({ ...pagination, page: 1 });
               }}
               className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-brand-cyan transition-all cursor-pointer"
