@@ -37,7 +37,7 @@ export default function HomeHero() {
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 lg:gap-8 items-center h-full">
 
         {/* Left Column: Typography & Actions */}
-        <div className="flex flex-col items-start text-left pt-10 lg:pt-0">
+        <div className="flex flex-col items-center lg:items-start text-center lg:text-left pt-10 lg:pt-0">
           <motion.div
             initial={{ opacity: 0, scale: 0.9, originX: 0 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -66,7 +66,7 @@ export default function HomeHero() {
             transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-lg lg:text-xl text-gray-400 mb-10 max-w-lg font-light leading-relaxed"
           >
-            Access thousands of breathtaking AI prompts tailored for Midjourney and DALL-E, or instantly render them right here in the browser.
+            Access thousands of breathtaking AI prompts, copy them for use in any platform, or generate your own images using Gemini right here in the browser.
           </motion.p>
 
           <motion.div
@@ -85,7 +85,7 @@ export default function HomeHero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-wrap items-center gap-4 w-full"
+            className="flex flex-wrap items-center justify-center lg:justify-start gap-4 w-full"
           >
             <Link
               href="/explore"
