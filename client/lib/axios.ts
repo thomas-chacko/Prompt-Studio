@@ -29,10 +29,16 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response.data,
   (error) => {
+    // Only redirect to login if 401 AND not already on auth pages
     if (error.response?.status === 401) {
-      localStorage.removeItem('token')
-      if (typeof window !== 'undefined') {
-        window.location.href = '/login'
+      const isAuthPage = typeof window !== 'undefined' && 
+        (window.location.pathname === '/login' || window.location.pathname === '/signup')
+      
+      if (!isAuthPage) {
+        localStorage.removeItem('token')
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login'
+        }
       }
     }
     
