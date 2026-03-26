@@ -1,9 +1,13 @@
+import dynamic from 'next/dynamic';
 import HomeHero from "@/sections/home-hero";
-import TrendingPromptsSection from "@/sections/trending-prompts-section";
-import CategoriesSection from "@/sections/categories-section";
-import HowItWorksSection from "@/sections/how-it-works-section";
-import ModelsTicker from "@/sections/models-ticker";
-import CTASectionNew from "@/sections/cta-section-new";
+
+// Lazy load below-the-fold sections to improve INP and initial load time
+const TrendingPromptsSection = dynamic(() => import("@/sections/trending-prompts-section"));
+const CategoriesSection = dynamic(() => import("@/sections/categories-section"));
+const HowItWorksSection = dynamic(() => import("@/sections/how-it-works-section"));
+const ModelsTicker = dynamic(() => import("@/sections/models-ticker"));
+const SEOContentSection = dynamic(() => import("@/sections/seo-content-section"));
+const CTASectionNew = dynamic(() => import("@/sections/cta-section-new"));
 
 export default function Home() {
   return (
@@ -22,6 +26,9 @@ export default function Home() {
 
       {/* Section 6 (Second-last): AI Models Ticker */}
       <ModelsTicker />
+
+      {/* SEO Section to improve text-to-code ratio */}
+      <SEOContentSection />
 
       {/* Section 7 (Last): Call to Action */}
       <CTASectionNew />

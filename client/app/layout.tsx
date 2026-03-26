@@ -17,26 +17,40 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: import("next").Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#03010a",
+};
+
 export const metadata: Metadata = {
-  title: "PromptStudio — #1 AI Image & Video Prompt Gallery | Generate with Gemini",
-  description:
-    "PromptStudio is the largest visual AI prompt gallery. Browse, copy, and discover breathtaking image prompts for Midjourney, DALL-E, & Stable Diffusion. Generate your own stunning AI images right here using your Gemini API key.",
+  metadataBase: new URL("https://promptstudio-web.vercel.app"),
+  title: "PromptStudio: Top AI Image & Video Prompts",
+  description: "Discover breathtaking AI image & video prompts for Midjourney & DALL-E. Generate art using the Gemini API.",
   keywords: [
     "AI image prompts", "Midjourney prompts", "DALL-E prompts", "Stable diffusion prompts",
     "AI generative art", "AI image generator", "Gemini API image generation",
     "copy image prompts", "visual AI gallery", "AI video prompts",
     "AI art community", "prompt studio art", "best AI image prompts",
   ],
+  alternates: {
+    canonical: "/",
+    languages: {
+      "en-US": "/en-US",
+    },
+  },
   openGraph: {
-    title: "PromptStudio — Visual AI Prompt Gallery",
-    description: "Discover breathtaking AI image prompts. Generate stunning generative art using your Gemini API key. Free curated library of Midjourney and DALL-E prompts.",
+    title: "PromptStudio: Top AI Image & Video Prompts",
+    description: "Discover breathtaking AI image & video prompts for Midjourney & DALL-E. Generate art using the Gemini API.",
     type: "website",
     locale: "en_US",
+    url: "/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "PromptStudio — Visual AI Prompt Gallery",
-    description: "Browse the world's best AI image prompts. Copy in one click. Generate stunning art directly with your Gemini API key.",
+    title: "PromptStudio: Top AI Image & Video Prompts",
+    description: "Discover breathtaking AI image & video prompts for Midjourney & DALL-E. Generate art using the Gemini API.",
   },
   robots: { index: true, follow: true },
 };
@@ -46,11 +60,34 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "PromptStudio",
+    "url": "https://promptstudio-web.vercel.app/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://promptstudio-web.vercel.app/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    },
+    "sameAs": [
+      "https://twitter.com/promptstudio",
+      "https://facebook.com/promptstudio",
+      "https://instagram.com/promptstudio",
+      "https://linkedin.com/company/promptstudio",
+      "https://youtube.com/@promptstudio"
+    ]
+  };
+
   return (
     <html lang="en" className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
         <ErrorBoundary>
           <APIWarmup />
           <ToastContainer />

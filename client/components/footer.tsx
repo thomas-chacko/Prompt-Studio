@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Github, Twitter, DiscIcon as Discord, Sparkles, Image as ImageIcon } from 'lucide-react';
+import { Github, Twitter, DiscIcon as Discord, Sparkles, Image as ImageIcon, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -22,15 +22,24 @@ export default function Footer() {
             <p className="text-gray-400 text-sm max-w-sm leading-relaxed mb-6 font-light">
               The world's largest visual AI prompt gallery. Discover stunning generative art, copy Midjourney prompts, and generate masterpieces using your Gemini API key.
             </p>
-            <div className="flex items-center gap-4">
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all outline-none focus:ring-2 focus:ring-brand-purple" aria-label="Twitter">
-                <Twitter className="w-4 h-4" />
+            <div className="flex items-center gap-4 flex-wrap">
+              <a href="https://twitter.com/promptstudio" target="_blank" rel="noopener noreferrer" className="p-3 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all outline-none focus:ring-2 focus:ring-brand-purple" aria-label="Twitter">
+                <Twitter className="w-5 h-5" />
               </a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all outline-none focus:ring-2 focus:ring-brand-purple" aria-label="GitHub">
-                <Github className="w-4 h-4" />
+              <a href="https://facebook.com/promptstudio" target="_blank" rel="noopener noreferrer" className="p-3 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all outline-none focus:ring-2 focus:ring-brand-purple" aria-label="Facebook">
+                <Facebook className="w-5 h-5" />
               </a>
-              <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all outline-none focus:ring-2 focus:ring-brand-purple" aria-label="Discord">
-                <Discord className="w-4 h-4" />
+              <a href="https://instagram.com/promptstudio" target="_blank" rel="noopener noreferrer" className="p-3 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all outline-none focus:ring-2 focus:ring-brand-purple" aria-label="Instagram">
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a href="https://linkedin.com/company/promptstudio" target="_blank" rel="noopener noreferrer" className="p-3 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all outline-none focus:ring-2 focus:ring-brand-purple" aria-label="LinkedIn">
+                <Linkedin className="w-5 h-5" />
+              </a>
+              <a href="https://youtube.com/@promptstudio" target="_blank" rel="noopener noreferrer" className="p-3 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all outline-none focus:ring-2 focus:ring-brand-purple" aria-label="YouTube">
+                <Youtube className="w-5 h-5" />
+              </a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-3 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all outline-none focus:ring-2 focus:ring-brand-purple" aria-label="GitHub">
+                <Github className="w-5 h-5" />
               </a>
             </div>
           </div>
