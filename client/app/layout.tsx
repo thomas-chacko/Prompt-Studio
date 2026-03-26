@@ -26,7 +26,7 @@ export const viewport: import("next").Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://promptstudio-web.vercel.app"),
-  title: "PromptStudio: Top AI Image & Video Prompts",
+  title: "PromptStudio - Best AI Image & Video Prompts for Midjourney & DALL-E",
   description: "Discover breathtaking AI image & video prompts for Midjourney & DALL-E. Generate art using the Gemini API.",
   keywords: [
     "AI image prompts", "Midjourney prompts", "DALL-E prompts", "Stable diffusion prompts",
@@ -37,7 +37,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
     languages: {
-      "en-US": "/en-US",
+      "en-US": "/",
+      "x-default": "/",
     },
   },
   openGraph: {

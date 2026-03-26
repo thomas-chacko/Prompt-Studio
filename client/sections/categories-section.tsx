@@ -85,7 +85,7 @@ export default function CategoriesSection() {
                     <div className="font-extrabold text-white text-2xl drop-shadow-md mb-1">{cat.name}</div>
                   </div>
                   <div className="flex flex-col items-end">
-                    <span className="text-xs font-bold text-gray-300 tracking-wider">PROMPTS</span>
+                    <span className="text-sm font-bold text-gray-300 tracking-wider">PROMPTS</span>
                     <span className="text-lg font-black text-brand-cyan tracking-tight">{cat.count}</span>
                   </div>
                 </div>

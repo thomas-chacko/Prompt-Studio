@@ -39,11 +39,11 @@ function TrendingCard({
       >
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0812] via-transparent to-transparent opacity-80" />
         {/* Rank badge */}
-        <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center text-xs font-bold text-white shadow-xl">
+        <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center text-sm font-bold text-white shadow-xl">
           #{rank}
         </div>
         <div className="absolute bottom-4 left-4">
-          <span className="text-xs font-bold uppercase tracking-widest px-2.5 py-1 rounded-md bg-brand-purple/20 text-brand-cyan border border-brand-purple/30 backdrop-blur-md">
+          <span className="text-sm font-bold uppercase tracking-widest px-2.5 py-1 rounded-md bg-brand-purple/20 text-brand-cyan border border-brand-purple/30 backdrop-blur-md">
             {prompt.category}
           </span>
         </div>
@@ -57,20 +57,20 @@ function TrendingCard({
         </Link>
 
         {/* The Prompt Snippet */}
-        <p className="text-xs text-gray-400 font-mono flex-1 line-clamp-3 leading-relaxed mb-5 p-3 rounded-lg bg-white/5 border border-white/5">
+        <p className="text-sm text-gray-400 font-mono flex-1 line-clamp-3 leading-relaxed mb-5 p-3 rounded-lg bg-white/5 border border-white/5">
           {prompt.content}
         </p>
 
         {/* Footer */}
         <div className="flex items-center justify-between pt-4 border-t border-white/10">
-          <span className="flex items-center gap-1.5 text-xs font-medium text-gray-500">
+          <span className="flex items-center gap-1.5 text-sm font-medium text-gray-500">
             <TrendingUp className="w-4 h-4 text-brand-cyan" />
             {prompt.copyCount.toLocaleString()} uses
           </span>
           <div className="flex items-center gap-2">
             <button
               onClick={handleCopy}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold transition-all duration-200 ${
                 copied
                   ? "bg-green-500/20 text-green-400 border border-green-500/30"
                   : "bg-white/5 text-white border border-white/10 hover:bg-brand-purple/20 hover:border-brand-purple/40"

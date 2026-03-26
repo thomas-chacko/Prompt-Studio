@@ -55,20 +55,41 @@ export default function SEOContentSection() {
             </div>
           </div>
 
+          <div className="grid md:grid-cols-2 gap-12 mt-12">
+            <div>
+              <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                <span className="w-8 h-px bg-brand-purple"></span>
+                Advanced AI Prompt Engineering
+              </h3>
+              <p className="text-gray-400 leading-relaxed font-light mb-4 text-sm">
+                Unlock the full potential of generative AI through expert prompt engineering. At PromptStudio, we focus on the technical nuances that elevate a simple text string into a visual masterpiece. Our gallery is organized by lighting styles, camera settings, and artist influences to help you build complex, layered prompts for professional-grade results.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                <span className="w-8 h-px bg-brand-cyan"></span>
+                Daily Prompt Inspiration
+              </h3>
+              <p className="text-gray-400 leading-relaxed font-light text-sm">
+                Our database is updated daily with fresh trending prompts and community submissions. Whether you're looking for photorealistic portrait prompts or surreal abstract landscapes, you'll find a constant stream of inspiration. Join our newsletter to stay ahead of the latest developments in Gemini 1.5 Pro and Midjourney v6 capabilities.
+              </p>
+            </div>
+          </div>
+
           <div className="p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm mt-12">
             <h3 className="text-2xl font-semibold text-white mb-4 text-center">Why Content Creators Choose PromptStudio</h3>
             <div className="grid sm:grid-cols-3 gap-6 text-center mt-8">
               <div>
                 <h4 className="text-lg font-medium text-white mb-2">Curated Quality</h4>
-                <p className="text-sm text-gray-400 font-light">Every prompt in our gallery is visually verified to ensure high-quality outputs across popular AI models.</p>
+                <p className="text-sm text-gray-400 font-light leading-relaxed">Every prompt in our gallery is visually verified to ensure high-quality outputs across popular AI models like Stable Diffusion, Midjourney, and DALL-E 3.</p>
               </div>
               <div>
                 <h4 className="text-lg font-medium text-white mb-2">One-Click Copying</h4>
-                <p className="text-sm text-gray-400 font-light">Our seamless UI allows you to instantly copy prompt text, parameters, and negative prompts to your clipboard.</p>
+                <p className="text-sm text-gray-400 font-light leading-relaxed">Our seamless UI allows you to instantly copy prompt text, seed parameters, and negative prompts to your clipboard for immediate workflow use.</p>
               </div>
               <div>
                 <h4 className="text-lg font-medium text-white mb-2">Active Community</h4>
-                <p className="text-sm text-gray-400 font-light">Join thousands of AI artists sharing their techniques, workflows, and discoveries in the generative space.</p>
+                <p className="text-sm text-gray-400 font-light leading-relaxed">Join thousands of AI artists sharing their techniques, workflows, and secret recipes for successful visual generation in the generative art space.</p>
               </div>
             </div>
           </div>

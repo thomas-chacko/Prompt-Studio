@@ -72,10 +72,10 @@ export default function Footer() {
 
         {/* Bottom Banner */}
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-xs text-gray-500 font-medium">
+          <div className="text-sm text-gray-400 font-medium">
             &copy; {new Date().getFullYear()} PromptStudio, Inc. All rights reserved.
           </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.02] border border-white/5 text-xs text-gray-400 font-mono">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.02] border border-white/5 text-sm text-gray-400 font-mono">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
