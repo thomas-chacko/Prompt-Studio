@@ -2,13 +2,26 @@ import { useAuthStore } from '@/store/auth.store'
 import { authApi } from '@/lib/api'
 import { handleApiError } from '@/lib/error-handler'
 
+// Transform backend camelCase to frontend snake_case
+const transformUser = (user: any) => {
+  if (!user) return user
+  return {
+    ...user,
+    avatar_url: user.avatarUrl,
+    is_verified: user.isVerified,
+    created_at: user.createdAt,
+    updated_at: user.updatedAt,
+  }
+}
+
 export const useAuth = () => {
   const { user, token, isAuthenticated, setAuth, clearAuth, updateUser } = useAuthStore()
 
   const signup = async (username: string, email: string, password: string) => {
     try {
       const response = await authApi.signup({ username, email, password })
-      setAuth(response.data.user, response.data.token)
+      const transformedUser = transformUser(response.data.user)
+      setAuth(transformedUser, response.data.token)
       return response
     } catch (err) {
       const error = handleApiError(err, 'Signup')
@@ -19,7 +32,8 @@ export const useAuth = () => {
   const login = async (email: string, password: string) => {
     try {
       const response = await authApi.login({ email, password })
-      setAuth(response.data.user, response.data.token)
+      const transformedUser = transformUser(response.data.user)
+      setAuth(transformedUser, response.data.token)
       return response
     } catch (err) {
       const error = handleApiError(err, 'Login')

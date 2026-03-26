@@ -5,23 +5,31 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   User, Mail, Calendar, Shield, Sparkles, LogOut,
-  Settings, ImageIcon, Wand2, Heart, Bookmark
+  Settings, ImageIcon, Wand2, Heart, Bookmark, Key
 } from "lucide-react";
 import { useToast } from "@/components/toast";
+import EditProfileModal from "@/components/edit-profile-modal";
+import ChangePasswordModal from "@/components/change-password-modal";
 
 export default function ProfilePage() {
   const { user, isAuthenticated, logout } = useAuth();
   const router = useRouter();
   const toast = useToast();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isHydrated, setIsHydrated] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+
+  // Wait for Zustand to hydrate from localStorage
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    // Only check auth after hydration is complete
+    if (isHydrated && !isAuthenticated) {
       router.push("/login");
-    } else {
-      setIsLoading(false);
     }
-  }, [isAuthenticated, router]);
+  }, [isHydrated, isAuthenticated, router]);
 
   const handleLogout = async () => {
     try {
@@ -33,7 +41,8 @@ export default function ProfilePage() {
     }
   };
 
-  if (isLoading) {
+  // Show loading while hydrating or redirecting
+  if (!isHydrated || !isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-purple"></div>
@@ -104,16 +113,24 @@ export default function ProfilePage() {
             </div>
 
             {/* Actions */}
-            <div className="flex gap-3">
+            <div className="flex flex-col gap-3">
               <button
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 hover:border-white/30 transition-all"
+                onClick={() => setIsEditModalOpen(true)}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 hover:border-white/30 transition-all cursor-pointer"
               >
                 <Settings className="w-4 h-4" />
                 Edit Profile
               </button>
               <button
+                onClick={() => setIsPasswordModalOpen(true)}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 hover:border-white/30 transition-all cursor-pointer"
+              >
+                <Key className="w-4 h-4" />
+                Change Password
+              </button>
+              <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-red-500/10 hover:bg-red-500/20 backdrop-blur-xl border border-red-500/30 hover:border-red-500/50 text-red-400 hover:text-red-300 transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-red-500/10 hover:bg-red-500/20 backdrop-blur-xl border border-red-500/30 hover:border-red-500/50 text-red-400 hover:text-red-300 transition-all cursor-pointer"
               >
                 <LogOut className="w-4 h-4" />
                 Logout
@@ -185,6 +202,17 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
+
+      {/* Modals */}
+      <EditProfileModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        currentUser={user}
+      />
+      <ChangePasswordModal
+        isOpen={isPasswordModalOpen}
+        onClose={() => setIsPasswordModalOpen(false)}
+      />
     </div>
   );
 }

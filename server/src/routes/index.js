@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import authRoutes from "./auth.routes.js";
+import userRoutes from "./user.routes.js";
 import promptRoutes from "./prompt.routes.js";
 import categoryRoutes from "./category.routes.js";
 import adminRoutes from "./admin.routes.js";
@@ -14,6 +15,7 @@ router.get("/health", (_req, res) => {
 
 // ─── Resource Routes ──────────────────────────────────────────────────────────
 router.use("/auth", authRoutes);
+router.use("/user", userRoutes);
 router.use("/prompts", promptRoutes);
 router.use("/categories", categoryRoutes);
 router.use("/admin", adminRoutes);

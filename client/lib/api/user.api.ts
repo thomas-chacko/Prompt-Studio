@@ -3,7 +3,6 @@ import axios from '../axios'
 interface UpdateProfileData {
   username?: string
   bio?: string
-  avatar_url?: string
 }
 
 interface UpdatePasswordData {
@@ -18,6 +17,10 @@ export const userApi = {
 
   updateProfile: async (data: UpdateProfileData) => {
     return axios.put('/api/v1/user/me', data)
+  },
+
+  uploadAvatar: async (imageData: string) => {
+    return axios.post('/api/v1/user/me/avatar', { image: imageData })
   },
 
   updatePassword: async (data: UpdatePasswordData) => {

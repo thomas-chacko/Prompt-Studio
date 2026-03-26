@@ -402,6 +402,68 @@ export const useMyResource = () => {
 };
 ```
 
+### User Profile Hook (`useUser`)
+
+The `useUser` hook provides methods for managing user profile operations:
+
+```typescript
+import { useUser } from '@/hooks';
+
+const { 
+  isLoading, 
+  updateProfile, 
+  uploadAvatar,
+  updatePassword, 
+  deleteAccount, 
+  getMyPrompts 
+} = useUser();
+
+// Update profile
+await updateProfile({
+  username: 'newusername',
+  bio: 'New bio text'
+});
+
+// Upload avatar (base64 data URI)
+const fileInput = document.querySelector('input[type="file"]');
+const file = fileInput.files[0];
+const reader = new FileReader();
+reader.onloadend = async () => {
+  await uploadAvatar(reader.result as string);
+};
+reader.readAsDataURL(file);
+
+// Update password
+await updatePassword({
+  current_password: 'oldpass',
+  new_password: 'newpass123'
+});
+
+// Delete account
+await deleteAccount();
+
+// Get user's prompts
+const response = await getMyPrompts(1, 12);
+```
+
+**Available Methods:**
+- `updateProfile({ username?, bio? })` - Updates user profile, syncs with auth store
+- `uploadAvatar(imageData)` - Uploads avatar to Cloudinary (base64 data URI), deletes old avatar, syncs with auth store
+- `updatePassword({ current_password, new_password })` - Changes password
+- `deleteAccount()` - Permanently deletes account
+- `getMyPrompts(page, limit)` - Gets user's created prompts with pagination
+
+**State:**
+- `isLoading` - Boolean indicating if any operation is in progress
+
+All methods automatically handle errors through the global error handler and display toast notifications.
+
+**Avatar Upload Notes:**
+- Send image as base64 data URI (e.g., `data:image/png;base64,...`)
+- Old avatar is automatically deleted from Cloudinary
+- Image is uploaded to `promptstudio/avatars/{userId}` folder
+- Returns updated user object with new `avatar_url`
+
 ---
 
 ## 🎨 Component Patterns

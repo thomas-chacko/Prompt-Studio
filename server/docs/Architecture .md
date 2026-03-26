@@ -424,6 +424,7 @@ Every response — success or error — follows one of these shapes:
 | POST | `/api/v1/auth/logout` | Auth | 200 |
 | GET | `/api/v1/user/me` | Auth | 200 |
 | PUT | `/api/v1/user/me` | Auth | 200 |
+| POST | `/api/v1/user/me/avatar` | Auth | 200 |
 | PUT | `/api/v1/user/me/password` | Auth | 200 |
 | DELETE | `/api/v1/user/me` | Auth | 200 |
 | GET | `/api/v1/user/me/prompts` | Auth | 200 |
@@ -469,7 +470,234 @@ Every response — success or error — follows one of these shapes:
 
 ---
 
-## 8. Authentication & Authorization
+## 8. User Profile API
+
+### Overview
+
+User profile endpoints allow authenticated users to manage their account information, update passwords, view their prompts, and delete their account. All endpoints require JWT authentication.
+
+### Endpoints
+
+#### Get Current User Profile
+
+**Endpoint:** `GET /api/v1/user/me`  
+**Auth:** Required  
+**Response:** 200
+
+Returns the authenticated user's profile information.
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "uuid",
+    "username": "johndoe",
+    "email": "john@example.com",
+    "avatar_url": "https://cloudinary.com/...",
+    "bio": "AI enthusiast",
+    "role": "user",
+    "plan": "free",
+    "is_verified": true,
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-20T14:45:00Z"
+  }
+}
+```
+
+---
+
+#### Update Profile
+
+**Endpoint:** `PUT /api/v1/user/me`  
+**Auth:** Required  
+**Response:** 200
+
+Updates user profile information (username, bio). All fields are optional - send only the fields you want to update.
+
+**Request Body:**
+```json
+{
+  "username": "newusername",
+  "bio": "Updated bio text"
+}
+```
+
+**Validation:**
+- Username must be unique across all users
+- At least one field must be provided
+
+**Error Responses:**
+- `400` - No fields provided
+- `409` - Username already taken
+
+---
+
+#### Upload Avatar
+
+**Endpoint:** `POST /api/v1/user/me/avatar`  
+**Auth:** Required  
+**Response:** 200
+
+Uploads a new avatar image to Cloudinary. Automatically deletes the old avatar if one exists.
+
+**Request Body:**
+```json
+{
+  "image": "data:image/png;base64,iVBORw0KGgoAAAANS..."
+}
+```
+
+**Notes:**
+- Image should be sent as a base64 data URI
+- Old avatar is automatically deleted from Cloudinary
+- Image is uploaded to `promptstudio/avatars/{userId}` folder
+- Returns updated user object with new `avatar_url`
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "uuid",
+    "username": "johndoe",
+    "email": "john@example.com",
+    "avatar_url": "https://res.cloudinary.com/.../promptstudio/avatars/uuid/image.jpg",
+    "bio": "AI enthusiast",
+    "role": "user",
+    "plan": "free",
+    "is_verified": true,
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-20T14:45:00Z"
+  }
+}
+```
+
+---
+
+#### Update Password
+
+**Endpoint:** `PUT /api/v1/user/me/password`  
+**Auth:** Required  
+**Response:** 200
+
+Changes the user's password.
+
+**Request Body:**
+```json
+{
+  "current_password": "oldpassword123",
+  "new_password": "newpassword456"
+}
+```
+
+**Validation:**
+- Both fields are required
+- New password must be at least 8 characters long
+- Current password must match the user's existing password
+
+**Error Responses:**
+- `400` - Missing fields or password too short
+- `401` - Current password is incorrect
+
+---
+
+#### Delete Account
+
+**Endpoint:** `DELETE /api/v1/user/me`  
+**Auth:** Required  
+**Response:** 200
+
+Permanently deletes the user's account and all associated data (prompts, collections, generations). This action is irreversible.
+
+```json
+{
+  "success": true,
+  "data": {
+    "message": "Account deleted successfully"
+  }
+}
+```
+
+---
+
+#### Get My Prompts
+
+**Endpoint:** `GET /api/v1/user/me/prompts`  
+**Auth:** Required  
+**Response:** 200
+
+Gets all prompts created by the authenticated user with pagination.
+
+**Query Parameters:**
+- `page` (number, default: 1) - Page number
+- `limit` (number, default: 12) - Items per page
+
+**Example:** `GET /api/v1/user/me/prompts?page=1&limit=12`
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "title": "Cyberpunk City",
+      "prompt": "A futuristic cyberpunk city at night...",
+      "image": "https://cloudinary.com/...",
+      "model_used": "imagen-3.0-generate-002",
+      "tags": ["cyberpunk", "city", "neon"],
+      "total_copied_count": 45,
+      "total_likes": 23,
+      "is_published": true,
+      "created_at": "2024-01-15T10:30:00Z",
+      "author": {
+        "id": "uuid",
+        "username": "johndoe",
+        "avatar_url": "https://cloudinary.com/..."
+      },
+      "category": {
+        "id": 1,
+        "category": "Cyberpunk",
+        "slug": "cyberpunk"
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 12,
+    "total": 45,
+    "totalPages": 4
+  }
+}
+```
+
+### Implementation Details
+
+**Service Layer (`user.service.js`):**
+- `getProfile(userId)` - Fetches user profile with selected fields
+- `updateProfile(userId, data)` - Updates profile with username uniqueness check
+- `uploadAvatar(userId, imageSource)` - Uploads avatar to Cloudinary, deletes old avatar
+- `updatePassword(userId, currentPassword, newPassword)` - Verifies current password and updates with bcrypt
+- `deleteAccount(userId)` - Deletes user (cascade deletes all related data)
+- `getMyPrompts(userId, page, limit)` - Fetches user's prompts with pagination
+
+**Cloudinary Integration:**
+- Avatars are uploaded to `promptstudio/avatars/{userId}` folder
+- Old avatars are automatically deleted when uploading a new one
+- Images are optimized with `quality: 'auto'` and `fetch_format: 'auto'`
+- Public ID is extracted from URL for deletion
+
+**Security:**
+- All endpoints require JWT authentication
+- Passwords are hashed with bcrypt (12 rounds)
+- Username changes are validated for uniqueness
+- Account deletion cascades to all related data
+- Users cannot change their role through the API
+- Avatar uploads are limited to authenticated users only
+
+---
+
+## 9. Authentication & Authorization
 
 ### JWT Flow
 
@@ -753,7 +981,7 @@ export const getById = asyncHandler(async (req, res) => {
 |---|---|
 | **Secure headers** | `helmet()` applied globally in `app.js` |
 | **CORS** | Configured via `CORS_ORIGIN` env var — never hardcoded |
-| **Body size** | `express.json({ limit: '10kb' })` — prevents payload attacks |
+| **Body size** | `express.json({ limit: '10mb' })` — allows base64 image uploads |
 | **Rate limiting** | `express-rate-limit` on all `/api/*` routes |
 | **Password storage** | bcrypt with cost factor 12 — never stored in plain text |
 | **JWT secrets** | Long random string via `openssl rand -hex 32` |

@@ -74,8 +74,11 @@ Current documentation files in `/server/docs/`:
 
 | File | Purpose |
 |---|---|
-| `Architecture .md` | Complete system architecture, database schema, tech stack |
+| `Architecture .md` | Complete system architecture, database schema, tech stack, all API endpoints |
 | `AUTH_API.md` | Authentication API endpoints with examples |
+| `ADMIN_API.md` | Admin panel API endpoints with examples |
+
+**User Profile API is documented in Architecture .md section 8.**
 
 **When implementing new modules, create similar detailed documentation files.**
 
@@ -210,7 +213,7 @@ server/src/
 │   └── admin.controller.js
 ├── services/                   # All business logic and data access lives here
 │   ├── auth.service.js
-│   ├── user.service.js
+│   ├── user.service.js         # Profile CRUD, password change, account deletion
 │   ├── prompt.service.js
 │   ├── category.service.js
 │   ├── search.service.js
