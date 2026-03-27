@@ -25,15 +25,17 @@ export default function PromptCard({ prompt }: { prompt: Prompt }) {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+        transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="glass p-6 rounded-2xl relative overflow-hidden group border border-white/5 transition-all duration-500 hover:border-white/20 hover:shadow-[0_8px_32px_rgba(112,0,255,0.15)] flex flex-col h-full cursor-pointer"
+        style={{ willChange: 'transform, opacity' }}
+        className="glass p-6 rounded-2xl relative overflow-hidden group border border-white/5 transition-all duration-300 hover:border-white/20 hover:shadow-[0_8px_32px_rgba(112,0,255,0.15)] flex flex-col h-full cursor-pointer"
       >
         {/* Subtle dynamic gradient overlay on hover */}
         <div 
-          className="absolute inset-0 bg-gradient-to-br from-brand-purple/10 to-brand-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          className="absolute inset-0 bg-gradient-to-br from-brand-purple/10 to-brand-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+          style={{ willChange: 'opacity' }}
         />
 
         <div className="flex justify-between items-start mb-4 relative z-10 w-full gap-4">
@@ -44,7 +46,7 @@ export default function PromptCard({ prompt }: { prompt: Prompt }) {
           </div>
           <div className="flex items-center gap-2">
             <button 
-              className="text-gray-400 hover:text-brand-pink transition-colors p-1"
+              className="text-gray-400 hover:text-brand-pink transition-colors duration-200 p-1"
               aria-label="Favorite prompt"
               onClick={(e) => {
                 e.preventDefault();
@@ -57,7 +59,7 @@ export default function PromptCard({ prompt }: { prompt: Prompt }) {
           </div>
         </div>
 
-        <h3 className="text-xl font-bold mb-2 text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-300 transition-all duration-300">
+        <h3 className="text-xl font-bold mb-2 text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-300 transition-all duration-200">
           {prompt.title}
         </h3>
         <p className="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">
@@ -83,7 +85,7 @@ export default function PromptCard({ prompt }: { prompt: Prompt }) {
           </span>
           <button
             onClick={handleCopy}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 ${
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
               copied
                 ? "bg-green-500/20 text-green-400 border border-green-500/30"
                 : "bg-white/10 text-white hover:bg-white/20 border border-white/10"
