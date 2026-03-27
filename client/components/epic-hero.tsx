@@ -19,7 +19,7 @@ export default function EpicHero() {
       {/* Grid background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
 
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+      <div className="relative z-10 w-full mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
         
         {/* Badge */}
         <motion.div
@@ -44,7 +44,7 @@ export default function EpicHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-4xl"
+          className="w-full"
         >
           <h1 className="text-5xl sm:text-7xl lg:text-[5.5rem] font-bold tracking-tighter text-white leading-[1.05] mb-6">
             The world's most powerful <br className="hidden md:block" />
@@ -59,7 +59,7 @@ export default function EpicHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-2xl"
+          className="w-full"
         >
           <p className="text-lg md:text-xl text-gray-400 font-light leading-relaxed mb-10">
             Stop guessing what the AI wants. Access the open registry of battle-tested prompts for ChatGPT, Claude, and Midjourney used by the top 1% of creators.
@@ -71,7 +71,7 @@ export default function EpicHero() {
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full max-w-2xl relative group"
+          className="w-full relative group"
         >
           <div className="absolute -inset-1 bg-gradient-to-r from-brand-cyan/20 to-brand-purple/20 rounded-2xl blur opacity-20 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
           <div className="relative flex items-center bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-2xl overflow-hidden focus-within:border-white/20 transition-all">

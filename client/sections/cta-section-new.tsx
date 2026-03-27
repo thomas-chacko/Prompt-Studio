@@ -17,7 +17,7 @@ export default function CTASectionNew() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full border border-brand-purple/5 animate-[spin_40s_linear_infinite] pointer-events-none mix-blend-screen" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-brand-cyan/5 animate-[spin_25s_linear_infinite_reverse] pointer-events-none mix-blend-screen" />
 
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-8 text-center z-10">
+      <div className="relative w-full mx-auto px-4 sm:px-8 text-center z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -37,11 +37,11 @@ export default function CTASectionNew() {
             </span>
           </h2>
 
-          <p className="text-lg md:text-xl text-gray-400 mb-14 max-w-2xl mx-auto leading-relaxed font-light">
+          <p className="text-lg md:text-xl text-gray-400 mb-14 w-full mx-auto leading-relaxed font-light">
             Join thousands of creators defining the bleeding edge of AI imagery. Browse the gallery, copy elite prompts, or render directly using the Gemini API entirely in your browser.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-5 w-full max-w-lg mx-auto mb-16">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-5 w-full mx-auto mb-16">
             <Link
               href="/explore"
               className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white text-black font-bold text-base hover:bg-gray-200 transition-all shadow-[0_0_40px_rgba(255,255,255,0.15)] group hover:scale-[1.02] active:scale-[0.98]"

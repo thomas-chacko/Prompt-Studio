@@ -15,11 +15,11 @@ export default function SubmitPageClient() {
 
   if (success) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-24 text-center">
+      <div className="w-full mx-auto px-4 py-24 text-center">
         <div className="glass rounded-3xl p-12 relative overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-green-500/20 rounded-full blur-[80px] -z-10" />
           <h2 className="text-4xl font-bold mb-4">Prompt Submitted!</h2>
-          <p className="text-xl text-gray-400 mb-8 max-w-lg mx-auto">
+          <p className="text-xl text-gray-400 mb-8 w-full mx-auto">
             Your prompt has been successfully submitted and is currently{" "}
             <span className="text-brand-cyan font-bold">pending review</span>.
             You will be notified once it is approved.
@@ -38,7 +38,7 @@ export default function SubmitPageClient() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12">
+    <div className="w-full mx-auto px-4 py-12">
       <Link
         href="/"
         className="inline-flex items-center text-sm font-medium text-gray-400 hover:text-white transition-colors mb-8"

@@ -89,7 +89,7 @@ export default function StatsSection() {
       {/* Subtle background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_40%_at_50%_50%,rgba(124,58,237,0.05),transparent)] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-8">
+      <div className="w-full mx-auto px-4 sm:px-8">
         {/* Stats grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
           {STATS.map(({ value, suffix, label, sub, color, glow }, i) => (

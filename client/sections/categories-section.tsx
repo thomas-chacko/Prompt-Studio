@@ -33,8 +33,8 @@ export default function CategoriesSection() {
     >
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16 max-w-5xl">
+      <div className="relative w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16 w-full">
           <div>
             <div className="flex items-center gap-2 mb-4">
               <ImageIcon className="w-5 h-5 text-brand-purple" />
@@ -43,7 +43,7 @@ export default function CategoriesSection() {
             <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4">
               Explore Aesthetic Categories
             </h2>
-            <p className="text-gray-400 text-lg max-w-2xl font-light leading-relaxed">
+            <p className="text-gray-400 text-lg w-full font-light leading-relaxed">
               Find the exact visual styles you need. Built for modern generative systems like Midjourney v6 and DALL·E 3.
             </p>
           </div>

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function GenerateImagePage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12 md:py-24">
+    <div className="w-full mx-auto px-4 py-12 md:py-24">
       {/* Page Header */}
       <div className="text-center mb-16 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-brand-purple/20 rounded-full blur-[120px] -z-10 pointer-events-none" />
@@ -22,7 +22,7 @@ export default function GenerateImagePage() {
         <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight text-white leading-tight">
           AI <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-pink-500">Image Generator</span>
         </h1>
-        <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-xl text-gray-400 w-full mx-auto leading-relaxed">
           Creating breathtaking AI art requires precision. Build the perfect text-to-image prompts for Midjourney, DALL-E 3, and Stable Diffusion by fine-tuning lighting, style, and camera settings.
         </p>
       </div>
