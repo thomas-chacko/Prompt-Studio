@@ -81,7 +81,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group shrink-0">
             <span className="font-extrabold text-lg tracking-tight text-white">
-              Prompt<span className="text-brand-cyan">Studio</span>
+              Prompt <span className="text-brand-cyan">Studio</span>
             </span>
           </Link>
 
