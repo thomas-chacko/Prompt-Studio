@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/store/auth.store'
 import { authApi } from '@/lib/api'
+import { userApi } from '@/lib/api/user.api'
 import { handleApiError } from '@/lib/error-handler'
 
 // Transform backend camelCase to frontend snake_case
@@ -52,6 +53,19 @@ export const useAuth = () => {
     }
   }
 
+  const refreshUser = async () => {
+    try {
+      const response: any = await userApi.getProfile()
+      const userData = response.data || response
+      const transformedUser = transformUser(userData)
+      updateUser(transformedUser)
+      return transformedUser
+    } catch (err) {
+      const error = handleApiError(err, 'RefreshUser')
+      throw new Error(error.message)
+    }
+  }
+
   return {
     user,
     token,
@@ -60,5 +74,6 @@ export const useAuth = () => {
     login,
     logout,
     updateUser,
+    refreshUser,
   }
 }

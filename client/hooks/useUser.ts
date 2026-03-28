@@ -7,6 +7,30 @@ export const useUser = () => {
   const [isLoading, setIsLoading] = useState(false)
   const { updateUser } = useAuth()
 
+  const getProfile = async () => {
+    setIsLoading(true)
+    try {
+      const response: any = await userApi.getProfile()
+      // Extract user from response.data
+      const userData = response.data || response
+      // Transform camelCase to snake_case for frontend
+      const transformedUser = {
+        ...userData,
+        avatar_url: userData.avatarUrl,
+        is_verified: userData.isVerified,
+        created_at: userData.createdAt,
+        updated_at: userData.updatedAt,
+      }
+      updateUser(transformedUser)
+      return transformedUser
+    } catch (error) {
+      handleApiError(error, 'GetProfile')
+      throw error
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   const updateProfile = async (data: {
     username?: string
     bio?: string
@@ -14,13 +38,15 @@ export const useUser = () => {
     setIsLoading(true)
     try {
       const response: any = await userApi.updateProfile(data)
+      // Extract user from response.data
+      const userData = response.data || response
       // Transform camelCase to snake_case for frontend
       const transformedUser = {
-        ...response,
-        avatar_url: response.avatarUrl,
-        is_verified: response.isVerified,
-        created_at: response.createdAt,
-        updated_at: response.updatedAt,
+        ...userData,
+        avatar_url: userData.avatarUrl,
+        is_verified: userData.isVerified,
+        created_at: userData.createdAt,
+        updated_at: userData.updatedAt,
       }
       updateUser(transformedUser)
       return transformedUser
@@ -37,13 +63,15 @@ export const useUser = () => {
     try {
       const response: any = await userApi.uploadAvatar(imageData)
       console.log('Upload avatar response:', response)
+      // Extract user from response.data
+      const userData = response.data || response
       // Transform camelCase to snake_case for frontend
       const transformedUser = {
-        ...response,
-        avatar_url: response.avatarUrl,
-        is_verified: response.isVerified,
-        created_at: response.createdAt,
-        updated_at: response.updatedAt,
+        ...userData,
+        avatar_url: userData.avatarUrl,
+        is_verified: userData.isVerified,
+        created_at: userData.createdAt,
+        updated_at: userData.updatedAt,
       }
       console.log('Transformed user:', transformedUser)
       updateUser(transformedUser)
@@ -100,6 +128,7 @@ export const useUser = () => {
 
   return {
     isLoading,
+    getProfile,
     updateProfile,
     uploadAvatar,
     updatePassword,

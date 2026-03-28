@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useUser } from "@/hooks";
 import { useToast } from "@/components/toast";
 import { X, Upload, User as UserIcon } from "lucide-react";
@@ -29,6 +29,17 @@ export default function EditProfileModal({
   );
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  // Update form data when currentUser changes
+  useEffect(() => {
+    if (currentUser) {
+      setFormData({
+        username: currentUser.username || "",
+        bio: currentUser.bio || "",
+      });
+      setAvatarPreview(currentUser.avatar_url || null);
+    }
+  }, [currentUser]);
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -90,6 +101,7 @@ export default function EditProfileModal({
               await updateProfile(formData);
             }
             toast.success("Profile updated successfully");
+            setAvatarFile(null); // Reset avatar file
             onClose();
           } catch (error) {
             // Error already handled by hook
