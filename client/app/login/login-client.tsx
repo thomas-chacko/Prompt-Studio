@@ -16,20 +16,23 @@ export default function LoginClient() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [isHydrated, setIsHydrated] = useState(false);
   
   const router = useRouter();
   const { login, isAuthenticated } = useAuth();
   const toast = useToast();
 
-  // Redirect if already authenticated
+  // Wait for Zustand to hydrate
   useEffect(() => {
-    if (isAuthenticated) {
+    setIsHydrated(true);
+  }, []);
+
+  // Redirect if already authenticated (after hydration)
+  useEffect(() => {
+    if (isHydrated && isAuthenticated) {
       router.replace("/");
-    } else {
-      setIsCheckingAuth(false);
     }
-  }, [isAuthenticated, router]);
+  }, [isHydrated, isAuthenticated, router]);
 
   const validateForm = (): boolean => {
     const errors: Record<string, string> = {};
@@ -73,8 +76,8 @@ export default function LoginClient() {
     }
   };
 
-  // Show loading while checking authentication
-  if (isCheckingAuth) {
+  // Show loading while hydrating
+  if (!isHydrated) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-purple"></div>
