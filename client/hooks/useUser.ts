@@ -93,6 +93,7 @@ export const useUser = () => {
       const response = await userApi.updatePassword(data)
       return response
     } catch (error) {
+      // Log error but re-throw so component can handle it
       handleApiError(error, 'UpdatePassword')
       throw error
     } finally {

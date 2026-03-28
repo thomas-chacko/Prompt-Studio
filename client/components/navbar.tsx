@@ -10,6 +10,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/components/toast";
+import LogoutModal from "@/components/logout-modal";
 
 const NAV_LINKS = [
   { href: "/explore", label: "Explore", icon: Compass },
@@ -21,18 +22,29 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const { isAuthenticated, user, logout } = useAuth();
   const toast = useToast();
 
-  const handleLogout = async () => {
+  const handleLogoutClick = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const handleLogoutConfirm = async () => {
+    setIsLoggingOut(true);
     try {
       await logout();
       toast.success("Logged out successfully");
+      setIsLogoutModalOpen(false);
+      setOpen(false); // Close mobile menu if open
       router.push("/");
     } catch (err) {
       toast.error("Logout failed");
+    } finally {
+      setIsLoggingOut(false);
     }
   };
 
@@ -252,7 +264,7 @@ export default function Navbar() {
                       Profile
                     </Link>
                     <button
-                      onClick={handleLogout}
+                      onClick={handleLogoutClick}
                       className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl font-medium text-sm bg-red-500/10 text-red-400 hover:text-red-300 hover:bg-red-500/20 border border-red-500/20 transition-all cursor-pointer"
                     >
                       Logout
@@ -271,6 +283,14 @@ export default function Navbar() {
           </>
         )}
       </AnimatePresence>
+
+      {/* Logout Confirmation Modal */}
+      <LogoutModal
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+        onConfirm={handleLogoutConfirm}
+        isLoading={isLoggingOut}
+      />
     </>
   );
 }

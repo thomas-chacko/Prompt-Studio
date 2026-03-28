@@ -13,10 +13,24 @@ const axiosInstance = axios.create({
   withCredentials: true,
 })
 
+// Helper to get token from Zustand persisted storage
+const getToken = () => {
+  try {
+    const authStorage = localStorage.getItem('auth-storage')
+    if (authStorage) {
+      const parsed = JSON.parse(authStorage)
+      return parsed.state?.token || null
+    }
+  } catch (error) {
+    console.error('Error reading token from storage:', error)
+  }
+  return null
+}
+
 // Request interceptor — attach JWT token
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token')
+    const token = getToken()
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -29,13 +43,22 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    // Only redirect to login if 401 AND not already on auth pages
+    // Only redirect to login if 401 AND it's an authentication issue (not validation)
     if (error.response?.status === 401) {
+      const errorMessage = error.response?.data?.message || ''
       const isAuthPage = typeof window !== 'undefined' && 
         (window.location.pathname === '/login' || window.location.pathname === '/signup')
       
-      if (!isAuthPage) {
-        localStorage.removeItem('token')
+      // Don't redirect if it's a validation error (like wrong password)
+      // Only redirect if token is invalid/expired
+      const isTokenInvalid = errorMessage.toLowerCase().includes('token') || 
+                            errorMessage.toLowerCase().includes('unauthorized') ||
+                            errorMessage.toLowerCase().includes('authentication') ||
+                            errorMessage.toLowerCase().includes('authorization')
+      
+      if (!isAuthPage && isTokenInvalid) {
+        // Clear Zustand persisted storage
+        localStorage.removeItem('auth-storage')
         if (typeof window !== 'undefined') {
           window.location.href = '/login'
         }

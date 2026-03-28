@@ -116,7 +116,7 @@ export const updatePassword = async (userId, currentPassword, newPassword) => {
   if (!user) throw createError(404, "User not found");
 
   const isValid = await bcrypt.compare(currentPassword, user.passwordHash);
-  if (!isValid) throw createError(401, "Current password is incorrect");
+  if (!isValid) throw createError(400, "Current password is incorrect");
 
   const hashedPassword = await bcrypt.hash(newPassword, 12);
 

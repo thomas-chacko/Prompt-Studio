@@ -10,6 +10,7 @@ import {
 import { useToast } from "@/components/toast";
 import EditProfileModal from "@/components/edit-profile-modal";
 import ChangePasswordModal from "@/components/change-password-modal";
+import LogoutModal from "@/components/logout-modal";
 
 export default function ProfilePage() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -18,6 +19,8 @@ export default function ProfilePage() {
   const [isHydrated, setIsHydrated] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   // Wait for Zustand to hydrate from localStorage
   useEffect(() => {
@@ -31,13 +34,21 @@ export default function ProfilePage() {
     }
   }, [isHydrated, isAuthenticated, router]);
 
-  const handleLogout = async () => {
+  const handleLogoutClick = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const handleLogoutConfirm = async () => {
+    setIsLoggingOut(true);
     try {
       await logout();
       toast.success("Logged out successfully");
+      setIsLogoutModalOpen(false);
       router.push("/");
     } catch (err) {
       toast.error("Logout failed");
+    } finally {
+      setIsLoggingOut(false);
     }
   };
 
@@ -129,7 +140,7 @@ export default function ProfilePage() {
                 Change Password
               </button>
               <button
-                onClick={handleLogout}
+                onClick={handleLogoutClick}
                 className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-red-500/10 hover:bg-red-500/20 backdrop-blur-xl border border-red-500/30 hover:border-red-500/50 text-red-400 hover:text-red-300 transition-all cursor-pointer"
               >
                 <LogOut className="w-4 h-4" />
@@ -212,6 +223,12 @@ export default function ProfilePage() {
       <ChangePasswordModal
         isOpen={isPasswordModalOpen}
         onClose={() => setIsPasswordModalOpen(false)}
+      />
+      <LogoutModal
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+        onConfirm={handleLogoutConfirm}
+        isLoading={isLoggingOut}
       />
     </div>
   );

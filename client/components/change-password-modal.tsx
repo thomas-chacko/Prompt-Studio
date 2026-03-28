@@ -68,8 +68,16 @@ export default function ChangePasswordModal({
       toast.success("Password updated successfully");
       setFormData({ current_password: "", new_password: "", confirm_password: "" });
       onClose();
-    } catch (error) {
-      // Error already handled by hook
+    } catch (error: any) {
+      // Show specific error message from API
+      const errorMessage = error?.message || "Failed to update password";
+      
+      // If it's a current password error, show it on the field
+      if (errorMessage.toLowerCase().includes("current password")) {
+        setFieldErrors({ current_password: errorMessage });
+      } else {
+        toast.error(errorMessage);
+      }
     }
   };
 

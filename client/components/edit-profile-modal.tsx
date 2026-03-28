@@ -103,8 +103,9 @@ export default function EditProfileModal({
             toast.success("Profile updated successfully");
             setAvatarFile(null); // Reset avatar file
             onClose();
-          } catch (error) {
-            // Error already handled by hook
+          } catch (error: any) {
+            console.error("Profile update error:", error);
+            toast.error(error?.message || "Failed to update profile");
           }
         };
         reader.readAsDataURL(avatarFile);
@@ -114,8 +115,9 @@ export default function EditProfileModal({
         toast.success("Profile updated successfully");
         onClose();
       }
-    } catch (error) {
-      // Error already handled by hook
+    } catch (error: any) {
+      console.error("Profile update error:", error);
+      toast.error(error?.message || "Failed to update profile");
     }
   };
 
