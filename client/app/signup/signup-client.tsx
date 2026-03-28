@@ -80,7 +80,7 @@ export default function SignupClient() {
     try {
       await signup(username, email, password);
       toast.success("Account created successfully!");
-      router.push("/explore");
+      router.push("/");
     } catch (err) {
       const appError = handleApiError(err, "Signup");
       setError(appError.message);

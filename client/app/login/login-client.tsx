@@ -63,7 +63,7 @@ export default function LoginClient() {
     try {
       await login(email, password);
       toast.success("Welcome back!");
-      router.push("/explore");
+      router.push("/");
     } catch (err) {
       const appError = handleApiError(err, "Login");
       setError(appError.message);
