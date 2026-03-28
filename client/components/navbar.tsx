@@ -84,9 +84,9 @@ export default function Navbar() {
         style={{ willChange: scrolled ? 'transform' : 'auto' }}
       >
         <nav
-          className={`mx-auto h-14 flex items-center justify-between transition-all duration-300 ${scrolled
-            ? "w-full px-5 rounded-2xl bg-[#07040f]/80 backdrop-blur-2xl border border-white/10 shadow-[0_4px_40px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.07)]"
-            : "w-full px-4 sm:px-6 lg:px-8 rounded-none bg-transparent border-b border-transparent"
+          className={`mx-auto h-14 flex items-center justify-between transition-all duration-500 ${scrolled
+            ? "max-w-5xl px-5 rounded-2xl bg-[#07040f]/80 backdrop-blur-2xl border border-white/10 shadow-[0_4px_40px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.07)]"
+            : "max-w-7xl px-4 sm:px-6 lg:px-8 rounded-none bg-transparent border-b border-transparent"
             }`}
           aria-label="Main navigation"
         >

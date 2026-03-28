@@ -43,7 +43,7 @@ export default function HowItWorksSection() {
   return (
     <section
       aria-label="How PromptStudio works — Browse visual art prompts, generate with Gemini, upload yours"
-      className="py-32 w-full mx-auto px-4 sm:px-8 relative"
+      className="py-32 max-w-7xl mx-auto px-4 sm:px-8 relative"
     >
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[800px] h-full bg-brand-purple/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 
@@ -52,7 +52,7 @@ export default function HowItWorksSection() {
         <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight text-white mb-6">
           How To Create Art
         </h2>
-        <p className="text-gray-400 text-xl w-full mx-auto font-light leading-relaxed">
+        <p className="text-gray-400 text-xl max-w-2xl mx-auto font-light leading-relaxed">
           Go from browsing beautiful imagery to generating your own cinematic masterpieces in seconds.
         </p>
       </div>

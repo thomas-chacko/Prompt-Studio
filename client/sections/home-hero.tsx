@@ -34,7 +34,7 @@ export default function HomeHero() {
       <div className="absolute bottom-[-20%] right-[-10%] w-[60%] aspect-square rounded-full bg-brand-cyan/10 blur-[150px] pointer-events-none" />
       <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
 
-      <div className="relative z-10 w-full mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 lg:gap-8 items-center h-full">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 lg:gap-8 items-center h-full">
 
         {/* Left Column: Typography & Actions */}
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left pt-10 lg:pt-0">
@@ -64,7 +64,7 @@ export default function HomeHero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg lg:text-xl text-gray-400 mb-10 w-full font-light leading-relaxed"
+            className="text-lg lg:text-xl text-gray-400 mb-10 max-w-lg font-light leading-relaxed"
           >
             Access thousands of breathtaking AI prompts, copy them for use in any platform, or generate your own images using Gemini right here in the browser.
           </motion.p>
@@ -73,7 +73,7 @@ export default function HomeHero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full relative mb-10 z-20 group"
+            className="w-full max-w-lg relative mb-10 z-20 group"
           >
             <div className="absolute -inset-1 bg-gradient-to-r from-brand-cyan to-brand-purple rounded-2xl blur-lg opacity-25 group-hover:opacity-40 transition-opacity duration-500" />
             <div className="relative">

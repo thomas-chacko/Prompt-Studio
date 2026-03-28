@@ -6,8 +6,8 @@ import Link from "next/link";
 
 export default function BentoFeatureGrid() {
   return (
-    <section className="py-24 w-full mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="text-center mb-16 w-full mx-auto">
+    <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="text-center mb-16 max-w-2xl mx-auto">
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-white">Engineered for speed.</h2>
         <p className="text-gray-400 text-lg">Build complex applications, write highly converting copy, and generate breathtaking imagery inside a single unified platform.</p>
       </div>
@@ -27,7 +27,7 @@ export default function BentoFeatureGrid() {
                 <Wand2 className="w-6 h-6 text-brand-cyan" />
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">AI-Powered Generators</h3>
-              <p className="text-gray-400 w-full">Not sure what to write? Our advanced AI model will engineer the perfect prompt for you based on a few simple inputs.</p>
+              <p className="text-gray-400 max-w-sm">Not sure what to write? Our advanced AI model will engineer the perfect prompt for you based on a few simple inputs.</p>
             </div>
             <Link href="/generate-prompt" className="inline-flex items-center gap-2 text-brand-cyan font-medium text-sm group-hover:underline underline-offset-4">
               Try the Generator <ArrowUpRight className="w-4 h-4" />
@@ -90,7 +90,7 @@ export default function BentoFeatureGrid() {
           className="md:col-span-2 relative rounded-3xl overflow-hidden group bg-[#0a0a0a] border border-white/10 hover:border-white/20 transition-colors"
         >
           <div className="absolute inset-0 bg-gradient-to-tl from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <div className="p-8 relative z-10 h-full flex pl-8 md:pl-12 flex-col justify-center w-full">
+          <div className="p-8 relative z-10 h-full flex pl-8 md:pl-12 flex-col justify-center max-w-md">
              <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-4 border border-white/10">
               <LayoutTemplate className="w-6 h-6 text-white" />
             </div>

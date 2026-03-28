@@ -29,7 +29,7 @@ export default function NotFoundContent() {
       {/* Dot Grid Background */}
       <div className="absolute inset-0 dot-grid opacity-20 -z-20" />
 
-      <div className="w-full flex flex-col items-center text-center space-y-12">
+      <div className="max-w-4xl w-full flex flex-col items-center text-center space-y-12">
         {/* Error Badge */}
         <motion.div
           initial={{ scale: 0 }}
@@ -61,7 +61,7 @@ export default function NotFoundContent() {
             <span className="text-gradient headline-shimmer">Neural Void</span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-white/50 w-full mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-white/50 max-w-2xl mx-auto leading-relaxed">
             The neural network hallucinated a path that doesn't exist. This specific coordinate in the Prompt Studio dataset is currently empty.
           </p>
         </motion.div>
@@ -88,7 +88,7 @@ export default function NotFoundContent() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.6 }}
-          className="pt-16 grid grid-cols-1 sm:grid-cols-3 gap-12 w-full border-t border-white/5"
+          className="pt-16 grid grid-cols-1 sm:grid-cols-3 gap-12 w-full max-w-3xl border-t border-white/5"
         >
           <Link href="/generate-prompt" className="flex flex-col gap-3 group">
             <span className="text-white/30 text-[10px] font-bold uppercase tracking-[0.3em] group-hover:text-brand-purple transition-colors">Generate</span>

@@ -50,7 +50,7 @@ export default function AdminDashboardClient() {
     <div className="min-h-screen bg-[#03010a] text-white">
       {/* Header */}
       <div className="border-b border-white/10 bg-black/40 backdrop-blur-xl sticky top-0 z-50">
-        <div className="w-full mx-auto px-6 py-6">
+        <div className="max-w-7xl mx-auto px-6 py-6">
           <h1 className="text-3xl font-bold bg-gradient-to-r from-brand-purple to-brand-cyan bg-clip-text text-transparent">
             Admin Dashboard
           </h1>
@@ -60,7 +60,7 @@ export default function AdminDashboardClient() {
 
       {/* Navigation Tabs */}
       <div className="border-b border-white/10 bg-black/20">
-        <div className="w-full mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="flex gap-8 overflow-x-auto">
             {[
               { id: "overview", label: "Overview", icon: TrendingUp },
@@ -90,7 +90,7 @@ export default function AdminDashboardClient() {
       </div>
 
       {/* Content */}
-      <div className="w-full mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 py-12">
         {activeTab === "overview" && stats && (
           <div>
             {/* Stats Grid */}

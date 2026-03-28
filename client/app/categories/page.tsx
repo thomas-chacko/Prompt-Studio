@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function CategoriesPage() {
   return (
-    <div className="w-full mx-auto px-4 py-12">
+    <div className="max-w-7xl mx-auto px-4 py-12">
       <div className="mb-12 cursor-pointer inline-flex items-center text-sm font-medium text-gray-400 hover:text-white transition-colors">
         <Link href="/">
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -31,7 +31,7 @@ export default function CategoriesPage() {
       </div>
       
       <h1 className="text-4xl md:text-5xl font-bold mb-6">Explore Categories</h1>
-      <p className="text-xl text-gray-400 mb-12 w-full">
+      <p className="text-xl text-gray-400 mb-12 max-w-2xl">
         Find the perfect prompt for your specific use case. From coding to marketing, we have you covered.
       </p>
       

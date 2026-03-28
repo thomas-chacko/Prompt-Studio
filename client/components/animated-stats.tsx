@@ -59,7 +59,7 @@ function StatItem({ end, label, suffix = "", delay = 0 }: StatItemProps) {
 export default function AnimatedStats() {
   return (
     <section className="py-20 relative z-10">
-      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="glass rounded-3xl p-8 md:p-12 border border-white/10 relative overflow-hidden flex flex-col md:flex-row justify-around items-center gap-8 md:gap-0">
           <div className="absolute inset-0 bg-gradient-to-r from-brand-cyan/5 via-transparent to-brand-purple/5" />
           

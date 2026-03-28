@@ -70,7 +70,7 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen pt-24 pb-16 px-4 sm:px-6 lg:px-8">
-      <div className="w-full mx-auto">
+      <div className="max-w-5xl mx-auto">
         {/* Profile Header */}
         <div className="relative bg-gradient-to-br from-brand-purple/20 to-brand-cyan/20 rounded-3xl p-8 mb-8 overflow-hidden border border-white/10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(112,0,255,0.15),transparent_50%)]" />

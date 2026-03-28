@@ -16,7 +16,7 @@ export default async function PromptDetail({ params }: Props) {
   }
 
   return (
-    <div className="w-full mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-12">
       <Link href="/explore" className="inline-flex items-center text-sm font-medium text-gray-400 hover:text-white transition-colors mb-12">
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back to Explore

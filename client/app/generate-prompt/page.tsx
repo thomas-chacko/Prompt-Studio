@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function GeneratePromptPage() {
   return (
-    <div className="w-full mx-auto px-4 py-12 md:py-24">
+    <div className="max-w-7xl mx-auto px-4 py-12 md:py-24">
       {/* Page Header */}
       <div className="text-center mb-16 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-brand-cyan/20 rounded-full blur-[100px] -z-10 pointer-events-none" />
@@ -23,7 +23,7 @@ export default function GeneratePromptPage() {
         <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight text-white leading-tight">
           Free <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-blue-500">AI Prompt Generator</span>
         </h1>
-        <p className="text-xl text-gray-400 w-full mx-auto leading-relaxed">
+        <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
           Struggling to get the right output from AI? Tell us what you want to achieve, and our advanced generator will engineer the perfect, highly-detailed prompt for ChatGPT, Claude, or Gemini.
         </p>
       </div>
@@ -96,7 +96,7 @@ export default function GeneratePromptPage() {
           <div className="relative z-10 w-full">
             <Loader2 className="w-12 h-12 text-brand-cyan/30 mx-auto mb-6 animate-spin duration-3000" />
             <h3 className="text-2xl font-bold text-gray-300 mb-2">Awaiting Instructions</h3>
-            <p className="text-sm text-gray-500 w-full mx-auto">
+            <p className="text-sm text-gray-500 max-w-sm mx-auto">
               Configure your requirements on the left, and watch as we engineer an expertly crafted, highly-effective language model prompt here.
             </p>
 

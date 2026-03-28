@@ -92,7 +92,7 @@ export default function TrendingPromptsSection() {
   return (
     <section
       aria-label="Trending AI image prompts for generative art"
-      className="py-32 w-full mx-auto px-4 sm:px-8"
+      className="py-32 max-w-7xl mx-auto px-4 sm:px-8"
     >
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 mb-16">
         <div>
@@ -103,7 +103,7 @@ export default function TrendingPromptsSection() {
           <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight text-white mb-4 leading-tight">
             Trending Image Prompts
           </h2>
-          <p className="text-gray-400 text-xl w-full leading-relaxed font-light">
+          <p className="text-gray-400 text-xl max-w-xl leading-relaxed font-light">
             The most copied, highest-rated visual prompts from our generative art community this week.
           </p>
         </div>

@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-px bg-gradient-to-r from-transparent via-brand-purple/50 to-transparent" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[200px] bg-brand-purple/10 blur-[100px] rounded-b-full pointer-events-none" />
 
-      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-16">
           
           {/* Brand Column */}
@@ -19,7 +19,7 @@ export default function Footer() {
               </div>
               <span className="font-extrabold text-xl tracking-tight text-white">PromptStudio</span>
             </Link>
-            <p className="text-gray-400 text-sm w-full leading-relaxed mb-6 font-light">
+            <p className="text-gray-400 text-sm max-w-sm leading-relaxed mb-6 font-light">
               The world's largest visual AI prompt gallery. Discover stunning generative art, copy Midjourney prompts, and generate masterpieces using your Gemini API key.
             </p>
             <div className="flex items-center gap-4 flex-wrap">
