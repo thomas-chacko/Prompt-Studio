@@ -48,9 +48,20 @@ export default function Navbar() {
     }
   };
 
-  // Detect scroll for blur intensity
+  // Detect scroll for blur intensity with throttle
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    let ticking = false;
+    
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -68,13 +79,14 @@ export default function Navbar() {
     <>
       {/* ─── Top Bar ─────────────────────────────────────────────────────── */}
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "top-3 px-4 sm:px-6" : "top-0 px-0"
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "top-3 px-4 sm:px-6" : "top-0 px-0"
           }`}
+        style={{ willChange: scrolled ? 'transform' : 'auto' }}
       >
         <nav
-          className={`mx-auto h-14 flex items-center justify-between transition-all duration-500 ${scrolled
-            ? "max-w-5xl px-5 rounded-2xl bg-[#07040f]/80 backdrop-blur-2xl border border-white/10 shadow-[0_4px_40px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.07)]"
-            : "max-w-7xl px-4 sm:px-6 lg:px-8 rounded-none bg-transparent border-b border-transparent"
+          className={`mx-auto h-14 flex items-center justify-between transition-all duration-300 ${scrolled
+            ? "w-full px-5 rounded-2xl bg-[#07040f]/80 backdrop-blur-2xl border border-white/10 shadow-[0_4px_40px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.07)]"
+            : "w-full px-4 sm:px-6 lg:px-8 rounded-none bg-transparent border-b border-transparent"
             }`}
           aria-label="Main navigation"
         >
@@ -93,7 +105,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-colors ${active
+                  className={`relative flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-colors duration-200 ${active
                     ? "text-white bg-white/8"
                     : "text-gray-400 hover:text-white hover:bg-white/5"
                     }`}
@@ -174,7 +186,7 @@ export default function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
+              transition={{ duration: 0.2 }}
               className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm lg:hidden"
               onClick={() => setOpen(false)}
             />
@@ -185,8 +197,9 @@ export default function Navbar() {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", mass: 0.5, damping: 28, stiffness: 260 }}
+              transition={{ type: "spring", mass: 0.4, damping: 30, stiffness: 300 }}
               className="fixed top-0 right-0 z-50 h-full w-[min(80vw,340px)] bg-[#0c0917] border-l border-white/10 flex flex-col shadow-2xl lg:hidden"
+              style={{ willChange: 'transform' }}
             >
               {/* Drawer header */}
               <div className="flex items-center justify-between px-5 py-4 border-b border-white/8">
@@ -215,7 +228,8 @@ export default function Navbar() {
                       key={link.href}
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.05, duration: 0.35 }}
+                      transition={{ delay: i * 0.04, duration: 0.25 }}
+                      style={{ willChange: 'transform, opacity' }}
                     >
                       <Link
                         href={link.href}

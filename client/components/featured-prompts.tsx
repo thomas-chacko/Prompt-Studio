@@ -13,8 +13,8 @@ export default function FeaturedPrompts({ prompts }: { prompts: Prompt[] }) {
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-brand-cyan/5 to-transparent -z-10 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-1/2 h-full bg-gradient-to-r from-brand-purple/5 to-transparent -z-10 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <div className="max-w-3xl">
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <div className="w-full">
           <motion.h2 
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -36,7 +36,7 @@ export default function FeaturedPrompts({ prompts }: { prompts: Prompt[] }) {
         </div>
       </div>
 
-      <div className="pl-4 sm:pl-6 lg:pl-8 ml-auto max-w-7xl">
+      <div className="pl-4 sm:pl-6 lg:pl-8 ml-auto w-full">
         <div className="flex gap-6 overflow-x-auto pb-12 pt-4 px-4 sm:px-0 snap-x snap-mandatory scrollbar-hide hide-scroll gap-x-6">
           <style dangerouslySetInnerHTML={{ __html: `
             .hide-scroll::-webkit-scrollbar { display: none; }

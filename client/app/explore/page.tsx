@@ -21,11 +21,11 @@ export const metadata: Metadata = {
 
 export default function ExplorePage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="w-full mx-auto px-4 py-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
         <div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Explore Prompts</h1>
-          <p className="text-xl text-gray-400 max-w-2xl">
+          <p className="text-xl text-gray-400 w-full">
             Discover the highest quality prompts curated by the community.
           </p>
         </div>

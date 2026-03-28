@@ -7,7 +7,7 @@ export default function SEOContentSection() {
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-brand-purple/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-brand-cyan/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-gray-300">
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-gray-300">
         <div className="space-y-12">
           
           <div className="text-center mb-16">

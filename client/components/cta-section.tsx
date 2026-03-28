@@ -6,7 +6,7 @@ import AnimatedButton from "./animated-button";
 export default function CTASection() {
   return (
     <section className="py-32 relative overflow-hidden">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95, y: 30 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -30,7 +30,7 @@ export default function CTASection() {
                 AI Prompts
               </span>
             </h2>
-            <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-300 mb-12 w-full mx-auto font-light leading-relaxed">
               Join thousands of creators sharing their best prompts. Access the library entirely for free, no account required.
             </p>
             
